@@ -19,17 +19,17 @@
 ## 项目结构
 
 ```
-├── public/           # 静态资源
-├── src/
-│   ├── components/   # Astro 组件
-│   ├── config/       # 应用配置
-│   ├── content/      # 内容集合
-│   ├── layouts/      # 页面布局
-│   ├── pages/        # 页面路由
-│   └── utils/        # 工具函数
-├── astro.config.mjs  # Astro 配置
-├── package.json
-└── tsconfig.json
+├── PUBLIC/           # 静态资源
+├── SRC/
+│   ├── COMPONENTS/   # aSTRO 组件
+│   ├── CONFIG/       # 应用配置
+│   ├── CONTENT/      # 内容集合
+│   ├── LAYOUTS/      # 页面布局
+│   ├── PAGES/        # 页面路由
+│   └── UTILS/        # 工具函数
+├── ASTRO.CONFIG.MJS  # aSTRO 配置
+├── PACKAGE.JSON
+└── TSCONFIG.JSON
 ```
 
 ### 主要页面
@@ -87,6 +87,7 @@ npm run astro ...
 主要配置位于 `src/config/index.ts`：
 
 **站点配置**
+
 - `siteTitle`: 站点标题
 - `siteDescription`: 站点描述
 - `siteUrl`: 站点 URL（需修改为你的域名）
@@ -94,6 +95,7 @@ npm run astro ...
 - `navLinks`: 导航菜单配置
 
 **其他配置**
+
 - `friendlyLink`: 友情链接列表
 - `donate`: 捐赠信息（ETC、SOL 地址）
 - `comments`: 评论系统配置（`giscus` 或 `gitalk`）
@@ -113,7 +115,6 @@ tags: [标签1, 标签2]
 categories: [分类]
 draft: false
 ---
-
 文章内容...
 ```
 
@@ -125,7 +126,6 @@ draft: false
 ---
 date: 2026-01-26
 ---
-
 短内容...
 ```
 
