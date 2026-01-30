@@ -12,7 +12,7 @@ interface Props {
 
 const { sticky = true } = Astro.props;
 // Cast `navLinks` to any to avoid type errors in Astro templates when iterating
-const navLinks: any = config.navLinks;
+const navLinks: any = config.navLinks || [];
 ---
 
 <header
@@ -61,7 +61,7 @@ const navLinks: any = config.navLinks;
     >
       <div class="internal-links flex flex-wrap justify-center">
         {
-          navLinks.map((link: any) => (
+          navLinks && Array.isArray(navLinks) ? navLinks.map((link: any) => (
             <div class="relative group">
               {
                 link.children ? (
@@ -95,7 +95,7 @@ const navLinks: any = config.navLinks;
                 </div>
               ) : null}
             </div>
-          ))
+          )) : null
         }
       </div>
     </div>
@@ -138,7 +138,7 @@ const navLinks: any = config.navLinks;
     <SearchBox />
     <div class="internal-links flex flex-col gap-2">
       {
-        navLinks.map((link: any) => (
+        navLinks && Array.isArray(navLinks) ? navLinks.map((link: any) => (
           link.children ? (
             <div>
               <div class="px-3 py-2 text-slate-900 dark:text-slate-50 font-semibold">{link.name}</div>
@@ -156,7 +156,7 @@ const navLinks: any = config.navLinks;
               {link.name}
             </a>
           )
-        ))
+        )) : null
       }
     </div>
   </div>
