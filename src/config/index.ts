@@ -39,7 +39,7 @@ const config: Config = {
     //   href: "/donate",
     // },
   ],
-  friendlylink: [
+  friendlyLink: [
     {
       name: "jellyfin",
       link: "https://jellyfin-cn.eeymoo.com/",
@@ -60,33 +60,33 @@ const config: Config = {
     },
   ],
   donate: {
-    etcaddress: "0x5d0738e5904a1c8dad3f6ef71453a61caeebdd9d",
-    soladdress: "fkdthsy7cifdnqhsrhm3rt3mchdueubug4uxqykqzdjr",
+    etcAddress: "0x5d0738e5904a1c8dad3f6ef71453a61caeebdd9d",
+    solAddress: "fkdthsy7cifdnqhsrhm3rt3mchdueubug4uxqykqzdjr",
   },
   comments: {
     system: 'giscus',
     giscus: {
       repo: "eeymoo/eeymoo.github.io",
-      repoid: "r_kgdon12345",
+      repoId: "r_kgdon12345",
       category: "general",
-      categoryid: "dic_kwdon123456",
+      categoryId: "dic_kwdon123456",
       mapping: "pathname",
       strict: "0",
-      reactionsenabled: "1",
-      emitmetadata: "0",
-      inputposition: "top",
+      reactionsEnabled: "1",
+      emitMetadata: "0",
+      inputPosition: "top",
       theme: "preferred_color_scheme",
       lang: "zh-cn",
       loading: "lazy",
     },
     gitalk: {
-      clientid: "your_github_app_client_id",
-      clientsecret: "your_github_app_client_secret",
+      clientID: "your_github_app_client_id",
+      clientSecret: "your_github_app_client_secret",
       repo: "eeymoo.github.io",
       owner: "eeymoo",
       admin: ["eeymoo"],
       language: "zh-cn",
-      distractionfreemode: false,
+      distractionFreeMode: false,
     },
   },
 };
