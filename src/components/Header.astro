@@ -65,12 +65,21 @@ const navLinks: any = config.navLinks;
             <div class="relative group">
               {
                 link.children ? (
-                  <button class:list={[
-                    "no-style inline-block px-2 mx-2 my-2 text-gray-700 dark:text-gray-300 underline hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors rounded",
-                    { "font-black text-gray-900 dark:text-gray-200! decoration-primary!": false },
-                  ]} disabled={link.disabled}>
-                    {link.name}
-                  </button>
+                  link.href ? (
+                    <a href={link.href} class:list={[
+                      "no-style inline-block px-2 mx-2 my-2 text-gray-700 dark:text-gray-300 underline hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors rounded",
+                      { "font-black text-gray-900 dark:text-gray-200! decoration-primary!": false },
+                    ]}>
+                      {link.name}
+                    </a>
+                  ) : (
+                    <button class:list={[
+                      "no-style inline-block px-2 mx-2 my-2 text-gray-700 dark:text-gray-300 underline hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors rounded",
+                      { "font-black text-gray-900 dark:text-gray-200! decoration-primary!": false },
+                    ]} disabled={link.disabled}>
+                      {link.name}
+                    </button>
+                  )
                 ) : (
                   <HeaderLink href={link.href}>{link.name}</HeaderLink>
                 )
