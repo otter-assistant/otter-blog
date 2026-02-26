@@ -20,15 +20,14 @@ const config: Config = {
     },
     {
       name: "AICG",
-      href: "/tags/AICG",
+      href: "/tags/AICG/",
     },
-    // moved into blog children
     {
       name: "Tools",
-      disabled: true,
+      href: "/tool",
       children: [
-        { name: "Goto", href: "/goto" },
-        { name: "Gzip-compare", href: "/tools/gzip-compare" },
+        { name: "Goto", href: "/tool/goto" },
+        { name: "Gzip-Compare", href: "/tool/gzip-compare" },
       ],
     },
     {

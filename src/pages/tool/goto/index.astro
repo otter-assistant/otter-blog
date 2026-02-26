@@ -1,9 +1,9 @@
 ---
-import BaseHead from '../../components/BaseHead.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
-import '../../styles/global.css';
+import BaseHead from '../../../components/BaseHead.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../../consts';
+import '../../../styles/global.css';
 
 const speculationUrls = ['/', '/post', '/categories', '/tags', '/archives'];
 ---
@@ -172,7 +172,7 @@ const speculationUrls = ['/', '/post', '/categories', '/tags', '/archives'];
               const params = new URLSearchParams({ url: inputUrl });
               if (stopOption?.checked) params.append('stop', 'true');
               if (isNewOption?.checked) params.append('isNew', 'true');
-              window.location.href = `/goto?${params.toString()}`;
+              window.location.href = `/tool/goto?${params.toString()}`;
             }
           });
         }
@@ -186,7 +186,7 @@ const speculationUrls = ['/', '/post', '/categories', '/tags', '/archives'];
               const params = new URLSearchParams({ url: inputUrl });
               if (stopOption?.checked) params.append('stop', 'true');
               if (isNewOption?.checked) params.append('isNew', 'true');
-              const fullLink = `${window.location.origin}/goto?${params.toString()}`;
+              const fullLink = `${window.location.origin}/tool/goto?${params.toString()}`;
 
               navigator.clipboard.writeText(fullLink).then(() => {
                 const originalText = copyBtn.textContent;
@@ -267,4 +267,3 @@ const speculationUrls = ['/', '/post', '/categories', '/tags', '/archives'];
     </script>
   </body>
 </html>
-
