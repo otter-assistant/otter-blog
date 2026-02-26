@@ -141,7 +141,11 @@ const navLinks: any = config.navLinks || [];
         navLinks && Array.isArray(navLinks) ? navLinks.map((link: any) => (
           link.children ? (
             <div>
-              <div class="px-3 py-2 text-slate-900 dark:text-slate-50 font-semibold">{link.name}</div>
+              {link.href ? (
+                <a href={link.href} class="block px-3 py-2 text-slate-900 dark:text-slate-50 font-semibold hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors">{link.name}</a>
+              ) : (
+                <div class="px-3 py-2 text-slate-900 dark:text-slate-50 font-semibold">{link.name}</div>
+              )}
               <div class="pl-4">
                 {Array.isArray(link.children) && link.children.map((c: any) => (
                   <a href={c.href} class="block px-3 py-2 text-slate-900 dark:text-slate-50 hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors">{c.name}</a>

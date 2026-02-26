@@ -53,7 +53,7 @@ function generateSlugFromText(text: string): string {
 }
 
 /**
- * 转换 Markdown 中的所有行内链接，非白名单链接转为 /goto.html?url=原始链接 格式
+ * 转换 Markdown 中的所有行内链接，非白名单链接转为 /tool/goto?url=原始链接 格式
  * @param {string} mdContent - 原始 Markdown 内容字符串
  * @param {Array<string>} whiteList - 链接白名单列表（匹配原始链接，精准匹配）
  * @returns {string} 处理后的 Markdown 内容
@@ -78,7 +78,7 @@ export function convertMdALinksToGoto(mdContent: string, whiteList: string[] = c
     } else {
       // 非白名单链接，转换为目标格式，对原始链接进行 URL 编码（避免特殊字符导致跳转异常）
       const encodedUrl = encodeURIComponent(originalUrl);
-      const targetUrl = `/goto.html?url=${encodedUrl}`;
+      const targetUrl = `/tool/goto?url=${encodedUrl}`;
       // 拼接新的 Markdown 链接，保留原链接文本和可选标题
       return title ? `[${linkText}](${targetUrl}${title})` : `[${linkText}](${targetUrl})`;
     }
@@ -86,7 +86,7 @@ export function convertMdALinksToGoto(mdContent: string, whiteList: string[] = c
 }
 
 /**
- * 从 HTML 中提取所有 a 标签，将非白名单链接的 href 转为 /goto.html?url=原始链接 格式
+ * 从 HTML 中提取所有 a 标签，将非白名单链接的 href 转为 /tool/goto?url=原始链接 格式
  * @param {string} htmlContent - 原始 HTML 内容字符串
  * @param {Array<string>} whiteList - 链接白名单列表（匹配原始 href，精准匹配）
  * @returns {string} 处理后的 HTML 内容
@@ -120,7 +120,7 @@ export function convertHtmlALinksToGoto(htmlContent: string, whiteList: string[]
       // 6. 非白名单链接：进行 URL 编码，避免特殊字符导致参数异常
       const encodedHref = encodeURIComponent(originalHref);
       // 7. 拼接目标链接格式，更新 a 标签的 href 属性
-      const targetHref = `/goto.html?url=${encodedHref}`;
+      const targetHref = `/tool/goto?url=${encodedHref}`;
       aTag.setAttribute('href', targetHref);
     }
     // 白名单链接：不做任何修改，保留原始 href

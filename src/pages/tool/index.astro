@@ -1,0 +1,64 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import '../../styles/global.css';
+
+const speculationUrls = ['/', '/post', '/categories', '/tags', '/archives'];
+
+const tools = [
+  {
+    name: 'URL 重定向',
+    href: '/tool/goto',
+    description: '安全的外链跳转工具，支持所有 URI 协议',
+  },
+  {
+    name: 'Gzip 压缩率对比',
+    href: '/tool/gzip-compare',
+    description: '输入两段文本，实时对比它们的 Gzip 压缩率和大小',
+  },
+];
+---
+
+<!doctype html>
+<html lang="zh-CN" class="scroll-smooth">
+  <head>
+    <BaseHead
+      title={`${SITE_TITLE} · Tools`}
+      description="在线工具集合"
+      speculationUrls={speculationUrls}
+      speculationEagerness="moderate"
+    />
+  </head>
+  <body>
+    <Header />
+    <main class="w-full max-w-4xl mx-auto px-4 py-12">
+      <section class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+          Tools
+        </h1>
+        <p class="text-gray-600 dark:text-gray-400">
+          在线工具集合
+        </p>
+      </section>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {tools.map((tool) => (
+          <a
+            href={tool.href}
+            class="group block p-6 bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-lg hover:border-primary dark:hover:border-primary transition-colors"
+          >
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2 group-hover:text-primary transition-colors">
+              {tool.name}
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400">
+              {tool.description}
+            </p>
+          </a>
+        ))}
+      </div>
+    </main>
+    <Footer />
+  </body>
+</html>
