@@ -76,3 +76,43 @@ html.dark #theme-color-toggle .color-indicator {
     opacity: 0;
   }
 }
+
+/* 扫描式过渡元素 - 从左上角到右下角 */
+#theme-color-sweep-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9997;
+  clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+  opacity: 0.15;
+}
+
+#theme-color-sweep-overlay.animate {
+  animation: sweepDiagonal 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* 从左上角到右下角的对角线扫描 */
+@keyframes sweepDiagonal {
+  0% {
+    clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+  }
+  100% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+/* 另一种效果：从左上角向右下角的三角扫描 */
+@keyframes sweepTriangle {
+  0% {
+    clip-path: polygon(0 0, 0 0, 0 0);
+  }
+  50% {
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+  }
+  100% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}

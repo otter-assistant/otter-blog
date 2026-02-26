@@ -38,5 +38,8 @@ const versionHash = isDev ? "dev" : (version && version !== 'unknown' ? version 
   <span class="color-indicator"></span>
 </button>
 
-<!-- 主题色过渡圆形 -->
+<!-- 主题色过渡圆形（用于点击切换） -->
 <div id="theme-color-transition-circle"></div>
+
+<!-- 主题色扫描过渡层（用于首次加载调整） -->
+<div id="theme-color-sweep-overlay" class="theme-sweep-overlay"></div>

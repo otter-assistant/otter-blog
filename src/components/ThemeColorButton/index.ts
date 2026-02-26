@@ -4,6 +4,8 @@
 interface ThemeColorConfig {
   defaultColor: string;
   hashColor: string;
+  rawHashColor: string;
+  needsAdjustment: boolean;
 }
 
 /**
@@ -66,29 +68,37 @@ function adjustBrightness(r: number, g: number, b: number, factor: number): { r:
 }
 
 /**
+ * 检查颜色是否满足 WCAG AA 对比度标准 (4.5:1)
+ */
+function checkAAContrast(hexColor: string): boolean {
+  const rgb = hexToRgb(hexColor);
+  const whiteBg = { r: 255, g: 255, b: 255 };
+  const darkBg = { r: 15, g: 23, b: 42 };
+  const AA_RATIO = 4.5;
+  
+  const contrastOnWhite = getContrastRatio(rgb, whiteBg);
+  const contrastOnDark = getContrastRatio(rgb, darkBg);
+  
+  return contrastOnWhite >= AA_RATIO || contrastOnDark >= AA_RATIO;
+}
+
+/**
  * 确保颜色满足 WCAG AA 对比度标准 (4.5:1)
  * 分别检查在白色背景和深色背景上的对比度
  */
 function ensureAAContrast(hexColor: string): string {
   const rgb = hexToRgb(hexColor);
-  
-  // 背景色
-  const whiteBg = { r: 255, g: 255, b: 255 }; // 亮色模式背景
-  const darkBg = { r: 15, g: 23, b: 42 }; // slate-950 暗色模式背景
-  
-  const AA_RATIO = 4.5; // WCAG AA 标准对比度
+  const whiteBg = { r: 255, g: 255, b: 255 };
+  const darkBg = { r: 15, g: 23, b: 42 };
+  const AA_RATIO = 4.5;
   
   let adjustedRgb = { ...rgb };
   
-  // 检查在白色背景上的对比度（颜色需要足够深）
-  let contrastOnWhite = getContrastRatio(adjustedRgb, whiteBg);
-  
-  // 检查在深色背景上的对比度（颜色需要足够亮）
-  let contrastOnDark = getContrastRatio(adjustedRgb, darkBg);
+  const contrastOnWhite = getContrastRatio(adjustedRgb, whiteBg);
+  const contrastOnDark = getContrastRatio(adjustedRgb, darkBg);
   
   // 如果两个对比度都不够，需要调整
   if (contrastOnWhite < AA_RATIO && contrastOnDark < AA_RATIO) {
-    // 计算原始颜色的亮度
     const luminance = getLuminance(adjustedRgb.r, adjustedRgb.g, adjustedRgb.b);
     const midLuminance = 0.5;
     
@@ -124,9 +134,11 @@ function ensureAAContrast(hexColor: string): string {
 
 function initThemeColorButton() {
   const storageKey = "theme-color";
+  const firstAdjustKey = "theme-color-first-adjusted";
   const toggle = document.getElementById("theme-color-toggle");
   const root = document.documentElement;
   const transitionCircle = document.getElementById("theme-color-transition-circle");
+  const sweepOverlay = document.getElementById("theme-color-sweep-overlay");
 
   // 从脚本标签获取 hash 颜色
   const scriptTag = document.querySelector('script[data-version-hash]');
@@ -161,20 +173,30 @@ function initThemeColorButton() {
     return `#${adjust(r)}${adjust(g)}${adjust(b)}`;
   };
 
-  // 生成原始 hash 颜色并确保符合 AA 对比度标准
+  // 生成原始 hash 颜色
   const rawHashColor = generateColorFromHash(versionHash);
-  const HASH_COLOR = ensureAAContrast(rawHashColor);
+  // 检查是否需要调整
+  const needsAdjustment = !checkAAContrast(rawHashColor);
+  // 确保符合 AA 对比度标准
+  const HASH_COLOR = needsAdjustment ? ensureAAContrast(rawHashColor) : rawHashColor;
 
   const config: ThemeColorConfig = {
     defaultColor: DEFAULT_COLOR,
-    hashColor: HASH_COLOR
+    hashColor: HASH_COLOR,
+    rawHashColor: rawHashColor,
+    needsAdjustment: needsAdjustment
   };
 
   let isAnimating = false;
 
   // 设置主题色（无动画）
-  const applyThemeColor = (theme: string) => {
-    const color = theme === 'default' ? config.defaultColor : config.hashColor;
+  const applyThemeColor = (theme: string, useRawColor = false) => {
+    let color: string;
+    if (theme === 'default') {
+      color = config.defaultColor;
+    } else {
+      color = useRawColor && config.needsAdjustment ? config.rawHashColor : config.hashColor;
+    }
     
     // 设置 CSS 变量
     root.style.setProperty('--color-primary', color);
@@ -188,7 +210,7 @@ function initThemeColorButton() {
       indicator.style.backgroundColor = color;
     }
     
-    // 更新 Footer 中的版本 hash 颜色 - 始终显示 hash 颜色
+    // 更新 Footer 中的版本 hash 颜色 - 始终显示调整后的 hash 颜色
     const versionHashEl = document.querySelector('.version-hash');
     if (versionHashEl instanceof HTMLElement) {
       versionHashEl.style.color = config.hashColor;
@@ -196,26 +218,25 @@ function initThemeColorButton() {
   };
 
   // 带过渡动画的主题色切换
-  const applyThemeColorWithTransition = (theme: string) => {
+  const applyThemeColorWithTransition = (theme: string, useRawColor = false) => {
     if (!document.startViewTransition) {
-      applyWithCircleAnimation(theme);
+      applyWithCircleAnimation(theme, useRawColor);
       return;
     }
-    applyWithViewTransition(theme);
+    applyWithViewTransition(theme, useRawColor);
   };
 
   // 方案1: View Transition API
-  const applyWithViewTransition = (theme: string) => {
+  const applyWithViewTransition = (theme: string, useRawColor = false) => {
     const rect = toggle!.getBoundingClientRect();
     const x = rect.left + rect.width / 2;
     const y = rect.top + rect.height / 2;
 
-    // 设置 CSS 变量用于动画
     document.documentElement.style.setProperty("--theme-x", `${x}px`);
     document.documentElement.style.setProperty("--theme-y", `${y}px`);
 
     const transition = document.startViewTransition!(() => {
-      applyThemeColor(theme);
+      applyThemeColor(theme, useRawColor);
     });
 
     transition.finished
@@ -228,12 +249,17 @@ function initThemeColorButton() {
   };
 
   // 方案2: 传统圆形展开动画
-  const applyWithCircleAnimation = (theme: string) => {
+  const applyWithCircleAnimation = (theme: string, useRawColor = false) => {
     const rect = toggle!.getBoundingClientRect();
     const x = rect.left + rect.width / 2;
     const y = rect.top + rect.height / 2;
 
-    const color = theme === 'default' ? config.defaultColor : config.hashColor;
+    let color: string;
+    if (theme === 'default') {
+      color = config.defaultColor;
+    } else {
+      color = useRawColor && config.needsAdjustment ? config.rawHashColor : config.hashColor;
+    }
 
     transitionCircle!.style.left = x + "px";
     transitionCircle!.style.top = y + "px";
@@ -241,7 +267,7 @@ function initThemeColorButton() {
     transitionCircle!.classList.add("animate");
 
     setTimeout(() => {
-      applyThemeColor(theme);
+      applyThemeColor(theme, useRawColor);
     }, 500);
 
     setTimeout(() => {
@@ -252,12 +278,55 @@ function initThemeColorButton() {
     }, 1000);
   };
 
+  // 方案3: 扫描式过渡（从左上角到右下角）- 用于首次调整
+  const applyWithSweepAnimation = (theme: string, useRawColor = false) => {
+    return new Promise<void>((resolve) => {
+      let color: string;
+      if (theme === 'default') {
+        color = config.defaultColor;
+      } else {
+        color = useRawColor && config.needsAdjustment ? config.rawHashColor : config.hashColor;
+      }
+
+      // 设置扫描层背景色
+      if (sweepOverlay) {
+        sweepOverlay.style.backgroundColor = color;
+        sweepOverlay.classList.add("animate");
+      }
+
+      // 动画中途更新实际颜色
+      setTimeout(() => {
+        applyThemeColor(theme, useRawColor);
+      }, 400);
+
+      // 动画结束，清理
+      setTimeout(() => {
+        if (sweepOverlay) {
+          sweepOverlay.classList.remove("animate");
+          sweepOverlay.style.backgroundColor = '';
+          sweepOverlay.style.clipPath = 'polygon(0 0, 0 0, 0 0, 0 0)';
+        }
+        isAnimating = false;
+        resolve();
+      }, 800);
+    });
+  };
+
   // 加载保存的主题 - 默认为 hash
   const loadTheme = (): string => {
     const saved = localStorage.getItem(storageKey);
-    // 默认使用 hash 颜色
     if (!saved) return 'hash';
     return saved === 'default' ? 'default' : 'hash';
+  };
+
+  // 检查是否已执行过首次调整
+  const hasFirstAdjusted = (): boolean => {
+    return localStorage.getItem(firstAdjustKey) === 'true';
+  };
+
+  // 标记已执行过首次调整
+  const markFirstAdjusted = () => {
+    localStorage.setItem(firstAdjustKey, 'true');
   };
 
   // 循环切换主题
@@ -269,7 +338,22 @@ function initThemeColorButton() {
   // 初始化
   const init = () => {
     const savedTheme = loadTheme();
-    applyThemeColor(savedTheme);
+    
+    // 如果是 hash 主题、需要调整、且未执行过首次调整动画
+    if (savedTheme === 'hash' && config.needsAdjustment && !hasFirstAdjusted()) {
+      // 先应用原始颜色
+      applyThemeColor('hash', true);
+      
+      // 2秒后用扫描动画切换到调整后的颜色
+      setTimeout(async () => {
+        isAnimating = true;
+        await applyWithSweepAnimation('hash', false);
+        markFirstAdjusted();
+      }, 2000);
+    } else {
+      // 直接应用颜色
+      applyThemeColor(savedTheme);
+    }
 
     toggle?.addEventListener('click', () => {
       if (isAnimating) return;
@@ -278,7 +362,8 @@ function initThemeColorButton() {
       const currentTheme = toggle.getAttribute('data-color-theme') || 'hash';
       const nextTheme = cycleTheme(currentTheme);
       localStorage.setItem(storageKey, nextTheme);
-      applyThemeColorWithTransition(nextTheme);
+      // 用户点击切换时，直接使用调整后的颜色
+      applyThemeColorWithTransition(nextTheme, false);
     });
   };
 
