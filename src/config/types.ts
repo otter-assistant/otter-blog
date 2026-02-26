@@ -11,6 +11,18 @@ type Config = {
   donate?: DonateConfig;
   // 评论系统配置
   comments: CommentsConfig;
+  // Goto 跳转配置
+  goto?: GotoConfig;
+};
+
+type GotoConfig = {
+  path: string;
+  whiteList: string[];
+  friendlyLinkUseGoto: boolean;
+  http: {
+    disableAutoRedirect: boolean;
+    showWarning: boolean;
+  };
 };
 
 type CommentsConfig = {
@@ -67,4 +79,4 @@ type FriendlyLink = {
   desc: string;
   img: string;
 };
-export type { Config, NavLink, FriendlyLink, DonateConfig, GiscusConfig, GitalkConfig, CommentsConfig };
+export type { Config, NavLink, FriendlyLink, DonateConfig, GiscusConfig, GitalkConfig, CommentsConfig, GotoConfig };

@@ -6,6 +6,7 @@ import Links from "../components/Links.astro";
 import Tips from "../components/Tips.astro";
 import config from "../config";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { processLink } from "../utils/goto";
 
 // Speculation Rules: hint common navigation paths
 const speculationUrls = [
@@ -15,6 +16,10 @@ const speculationUrls = [
   "/tags",       // Tags
   "/archives",   // Archives
 ];
+
+// 处理外链
+const githubConfigLink = processLink("https://github.com/Eeymoo/obsidian2astro-template/blob/main/src/config/index.ts");
+const githubIssuesLink = processLink("https://github.com/Eeymoo/obsidian2astro-template/issues");
 ---
 
 <!doctype html>
@@ -157,7 +162,7 @@ const speculationUrls = [
                       直接编辑配置文件并提交 PR
                     </p>
                     <a
-                      href="https://github.com/Eeymoo/obsidian2astro-template/blob/main/src/config/index.ts"
+                      href={githubConfigLink}
                       target="_blank"
                       rel="noopener noreferrer"
                       class="text-sm"
@@ -199,7 +204,7 @@ const speculationUrls = [
                       在 GitHub 仓库中创建 Issue，提交您的友链信息
                     </p>
                     <a
-                      href="https://github.com/Eeymoo/obsidian2astro-template/issues"
+                      href={githubIssuesLink}
                       target="_blank"
                       rel="noopener noreferrer"
                       class="text-sm"

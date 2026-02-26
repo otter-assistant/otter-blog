@@ -95,5 +95,17 @@ const config: Config = {
       distractionFreeMode: false,
     },
   },
+  goto: {
+    path: '/tool/goto/',
+    whiteList: [
+      '*.google.com/*',
+      '/^https?:\\/\\/([^.]+\\.)*google\\.com\\//i',
+    ],
+    friendlyLinkUseGoto: false,
+    http: {
+      disableAutoRedirect: true,
+      showWarning: true,
+    },
+  },
 };
 export default config;

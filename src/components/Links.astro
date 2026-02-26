@@ -1,4 +1,6 @@
 ---
+import { processLink } from "../utils/goto";
+
 type Props = {
   links: {
     name: string;
@@ -16,7 +18,7 @@ const { links } = Astro.props;
       .filter((link) => link.link)
       .map((link) => (
         <a 
-          href={link.link} 
+          href={processLink(link.link)} 
           target="_blank" 
           rel="noopener noreferrer" 
           class="no-style group flex items-center gap-3 p-2! rounded-lg transition-all duration-300 hover:bg-primary/20 dark:hover:bg-primary/30"
