@@ -5,15 +5,17 @@ import HeaderLink from "./HeaderLink.astro";
 import SearchBox from "./SearchBox.astro";
 import Logo from "./Logo.astro";
 import config from "../config";
+import headerScriptUrl from "../scripts/header.ts?url";
 
 interface Props {
   sticky?: boolean;
 }
 
 const { sticky = true } = Astro.props;
-// Cast `navLinks` to any to avoid type errors in Astro templates when iterating
 const navLinks: any = config.navLinks || [];
 ---
+
+<script type="module" src={headerScriptUrl}></script>
 
 <header
   class={`bg-white dark:bg-slate-950 px-3 sm:px-4 py-3 transition-colors ${sticky ? "sticky top-0 z-50" : ""}`}
@@ -165,22 +167,3 @@ const navLinks: any = config.navLinks || [];
     </div>
   </div>
 </header>
-
-<script>
-  const menuToggle = document.getElementById("mobile-menu-toggle");
-  const mobileMenu = document.getElementById("mobile-menu");
-
-  if (menuToggle && mobileMenu) {
-    menuToggle.addEventListener("click", () => {
-      mobileMenu.classList.toggle("hidden");
-    });
-
-    // Close menu when a link is clicked
-    const links = mobileMenu.querySelectorAll("a");
-    links.forEach((link) => {
-      link.addEventListener("click", () => {
-        mobileMenu.classList.add("hidden");
-      });
-    });
-  }
-</script>

@@ -35,5 +35,14 @@ export default defineConfig({
     define: {
       'import.meta.env.__version__': JSON.stringify(process.env.VITE_GIT_HASH || gitHash),
     },
+    build: {
+      rollupOptions: {
+        output: {
+          entryFileNames: `assets/[name].${gitHash}.js`,
+          chunkFileNames: `assets/[name].${gitHash}.js`,
+          assetFileNames: `assets/[name].${gitHash}.[ext]`,
+        },
+      },
+    },
   },
 });
