@@ -1,8 +1,9 @@
 ---
 import { SITE_TITLE } from "../consts";
 import DarkModeButton from "./DarkModeButton.astro";
-import HeaderLink from "./HeaderLink.astro";
+import ThemeColorButton from "./ThemeColorButton.astro";
 import SearchBox from "./SearchBox.astro";
+import HeaderLink from "./HeaderLink.astro";
 import Logo from "./Logo.astro";
 import config from "../config";
 import headerScriptUrl from "../scripts/header.ts?url";
@@ -129,6 +130,7 @@ const navLinks: any = config.navLinks || [];
         </svg>
       </a>
       <DarkModeButton />
+      <ThemeColorButton />
     </div>
   </nav>
 
