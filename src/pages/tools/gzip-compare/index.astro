@@ -89,6 +89,9 @@ const speculationUrls = ["/", "/post", "/categories", "/tags", "/archives"];
           <li>使用浏览器原生 CompressionStream API 计算 Gzip 大小（不支持时自动降级到 fflate 库）</li>
           <li>压缩率 = Gzip 后大小 / 原始大小（越小越好）</li>
           <li>节省 = 1 - 压缩率（越大越好）</li>
+          <li>
+            小文本压缩后可能变大：Gzip 有固定的封装开销（header + footer + 元数据），当原始内容很短时（例如 10B），压缩后可能变成 20-30B，这是正常现象；文本越长、重复度越高，压缩效果越明显
+          </li>
         </ul>
       </div>
     </main>
