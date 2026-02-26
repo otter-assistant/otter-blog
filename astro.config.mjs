@@ -2,6 +2,7 @@
 
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
+import mermaid from "astro-mermaid";
 import { defineConfig } from "astro/config";
 
 import tailwindcss from "@tailwindcss/vite";
@@ -15,13 +16,17 @@ const gitHash = process.env.VITE_GIT_HASH || 'unknown';
 export default defineConfig({
   site: "https://blog.eeymoo.com",
   base: "/",
-  integrations: [mdx(), sitemap()],
+  integrations: [mdx(), sitemap(), mermaid()],
 
   build: {
     assets: "assets",
   },
 
   markdown: {
+    syntaxHighlight: {
+      type: 'shiki',
+      excludeLangs: ['mermaid'],
+    },
     shikiConfig: {
       theme: "monokai",
       wrap: true,
