@@ -2,6 +2,7 @@
 import config from "../config";
 import FooterLinks from "./FooterLinks.astro";
 import { generateColorFromHash } from "../utils/index";
+import { processLink } from "../utils/goto";
 
 const today = new Date();
 
@@ -24,6 +25,11 @@ if (isDev) {
 
 // 根据哈希生成颜色
 const hashColor = generateColorFromHash(versionHash);
+
+// 处理外链
+const processedVersionLink = processLink(versionLink);
+const astroLink = processLink("https://astro.build/");
+const githubLink = processLink("https://github.com/eeymoo");
 ---
 
 <footer
@@ -36,15 +42,15 @@ const hashColor = generateColorFromHash(versionHash);
     <div>
       Built on <a
         class="no-underline!"
-        href={versionLink}
+        href={processedVersionLink}
         target="_blank">obsidian2astro-template<span style={`color: ${hashColor};`}>#{versionHash}</span></a
-      > / <a class="no-underline!" href="https://astro.build/" target="_blank"
+      > / <a class="no-underline!" href={astroLink} target="_blank"
         >Astro</a
       >
     </div>
     <div class="social-links flex justify-center gap-4 mt-4">
       <a
-        href="https://github.com/eeymoo"
+        href={githubLink}
         target="_blank"
         class="no-underline text-gray-500 dark:text-gray-400 hover:bg-primary/10 dark:hover:bg-primary/20 p-2 rounded transition-colors"
       >
