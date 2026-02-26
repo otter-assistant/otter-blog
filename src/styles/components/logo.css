@@ -10,15 +10,15 @@
 @keyframes colorFlash {
   0% {
     fill: none;
-    stroke: #8080f7;
+    stroke: var(--color-primary);
   }
   80% {
-    fill: #8080f700;
-    stroke: #8080f7;
+    fill: color-mix(in srgb, var(--color-primary) 0%, transparent);
+    stroke: var(--color-primary);
   }
   100% {
-    fill: #8080f7ff;
-    stroke: #8080f7;
+    fill: var(--color-primary);
+    stroke: var(--color-primary);
   }
 }
 
