@@ -58,6 +58,12 @@ const config: Config = {
       desc: "",
       img: "https://avatars.githubusercontent.com/u/82026204?v=4",
     },
+    {
+      name: "lhDream's Blog",
+      link: "http://blog.luhua.site/",
+      desc: "技术、游戏、生活 | 我的个人空间",
+      img: "https://blog.luhua.site/upload/%E5%A4%B4%E5%83%8F%E4%B8%93%E7%94%A8%E5%9B%BE.png?width=1600",
+    },
   ],
   donate: {
     etcAddress: "0x5d0738e5904a1c8dad3f6ef71453a61caeebdd9d",
