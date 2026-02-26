@@ -1,7 +1,8 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
-import { filterContent, generatePostSlug } from "../utils";
+import { filterContent } from "../utils";
+import { getPostUrl } from "../utils/urls";
 
 export interface Props {
   currentPost: CollectionEntry<"blog"> | {
@@ -36,7 +37,7 @@ const isNextOnly = !!(nextPost && !prevPost);
     <!-- 上一篇 -->
     {prevPost && (
       <div class={isPrevOnly ? 'prev-post mx-auto text-center max-w-md' : 'prev-post text-left max-w-md'}>
-        <a href={`/post/${generatePostSlug(prevPost)}.html`} 
+        <a href={getPostUrl(prevPost)} 
            class="no-style group block p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors border-0 shadow-none focus:outline-none focus:ring-0">
           <div class="text-sm text-gray-500 dark:text-gray-400 mb-2 flex items-center">
             <svg class={isPrevOnly ? 'w-4 h-4 mr-1 rotate-180' : 'w-4 h-4 mr-1'} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -57,7 +58,7 @@ const isNextOnly = !!(nextPost && !prevPost);
     <!-- 下一篇 -->
     {nextPost && (
       <div class={isNextOnly ? 'next-post mx-auto text-center max-w-md' : 'next-post text-right max-w-md ml-auto'}>
-        <a href={`/post/${generatePostSlug(nextPost)}.html`} 
+        <a href={getPostUrl(nextPost)} 
            class="no-style group block p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors border-0 shadow-none focus:outline-none focus:ring-0">
           <div class="text-sm text-gray-500 dark:text-gray-400 mb-2 flex items-center justify-end">
             下一篇

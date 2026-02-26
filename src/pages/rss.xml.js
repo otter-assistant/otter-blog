@@ -1,10 +1,11 @@
 import { getCollection } from "astro:content";
 import rss from "@astrojs/rss";
 import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "../consts";
-import { generatePostSlug } from "../utils";
+import { getPostAbsUrl } from "../utils/urls";
+import { filterContent } from "../utils";
 
 export async function GET(context) {
-  const posts = await getCollection("blog");
+  const posts = filterContent(await getCollection("blog"));
   const rssData = {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
@@ -15,7 +16,7 @@ export async function GET(context) {
         post.data.description ||
         post.body?.slice(0, 200) ||
         "This post has no description.",
-      link: `${SITE_URL}/post/${generatePostSlug(post)}.html`,
+      link: getPostAbsUrl(post, SITE_URL),
       pubDate: new Date(post.data.date),
       categories: post.data.tags || [],
       customData: post.data.categories

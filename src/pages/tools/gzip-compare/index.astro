@@ -17,14 +17,6 @@ const speculationUrls = ["/", "/post", "/categories", "/tags", "/archives"];
       speculationUrls={speculationUrls}
       speculationEagerness="moderate"
     />
-    <script>
-      const savedTheme = localStorage.getItem("theme");
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      const isDark = savedTheme === "dark" || (!savedTheme && prefersDark);
-      if (isDark) {
-        document.documentElement.classList.add("dark");
-      }
-    </script>
   </head>
   <body>
     <Header />

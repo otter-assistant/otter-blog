@@ -239,3 +239,4 @@ export function generateColorFromHash(hash: string): string {
 export { generateCategorySlug, generateTagSlug };
 export { filterContent } from './filterContent';
 export { MD_LINK_REG } from './regexps.ts';
+export { getPostUrl, getPostAbsUrl, getMicroblogUrl, getMicroblogAbsUrl } from './urls';
