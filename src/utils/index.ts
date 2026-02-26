@@ -201,38 +201,165 @@ export function generateHeadingSlug(text: string): string {
 }
 
 /**
+ * 计算颜色的相对亮度 (0-1)
+ * 基于 WCAG 2.0 标准
+ */
+function getLuminance(r: number, g: number, b: number): number {
+  const [rs, gs, bs] = [r, g, b].map(c => {
+    c = c / 255;
+    return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+  });
+  return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
+}
+
+/**
+ * 计算两个颜色之间的对比度
+ * 返回值范围 1-21
+ */
+function getContrastRatio(
+  color1: { r: number; g: number; b: number },
+  color2: { r: number; g: number; b: number }
+): number {
+  const l1 = getLuminance(color1.r, color1.g, color1.b);
+  const l2 = getLuminance(color2.r, color2.g, color2.b);
+  const lighter = Math.max(l1, l2);
+  const darker = Math.min(l1, l2);
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
+/**
+ * 解析十六进制颜色为 RGB
+ */
+function hexToRgb(hex: string): { r: number; g: number; b: number } {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  if (!result) return { r: 0, g: 0, b: 0 };
+  return {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16)
+  };
+}
+
+/**
+ * RGB 转十六进制
+ */
+function rgbToHex(r: number, g: number, b: number): string {
+  return '#' + [r, g, b].map(c => {
+    c = Math.round(Math.max(0, Math.min(255, c)));
+    return c.toString(16).padStart(2, '0');
+  }).join('');
+}
+
+/**
+ * 调整颜色亮度
+ * factor > 1 变亮，< 1 变暗
+ */
+function adjustBrightness(r: number, g: number, b: number, factor: number): { r: number; g: number; b: number } {
+  return {
+    r: Math.min(255, r * factor),
+    g: Math.min(255, g * factor),
+    b: Math.min(255, b * factor)
+  };
+}
+
+/**
+ * 确保颜色满足 WCAG AA 对比度标准 (4.5:1)
+ * 分别检查在白色背景和深色背景上的对比度
+ * @param hexColor - 十六进制颜色值
+ * @returns 符合 AA 标准的颜色值
+ */
+export function ensureAAContrastColor(hexColor: string): string {
+  const rgb = hexToRgb(hexColor);
+  
+  // 背景色
+  const whiteBg = { r: 255, g: 255, b: 255 }; // 亮色模式背景
+  const darkBg = { r: 15, g: 23, b: 42 }; // slate-950 暗色模式背景
+  
+  const AA_RATIO = 4.5; // WCAG AA 标准对比度
+  
+  let adjustedRgb = { ...rgb };
+  
+  // 检查在白色背景上的对比度（颜色需要足够深）
+  let contrastOnWhite = getContrastRatio(adjustedRgb, whiteBg);
+  
+  // 检查在深色背景上的对比度（颜色需要足够亮）
+  let contrastOnDark = getContrastRatio(adjustedRgb, darkBg);
+  
+  // 如果两个对比度都不够，需要调整
+  if (contrastOnWhite < AA_RATIO && contrastOnDark < AA_RATIO) {
+    // 计算原始颜色的亮度
+    const luminance = getLuminance(adjustedRgb.r, adjustedRgb.g, adjustedRgb.b);
+    const midLuminance = 0.5;
+    
+    if (luminance < midLuminance) {
+      // 颜色偏暗，尝试变亮
+      let factor = 1.1;
+      while (factor <= 3) {
+        const testRgb = adjustBrightness(rgb.r, rgb.g, rgb.b, factor);
+        const testContrastDark = getContrastRatio(testRgb, darkBg);
+        if (testContrastDark >= AA_RATIO) {
+          adjustedRgb = testRgb;
+          break;
+        }
+        factor += 0.05;
+      }
+    } else {
+      // 颜色偏亮，尝试变暗
+      let factor = 0.9;
+      while (factor >= 0.2) {
+        const testRgb = adjustBrightness(rgb.r, rgb.g, rgb.b, factor);
+        const testContrastWhite = getContrastRatio(testRgb, whiteBg);
+        if (testContrastWhite >= AA_RATIO) {
+          adjustedRgb = testRgb;
+          break;
+        }
+        factor -= 0.05;
+      }
+    }
+  }
+  
+  return rgbToHex(adjustedRgb.r, adjustedRgb.g, adjustedRgb.b);
+}
+
+/**
  * 根据哈希值生成颜色
  * 直接使用哈希值的前6位作为颜色值（如果哈希值是有效的十六进制）
+ * 并确保颜色符合 WCAG AA 对比度标准
  * @param hash - 哈希字符串
  * @returns 生成的十六进制颜色值
  */
 export function generateColorFromHash(hash: string): string {
   if (!hash) return '#666666';
   
+  let rawColor: string;
+  
   // 如果哈希值只包含十六进制字符且长度 >= 6，直接使用前6位
   const hexRegex = /^[0-9a-f]+$/i;
   if (hexRegex.test(hash) && hash.length >= 6) {
-    return `#${hash.substring(0, 6)}`;
+    rawColor = `#${hash.substring(0, 6)}`;
+  } else {
+    // 如果哈希值不是纯十六进制，使用哈希算法生成颜色
+    let hashValue = 5381;
+    for (let i = 0; i < hash.length; i++) {
+      hashValue = (hashValue * 33) ^ hash.charCodeAt(i);
+    }
+    
+    // 生成3个颜色分量
+    const r = (hashValue & 0xFF0000) >> 16;
+    const g = (hashValue & 0x00FF00) >> 8;
+    const b = hashValue & 0x0000FF;
+    
+    // 调整亮度确保可读性
+    const adjust = (c: number) => {
+      const adjusted = Math.floor(100 + (c / 255) * 100);
+      return adjusted.toString(16).padStart(2, '0');
+    };
+    
+    rawColor = `#${adjust(r)}${adjust(g)}${adjust(b)}`;
   }
   
-  // 如果哈希值不是纯十六进制，使用哈希算法生成颜色
-  let hashValue = 5381;
-  for (let i = 0; i < hash.length; i++) {
-    hashValue = (hashValue * 33) ^ hash.charCodeAt(i);
-  }
-  
-  // 生成3个颜色分量
-  const r = (hashValue & 0xFF0000) >> 16;
-  const g = (hashValue & 0x00FF00) >> 8;
-  const b = hashValue & 0x0000FF;
-  
-  // 调整亮度确保可读性
-  const adjust = (c: number) => {
-    const adjusted = Math.floor(100 + (c / 255) * 100);
-    return adjusted.toString(16).padStart(2, '0');
-  };
-  
-  return `#${adjust(r)}${adjust(g)}${adjust(b)}`;
+  // 确保颜色符合 WCAG AA 对比度标准
+  return ensureAAContrastColor(rawColor);
 }
 
 // 统一导出所有 utils 方法和规则
