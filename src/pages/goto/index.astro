@@ -4,14 +4,20 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 import '../../styles/global.css';
+
+const speculationUrls = ['/', '/post', '/categories', '/tags', '/archives'];
 ---
 
 <!doctype html>
 <html lang="zh-CN" class="scroll-smooth">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead
+      title={`${SITE_TITLE} · URL 重定向`}
+      description="安全的 URL 重定向工具，支持自定义协议"
+      speculationUrls={speculationUrls}
+      speculationEagerness="moderate"
+    />
     <script>
-      // 防止闪烁：在页面加载前设置主题
       const savedTheme = localStorage.getItem('theme');
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       const isDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
@@ -22,242 +28,228 @@ import '../../styles/global.css';
   </head>
   <body>
     <Header />
-    <main class="w-full max-w-2xl mx-auto px-4 py-16 min-h-screen flex flex-col justify-center">
-      <!-- 倒计时区域 - 高优先级展示 -->
-      <div id="countdownContainer" class="mb-12">
-        <div class="text-center">
-          <div class="inline-flex items-center justify-center w-40 h-40 rounded-full bg-gradient-to-br from-primary via-primary/80 to-primary/60 shadow-lg mb-6">
-            <span id="countdown" class="text-8xl font-bold text-white drop-shadow-md">3</span>
-          </div>
-          <p class="text-2xl font-semibold text-gray-900 dark:text-white mt-4">秒后跳转</p>
-        </div>
-      </div>
-
-      <!-- URL 展示区域 - 突出 -->
-      <div id="urlDisplayContainer" class="mb-8 p-6 bg-primary/5 dark:bg-primary/10 border-2 border-primary/30 dark:border-primary/40 rounded-lg">
-        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">目标网址</p>
-        <p id="urlDisplay" class="text-lg md:text-xl font-semibold text-primary break-all leading-relaxed">
-          获取中...
+    <main class="w-full max-w-4xl mx-auto px-4 py-12">
+      <section class="mb-8">
+        <h1 id="pageTitle" class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+          URL 重定向
+        </h1>
+        <p id="pageDescription" class="text-gray-600 dark:text-gray-400">
+          安全的外链跳转工具，支持所有 URI 协议
         </p>
-      </div>
+      </section>
 
-      <!-- URL 输入区域 -->
-      <div id="urlInputContainer" class="hidden mb-8">
-        <p class="text-2xl font-bold text-center mb-6 text-gray-900 dark:text-white">输入要跳转的地址</p>
-        <div class="mb-6">
-          <input 
-            id="urlInput" 
-            type="text" 
-            placeholder="例如: https://github.com 或 steam://app/730 或任意 xxx:xxx"
-            class="w-full px-4 py-3 text-lg border-2 border-primary/30 dark:border-primary/40 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
-          />
+      <div class="space-y-6 mb-8">
+        <div id="countdownContainer" class="p-6 bg-gradient-to-r from-primary/5 to-primary/10 dark:from-primary/10 dark:to-primary/20 border-2 border-primary/20 dark:border-primary/30 rounded-lg">
+          <div class="text-center">
+            <div class="inline-flex items-center justify-center mb-4">
+              <span id="countdown" class="text-6xl font-bold text-primary">3</span>
+            </div>
+            <p class="text-lg font-semibold text-gray-900 dark:text-gray-100">秒后自动跳转</p>
+          </div>
         </div>
 
-        <!-- 选项复选框 -->
-        <div class="mb-8 space-y-3">
-          <label class="flex items-center gap-3 cursor-pointer">
-            <input 
-              id="stopOption" 
-              type="checkbox" 
-              class="w-5 h-5 accent-primary"
+        <div id="urlDisplayContainer" class="p-6 bg-primary/5 dark:bg-primary/10 border border-primary/20 dark:border-primary/30 rounded-lg">
+          <p class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">目标网址</p>
+          <p id="urlDisplay" class="text-base font-medium text-primary break-all leading-relaxed">
+            获取中...
+          </p>
+        </div>
+
+        <div id="urlInputContainer" class="hidden space-y-4">
+          <label class="block">
+            <span class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2 block">
+              输入跳转地址
+            </span>
+            <input
+              id="urlInput"
+              type="text"
+              placeholder="例如: https://github.com 或 steam://app/730"
+              class="w-full px-4 py-3 border-2 border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-900 text-gray-900 dark:text-gray-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors"
             />
-            <span class="text-gray-700 dark:text-gray-300">不自动跳转 (stop=true)</span>
           </label>
-          <label class="flex items-center gap-3 cursor-pointer">
-            <input 
-              id="isNewOption" 
-              type="checkbox" 
-              class="w-5 h-5 accent-primary"
-            />
-            <span class="text-gray-700 dark:text-gray-300">立即跳转 (isNew=true)</span>
-          </label>
+
+          <div class="space-y-3">
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input
+                id="stopOption"
+                type="checkbox"
+                class="w-5 h-5 accent-primary"
+              />
+              <span class="text-gray-700 dark:text-gray-300">不自动跳转 (stop=true)</span>
+            </label>
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input
+                id="isNewOption"
+                type="checkbox"
+                class="w-5 h-5 accent-primary"
+              />
+              <span class="text-gray-700 dark:text-gray-300">立即跳转 (isNew=true)</span>
+            </label>
+          </div>
         </div>
       </div>
 
-      <!-- 页面标题 -->
-      <h1 id="pageTitle" class="text-4xl md:text-5xl font-bold text-center mb-6 text-gray-900 dark:text-white">
-        🌐 重定向中
-      </h1>
-
-      <!-- 描述文本 -->
-      <p id="pageDescription" class="text-center text-gray-700 dark:text-gray-300 mb-8 text-base md:text-lg">
-        正在为您跳转到目标页面，请稍等...
-      </p>
-
-      <!-- 操作按钮区域 -->
-      <div id="redirectButtonsContainer" class="flex flex-col sm:flex-row gap-8 justify-center items-center mt-8">
-        <!-- 立即跳转链接 -->
-        <a 
-          id="redirectLink" 
-          href="#" 
-          class="no-style px-16 py-4 bg-primary text-white font-bold text-lg rounded-full hover:bg-primary/90 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl"
+      <div id="redirectButtonsContainer" class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+        <a
+          id="redirectLink"
+          href="#"
+          class="no-style px-8 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary/90 active:scale-95 transition-all duration-200"
         >
           立即跳转
         </a>
 
-        <!-- 取消链接 -->
         <a
           id="cancelBtn"
           href="#"
-          class="no-style px-16 py-4 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white font-bold text-lg rounded-full hover:bg-gray-400 dark:hover:bg-gray-500 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
+          class="no-style px-8 py-3 bg-slate-300 dark:bg-slate-600 text-gray-900 dark:text-white font-semibold rounded-lg hover:bg-slate-400 dark:hover:bg-slate-500 active:scale-95 transition-all duration-200"
         >
-          取消
+          取消跳转
         </a>
       </div>
 
-      <!-- 输入模式按钮 -->
-      <div id="inputButtonsContainer" class="hidden flex flex-col sm:flex-row gap-8 justify-center items-center mt-8">
-        <!-- 提交按钮 -->
-        <a 
-          id="submitBtn" 
-          href="#" 
-          class="no-style px-16 py-4 bg-primary text-white font-bold text-lg rounded-full hover:bg-primary/90 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl"
+      <div id="inputButtonsContainer" class="hidden flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+        <a
+          id="submitBtn"
+          href="#"
+          class="no-style px-8 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary/90 active:scale-95 transition-all duration-200"
         >
           确认跳转
         </a>
 
-        <!-- 复制链接按钮 -->
         <a
           id="copyBtn"
           href="#"
-          class="no-style px-16 py-4 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white font-bold text-lg rounded-full hover:bg-gray-400 dark:hover:bg-gray-500 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
+          class="no-style px-8 py-3 bg-slate-300 dark:bg-slate-600 text-gray-900 dark:text-white font-semibold rounded-lg hover:bg-slate-400 dark:hover:bg-slate-500 active:scale-95 transition-all duration-200"
         >
           复制链接
         </a>
       </div>
 
-      <!-- 备注信息 -->
-      <p id="footerNote" class="text-center text-xs text-gray-500 dark:text-gray-400 mt-12">
-        如果页面未能自动跳转，请点击上方"立即跳转"按钮
-      </p>
+      <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+        <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+          使用说明
+        </h3>
+        <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1 list-disc list-inside">
+          <li>支持所有 URI 协议，如 https://、http://、steam://、csgo:// 等</li>
+          <li>stop=true：只显示跳转链接，不自动跳转</li>
+          <li>isNew=true：立即跳转，不等待倒计时</li>
+          <li>出于安全考虑，所有外链跳转都会经过此确认页面</li>
+        </ul>
+      </div>
     </main>
     <Footer />
 
     <script>
-      // 获取 URL 参数
       const urlParams = new URLSearchParams(window.location.search);
       const url = urlParams.get('url') || '';
       const stop = urlParams.get('stop') === 'true';
       const isNew = urlParams.get('isNew') === 'true';
-      
-      // DOM 元素
+
       const urlDisplayContainer = document.getElementById('urlDisplayContainer');
       const urlInputContainer = document.getElementById('urlInputContainer');
       const redirectButtonsContainer = document.getElementById('redirectButtonsContainer');
       const inputButtonsContainer = document.getElementById('inputButtonsContainer');
-      const pageTitle = document.getElementById('pageTitle');
-      const pageDescription = document.getElementById('pageDescription');
-      const footerNote = document.getElementById('footerNote');
       const countdownContainer = document.getElementById('countdownContainer');
-      
-      // 如果没有 url 参数，显示输入框
+
       if (!url) {
         showInputMode();
       } else {
         showRedirectMode(url, stop, isNew);
       }
-      
+
       function showInputMode() {
-        // 隐藏重定向相关的 UI
         if (urlDisplayContainer) urlDisplayContainer.classList.add('hidden');
         if (countdownContainer) countdownContainer.classList.add('hidden');
         if (redirectButtonsContainer) redirectButtonsContainer.classList.add('hidden');
-        
-        // 显示输入相关的 UI
+
         if (urlInputContainer) urlInputContainer.classList.remove('hidden');
         if (inputButtonsContainer) inputButtonsContainer.classList.remove('hidden');
-        
-        // 更新文本
-        if (pageTitle) pageTitle.textContent = '🔗 URL 重定向工具';
-        if (pageDescription) pageDescription.textContent = '输入任何 URL 或自定义协议地址进行跳转';
-        if (footerNote) footerNote.textContent = '支持所有 URI 协议，如 http://, https://, steam://, csgo:// 等';
-        
-        // 输入框和选项
-        const urlInput = document.getElementById('urlInput');
-        const stopOption = document.getElementById('stopOption');
-        const isNewOption = document.getElementById('isNewOption');
+
+        const urlInput = document.getElementById('urlInput') as HTMLInputElement | null;
+        const stopOption = document.getElementById('stopOption') as HTMLInputElement | null;
+        const isNewOption = document.getElementById('isNewOption') as HTMLInputElement | null;
         const submitBtn = document.getElementById('submitBtn');
         const copyBtn = document.getElementById('copyBtn');
-        
-        // 提交按钮
-        submitBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          const inputUrl = urlInput.value.trim();
-          if (inputUrl) {
-            const params = new URLSearchParams({ url: inputUrl });
-            if (stopOption.checked) params.append('stop', 'true');
-            if (isNewOption.checked) params.append('isNew', 'true');
-            window.location.href = `/goto?${params.toString()}`;
-          }
-        });
-        
-        // 复制链接按钮
-        copyBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          const inputUrl = urlInput.value.trim();
-          if (inputUrl) {
-            const params = new URLSearchParams({ url: inputUrl });
-            if (stopOption.checked) params.append('stop', 'true');
-            if (isNewOption.checked) params.append('isNew', 'true');
-            const fullLink = `${window.location.origin}/goto?${params.toString()}`;
-            
-            navigator.clipboard.writeText(fullLink).then(() => {
-              const originalText = copyBtn.textContent;
-              copyBtn.textContent = '已复制!';
-              setTimeout(() => {
-                copyBtn.textContent = originalText;
-              }, 2000);
-            });
-          }
-        });
-        
-        // 回车提交
-        urlInput.addEventListener('keypress', (e) => {
-          if (e.key === 'Enter') {
-            submitBtn.click();
-          }
-        });
-        
-        // 自动聚焦
-        urlInput.focus();
+
+        if (submitBtn) {
+          submitBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (!urlInput) return;
+            const inputUrl = urlInput.value.trim();
+            if (inputUrl) {
+              const params = new URLSearchParams({ url: inputUrl });
+              if (stopOption?.checked) params.append('stop', 'true');
+              if (isNewOption?.checked) params.append('isNew', 'true');
+              window.location.href = `/goto?${params.toString()}`;
+            }
+          });
+        }
+
+        if (copyBtn) {
+          copyBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (!urlInput) return;
+            const inputUrl = urlInput.value.trim();
+            if (inputUrl) {
+              const params = new URLSearchParams({ url: inputUrl });
+              if (stopOption?.checked) params.append('stop', 'true');
+              if (isNewOption?.checked) params.append('isNew', 'true');
+              const fullLink = `${window.location.origin}/goto?${params.toString()}`;
+
+              navigator.clipboard.writeText(fullLink).then(() => {
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = '已复制!';
+                setTimeout(() => {
+                  copyBtn.textContent = originalText;
+                }, 2000);
+              });
+            }
+          });
+        }
+
+        if (urlInput) {
+          urlInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && submitBtn) {
+              submitBtn.click();
+            }
+          });
+          urlInput.focus();
+        }
       }
-      
-      function showRedirectMode(targetUrl, shouldStop, shouldRedirectImmediately) {
-        // 设置 URL 显示和链接
+
+      function showRedirectMode(targetUrl: string, shouldStop: boolean, shouldRedirectImmediately: boolean) {
         const urlDisplay = document.getElementById('urlDisplay');
-        const redirectLink = document.getElementById('redirectLink');
-        
+        const redirectLink = document.getElementById('redirectLink') as HTMLAnchorElement | null;
+
         if (urlDisplay) {
           urlDisplay.textContent = targetUrl;
         }
         if (redirectLink) {
           redirectLink.href = targetUrl;
         }
-        
-        // 如果 isNew=true，立即跳转（不等待倒计时）
+
         if (shouldRedirectImmediately) {
           window.location.href = targetUrl;
         } else {
-          // 倒计时和跳转逻辑 - 默认 3 秒后跳转
           let countdown = 3;
           const countdownEl = document.getElementById('countdown');
           const cancelBtn = document.getElementById('cancelBtn');
-          let redirectTimer = null;
-          
+          let redirectTimer: number | null = null;
+
           function startCountdown() {
-            redirectTimer = setInterval(() => {
+            redirectTimer = window.setInterval(() => {
               countdown--;
               if (countdownEl) {
                 countdownEl.textContent = countdown.toString();
               }
-              
+
               if (countdown <= 0) {
                 if (redirectTimer) clearInterval(redirectTimer);
                 window.location.href = targetUrl;
               }
             }, 1000);
           }
-          
+
           if (cancelBtn) {
             cancelBtn.addEventListener('click', (e) => {
               e.preventDefault();
@@ -270,12 +262,10 @@ import '../../styles/global.css';
               }
             });
           }
-          
-          // 如果 stop=true，不自动跳转（只显示链接）
+
           if (!shouldStop) {
             startCountdown();
           } else {
-            // stop=true 时隐藏倒计时容器
             if (countdownContainer) {
               countdownContainer.style.display = 'none';
             }
