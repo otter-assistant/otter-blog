@@ -115,7 +115,7 @@ function updateComparison(resultA: GzipResult, resultB: GzipResult) {
   }
 
   const ratioDiff = resultA.ratio - resultB.ratio;
-  const savedDiff = resultB.saved - resultA.saved;
+  const savedDiff = resultA.saved - resultB.saved;
 
   let comparisonText = "";
   let comparisonClass = "";
