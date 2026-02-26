@@ -1,0 +1,118 @@
+/* Theme Color Button Styles */
+
+#theme-color-toggle {
+  position: relative;
+}
+
+#theme-color-toggle .color-indicator {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  transition: background-color 0.3s ease;
+}
+
+html.dark #theme-color-toggle .color-indicator {
+  border-color: rgba(0, 0, 0, 0.3);
+}
+
+/* 主题色过渡 */
+:root {
+  transition: --color-primary 0.3s ease;
+}
+
+/* Footer 版本 hash 颜色过渡 */
+.version-hash {
+  transition: color 0.3s ease;
+}
+
+/* View Transition 圆形展开动画 - 主题色专用 */
+::view-transition-new(root) {
+  animation-name: revealCircle;
+}
+
+/* 主题色 View Transition 圆形展开 */
+@keyframes themeColorRevealCircle {
+  0% {
+    clip-path: circle(20px at var(--theme-x, 50%) var(--theme-y, 50%));
+  }
+  100% {
+    clip-path: circle(200vmax at var(--theme-x, 50%) var(--theme-y, 50%));
+  }
+}
+
+/* 圆形过渡元素 - 主题色专用 */
+#theme-color-transition-circle {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: none;
+  opacity: 0.3;
+}
+
+#theme-color-transition-circle.animate {
+  animation: themeColorExpandCircle 1s ease-in-out forwards;
+}
+
+@keyframes themeColorExpandCircle {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.5;
+  }
+  50% {
+    width: 300vmax;
+    height: 300vmax;
+    opacity: 0.3;
+  }
+  100% {
+    width: 300vmax;
+    height: 300vmax;
+    opacity: 0;
+  }
+}
+
+/* 扫描式过渡元素 - 从左上角到右下角 */
+#theme-color-sweep-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9997;
+  clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+  opacity: 0.15;
+}
+
+#theme-color-sweep-overlay.animate {
+  animation: sweepDiagonal 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* 从左上角到右下角的对角线扫描 */
+@keyframes sweepDiagonal {
+  0% {
+    clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+  }
+  100% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+/* 另一种效果：从左上角向右下角的三角扫描 */
+@keyframes sweepTriangle {
+  0% {
+    clip-path: polygon(0 0, 0 0, 0 0);
+  }
+  50% {
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+  }
+  100% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
