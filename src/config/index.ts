@@ -28,6 +28,7 @@ const config: Config = {
       disabled: true,
       children: [
         { name: "goto", href: "/goto" },
+        { name: "gzip-compare", href: "/tools/gzip-compare" },
       ],
     },
     {
