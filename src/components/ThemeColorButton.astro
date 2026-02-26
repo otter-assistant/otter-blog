@@ -1,6 +1,5 @@
 ---
 import themeColorCssUrl from "../styles/components/theme-color-button.css?url";
-import themeColorScriptUrl from "./ThemeColorButton/index.ts?url";
 
 // 获取版本信息用于生成 hash 颜色
 const version = import.meta.env.__version__;
@@ -9,7 +8,6 @@ const versionHash = isDev ? "dev" : (version && version !== 'unknown' ? version 
 ---
 
 <link rel="stylesheet" href={themeColorCssUrl} />
-<script type="module" src={themeColorScriptUrl} data-version-hash={versionHash}></script>
 
 <button
   id="theme-color-toggle"
@@ -43,3 +41,214 @@ const versionHash = isDev ? "dev" : (version && version !== 'unknown' ? version 
 
 <!-- 主题色扫描过渡层（用于首次加载调整） -->
 <div id="theme-color-sweep-overlay" class="theme-sweep-overlay"></div>
+
+<script define:vars={{ versionHash }}>
+// 主题色切换功能
+
+function getLuminance(r, g, b) {
+  const [rs, gs, bs] = [r, g, b].map(c => {
+    c = c / 255;
+    return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+  });
+  return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
+}
+
+function getContrastRatio(color1, color2) {
+  const l1 = getLuminance(color1.r, color1.g, color1.b);
+  const l2 = getLuminance(color2.r, color2.g, color2.b);
+  const lighter = Math.max(l1, l2);
+  const darker = Math.min(l1, l2);
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
+function hexToRgb(hex) {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  if (!result) return { r: 0, g: 0, b: 0 };
+  return {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16)
+  };
+}
+
+function rgbToHex(r, g, b) {
+  return '#' + [r, g, b].map(c => {
+    c = Math.round(Math.max(0, Math.min(255, c)));
+    return c.toString(16).padStart(2, '0');
+  }).join('');
+}
+
+function adjustBrightness(r, g, b, factor) {
+  return {
+    r: Math.min(255, r * factor),
+    g: Math.min(255, g * factor),
+    b: Math.min(255, b * factor)
+  };
+}
+
+function checkAAContrast(hexColor) {
+  const rgb = hexToRgb(hexColor);
+  const whiteBg = { r: 255, g: 255, b: 255 };
+  const darkBg = { r: 15, g: 23, b: 42 };
+  const AA_RATIO = 4.5;
+  const contrastOnWhite = getContrastRatio(rgb, whiteBg);
+  const contrastOnDark = getContrastRatio(rgb, darkBg);
+  return contrastOnWhite >= AA_RATIO || contrastOnDark >= AA_RATIO;
+}
+
+function ensureAAContrast(hexColor) {
+  const rgb = hexToRgb(hexColor);
+  const whiteBg = { r: 255, g: 255, b: 255 };
+  const darkBg = { r: 15, g: 23, b: 42 };
+  const AA_RATIO = 4.5;
+  let adjustedRgb = { ...rgb };
+  const contrastOnWhite = getContrastRatio(adjustedRgb, whiteBg);
+  const contrastOnDark = getContrastRatio(adjustedRgb, darkBg);
+  
+  if (contrastOnWhite < AA_RATIO && contrastOnDark < AA_RATIO) {
+    const luminance = getLuminance(adjustedRgb.r, adjustedRgb.g, adjustedRgb.b);
+    if (luminance < 0.5) {
+      let factor = 1.1;
+      while (factor <= 3) {
+        const testRgb = adjustBrightness(rgb.r, rgb.g, rgb.b, factor);
+        if (getContrastRatio(testRgb, darkBg) >= AA_RATIO) {
+          adjustedRgb = testRgb;
+          break;
+        }
+        factor += 0.05;
+      }
+    } else {
+      let factor = 0.9;
+      while (factor >= 0.2) {
+        const testRgb = adjustBrightness(rgb.r, rgb.g, rgb.b, factor);
+        if (getContrastRatio(testRgb, whiteBg) >= AA_RATIO) {
+          adjustedRgb = testRgb;
+          break;
+        }
+        factor -= 0.05;
+      }
+    }
+  }
+  return rgbToHex(adjustedRgb.r, adjustedRgb.g, adjustedRgb.b);
+}
+
+const storageKey = "theme-color";
+const firstAdjustKey = "theme-color-first-adjusted";
+const toggle = document.getElementById("theme-color-toggle");
+const root = document.documentElement;
+const transitionCircle = document.getElementById("theme-color-transition-circle");
+const sweepOverlay = document.getElementById("theme-color-sweep-overlay");
+
+const DEFAULT_COLOR = '#8080f7';
+
+function generateColorFromHash(hash) {
+  if (!hash) return '#666666';
+  const hexRegex = /^[0-9a-f]+$/i;
+  if (hexRegex.test(hash) && hash.length >= 6) {
+    return `#${hash.substring(0, 6)}`;
+  }
+  let hashValue = 5381;
+  for (let i = 0; i < hash.length; i++) {
+    hashValue = (hashValue * 33) ^ hash.charCodeAt(i);
+  }
+  const r = (hashValue & 0xFF0000) >> 16;
+  const g = (hashValue & 0x00FF00) >> 8;
+  const b = hashValue & 0x0000FF;
+  const adjust = (c) => Math.floor(100 + (c / 255) * 100).toString(16).padStart(2, '0');
+  return `#${adjust(r)}${adjust(g)}${adjust(b)}`;
+}
+
+const rawHashColor = generateColorFromHash(versionHash);
+const needsAdjustment = !checkAAContrast(rawHashColor);
+const HASH_COLOR = needsAdjustment ? ensureAAContrast(rawHashColor) : rawHashColor;
+
+const config = {
+  defaultColor: DEFAULT_COLOR,
+  hashColor: HASH_COLOR,
+  rawHashColor: rawHashColor,
+  needsAdjustment: needsAdjustment
+};
+
+let isAnimating = false;
+
+function applyThemeColor(theme, useRawColor) {
+  useRawColor = useRawColor || false;
+  let color;
+  if (theme === 'default') {
+    color = config.defaultColor;
+  } else {
+    color = useRawColor && config.needsAdjustment ? config.rawHashColor : config.hashColor;
+  }
+  root.style.setProperty('--color-primary', color);
+  toggle?.setAttribute('data-color-theme', theme);
+  const indicator = toggle?.querySelector('.color-indicator');
+  if (indicator) {
+    indicator.style.backgroundColor = color;
+  }
+  const versionHashEl = document.querySelector('.version-hash');
+  if (versionHashEl) {
+    versionHashEl.style.color = config.hashColor;
+  }
+}
+
+function applyWithSweepAnimation(theme, useRawColor) {
+  useRawColor = useRawColor || false;
+  return new Promise((resolve) => {
+    let color = theme === 'default' ? config.defaultColor : (useRawColor && config.needsAdjustment ? config.rawHashColor : config.hashColor);
+    if (sweepOverlay) {
+      sweepOverlay.style.backgroundColor = color;
+      sweepOverlay.classList.add("animate");
+    }
+    setTimeout(() => applyThemeColor(theme, useRawColor), 400);
+    setTimeout(() => {
+      if (sweepOverlay) {
+        sweepOverlay.classList.remove("animate");
+        sweepOverlay.style.backgroundColor = '';
+      }
+      isAnimating = false;
+      resolve();
+    }, 800);
+  });
+}
+
+function loadTheme() {
+  const saved = localStorage.getItem(storageKey);
+  if (!saved) return 'hash';
+  return saved === 'default' ? 'default' : 'hash';
+}
+
+function hasFirstAdjusted() {
+  return localStorage.getItem(firstAdjustKey) === 'true';
+}
+
+function markFirstAdjusted() {
+  localStorage.setItem(firstAdjustKey, 'true');
+}
+
+function cycleTheme(theme) {
+  return theme === 'hash' ? 'default' : 'hash';
+}
+
+// 初始化
+const savedTheme = loadTheme();
+if (savedTheme === 'hash' && config.needsAdjustment && !hasFirstAdjusted()) {
+  applyThemeColor('hash', true);
+  setTimeout(async () => {
+    isAnimating = true;
+    await applyWithSweepAnimation('hash', false);
+    markFirstAdjusted();
+  }, 2000);
+} else {
+  applyThemeColor(savedTheme);
+}
+
+toggle?.addEventListener('click', () => {
+  if (isAnimating) return;
+  isAnimating = true;
+  const currentTheme = toggle.getAttribute('data-color-theme') || 'hash';
+  const nextTheme = cycleTheme(currentTheme);
+  localStorage.setItem(storageKey, nextTheme);
+  applyThemeColor(nextTheme, false);
+  isAnimating = false;
+});
+</script>
