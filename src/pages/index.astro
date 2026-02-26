@@ -6,7 +6,7 @@ import StructuredData from "../components/StructuredData.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import { getCollection, render } from "astro:content";
 import { filterContent } from "../utils";
-import "../styles/global.css";
+import homeCssUrl from "../styles/pages/home.css?url";
 
 
 
@@ -53,6 +53,7 @@ if (allMicroblogs.length > 0) {
       speculationUrls={speculationUrls}
       speculationEagerness="moderate"
     />
+    <link rel="stylesheet" href={homeCssUrl} />
     <StructuredData type="WebPage" data={homepageStructuredData} />
   </head>
   <body>
@@ -67,39 +68,6 @@ if (allMicroblogs.length > 0) {
         >).
       </h1>
       <br />
-      <style>
-        @keyframes wave {
-          0% {
-            transform: rotate(0deg);
-          }
-          10% {
-            transform: rotate(14deg);
-          }
-          20% {
-            transform: rotate(-8deg);
-          }
-          30% {
-            transform: rotate(14deg);
-          }
-          40% {
-            transform: rotate(-4deg);
-          }
-          50% {
-            transform: rotate(10deg);
-          }
-          60% {
-            transform: rotate(0deg);
-          }
-          100% {
-            transform: rotate(0deg);
-          }
-        }
-        .animate-wave {
-          animation: wave 2.5s ease-in-out infinite;
-          transform-origin: 70% 70%;
-          display: inline-block;
-        }
-      </style>
       <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
         I like Markdown and JavaScript.
       </p>

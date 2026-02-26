@@ -1,6 +1,10 @@
 ---
-
+import darkModeCssUrl from "../styles/components/dark-mode-button.css?url";
+import darkModeScriptUrl from "./DarkModeButton/index.ts?url";
 ---
+
+<link rel="stylesheet" href={darkModeCssUrl} />
+<script type="module" src={darkModeScriptUrl}></script>
 
 <button
   id="theme-toggle"
@@ -55,88 +59,3 @@
 </button>
 
 <div id="theme-transition-circle" class="theme-transition-circle"></div>
-
-<style is:global>
-  /* View Transition API 样式 - 必须是全局样式 */
-  ::view-transition {
-    pointer-events: none;
-    z-index: 9999;
-  }
-
-  ::view-transition-group(root) {
-    animation-duration: 0.7s;
-    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  ::view-transition-image-pair(root) {
-    isolation: auto;
-  }
-
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
-    animation-duration: 0.7s;
-    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    animation-fill-mode: both;
-    mix-blend-mode: normal;
-    height: 100%;
-    width: 100%;
-  }
-
-  ::view-transition-old(root) {
-    animation: none;
-    z-index: 1;
-  }
-
-  ::view-transition-new(root) {
-    animation-name: revealCircle;
-    z-index: 2;
-  }
-
-  @keyframes revealCircle {
-    0% {
-      clip-path: circle(40px at var(--x, 50%) var(--y, 50%));
-    }
-    100% {
-      clip-path: circle(200vmax at var(--x, 50%) var(--y, 50%));
-    }
-  }
-</style>
-
-<style>
-  /* 备用方案：圆形展开动画 */
-  .theme-transition-circle {
-    position: fixed;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 1000;
-    transform: translate(-50%, -50%);
-    transition: none;
-  }
-
-  .theme-transition-circle.animate {
-    animation: expandCircle 1s ease-in-out forwards;
-  }
-
-  @keyframes expandCircle {
-    0% {
-      width: 0;
-      height: 0;
-      opacity: 1;
-    }
-    50% {
-      width: 300vmax;
-      height: 300vmax;
-      opacity: 1;
-    }
-    100% {
-      width: 300vmax;
-      height: 300vmax;
-      opacity: 0;
-    }
-  }
-</style>
-
-<script>
-  import { initDarkModeButton } from "./DarkModeButton/index.ts";
-  initDarkModeButton();
-</script>
