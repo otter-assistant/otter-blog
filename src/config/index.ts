@@ -11,28 +11,28 @@ const config: Config = {
       href: "/",
     },
     {
-      name: "blog",
+      name: "Blog",
       href: "/post",
       children: [
-        { name: "microblog", href: "/microblog" },
-        { name: "archives", href: "/archives" },
+        { name: "Microblog", href: "/microblog" },
+        { name: "Archives", href: "/archives" },
       ],
     },
     {
-      name: "aicg",
-      href: "/tags/aicg",
+      name: "AICG",
+      href: "/tags/AICG",
     },
     // moved into blog children
     {
-      name: "tools",
+      name: "Tools",
       disabled: true,
       children: [
-        { name: "goto", href: "/goto" },
-        { name: "gzip-compare", href: "/tools/gzip-compare" },
+        { name: "Goto", href: "/goto" },
+        { name: "Gzip-compare", href: "/tools/gzip-compare" },
       ],
     },
     {
-      name: "friends",
+      name: "Friends",
       href: "/friends",
     },
     // {
