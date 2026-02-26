@@ -14,16 +14,6 @@ import "../styles/global.css";
       title="捐赠支持 - Eeymoo"
       description="感谢您的支持，您的每一份捐赠都是对我最大的鼓励"
     />
-    <script>
-      const savedTheme = localStorage.getItem("theme");
-      const prefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)",
-      ).matches;
-      const isDark = savedTheme === "dark" || (!savedTheme && prefersDark);
-      if (isDark) {
-        document.documentElement.classList.add("dark");
-      }
-    </script>
   </head>
   <body>
     <Header />

@@ -17,7 +17,9 @@ export function initSearchBox() {
     if (e.key === "Enter") {
       const query = searchInput.value.trim();
       if (query) {
-        const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}+site:blog.eeymoo.com`;
+        const siteUrl = searchInput.dataset.siteUrl || window.location.origin;
+        const hostname = new URL(siteUrl).hostname;
+        const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}+site:${hostname}`;
         window.location.href = searchUrl;
       }
     }

@@ -2,6 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
 import { filterContent } from "../utils";
+import { getPostUrl } from "../utils/urls";
 
 export interface Props {
   currentPost: CollectionEntry<"blog"> | {
@@ -95,7 +96,7 @@ const relatedPosts = getRelatedPosts(currentPost, allPosts, maxRelated);
         
         return (
           <article class="related-post-card bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-lg transition-shadow duration-300">
-            <a href={`/post/${post.data.uri || post.id.replace(/\.mdx?$/, '')}/`} class="block">
+            <a href={getPostUrl(post)} class="block">
               {post.data.heroImage && (
                 <div class="aspect-w-16 aspect-h-9 bg-gray-100 dark:bg-gray-700">
                   <img 

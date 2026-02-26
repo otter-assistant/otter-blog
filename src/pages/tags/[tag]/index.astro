@@ -7,7 +7,8 @@ import PostDate from "../../../components/PostDate.astro";
 import StructuredData from "../../../components/StructuredData.astro";
 import Breadcrumb from "../../../components/Breadcrumb.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../../consts";
-import { generatePostSlug, generateTagSlug, filterContent } from "../../../utils";
+import { generateTagSlug, filterContent } from "../../../utils";
+import { getPostUrl, getPostAbsUrl } from "../../../utils/urls";
 
 export async function getStaticPaths() {
   const posts = filterContent(await getCollection("blog"));
@@ -70,7 +71,7 @@ const tagStructuredData = {
       item: {
         "@type": "BlogPosting",
         name: post.data.title,
-        url: `${Astro.url.origin}/post/${generatePostSlug(post)}.html`,
+        url: getPostAbsUrl(post, Astro.url.origin),
         datePublished: post.data.date.toISOString()
       }
     }))
@@ -87,16 +88,6 @@ const tagStructuredData = {
       keywords={[tag, "技术博客", "编程", "前端开发", "后端开发"].slice(0, 10)}
     />
     <StructuredData type="WebPage" data={tagStructuredData} />
-    <script>
-      const savedTheme = localStorage.getItem("theme");
-      const prefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)",
-      ).matches;
-      const isDark = savedTheme === "dark" || (!savedTheme && prefersDark);
-      if (isDark) {
-        document.documentElement.classList.add("dark");
-      }
-    </script>
   </head>
   <body>
     <Header />
@@ -114,11 +105,10 @@ const tagStructuredData = {
           ) : (
             <ul class="grid grid-cols-2 gap-6 list-none m-0 p-0 sm:grid-cols-1 sm:gap-6">
               {allPosts.map((post) => {
-                const slug = generatePostSlug(post);
                 return (
                   <li class="w-full first:mb-4">
                     <a
-                      href={`/post/${slug}.html`}
+                      href={getPostUrl(post)}
                       class="no-style block hover:bg-primary/20 p-4! rounded transition-colors"
                     >
                       <h4 class="title m-0 text-gray-900 leading-tight underline decoration-primary hover:decoration-primary transition-colors dark:text-gray-100">

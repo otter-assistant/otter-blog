@@ -6,7 +6,8 @@ import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import PostDate from "../components/PostDate.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
-import { generatePostSlug, filterContent } from "../utils";
+import { filterContent } from "../utils";
+import { getPostUrl } from "../utils/urls";
 
 const posts = filterContent(await getCollection("blog")).sort(
   (a, b) => b.data.date?.valueOf() - a.data.date?.valueOf()
@@ -29,8 +30,7 @@ const speculationUrls = [
 ];
 // Add URLs for the first few posts shown in archives
 posts.slice(0, 5).forEach((post) => {
-  const slug = generatePostSlug(post);
-  speculationUrls.push(`/post/${slug}.html`);
+  speculationUrls.push(getPostUrl(post));
 });
 ---
 
@@ -43,16 +43,6 @@ posts.slice(0, 5).forEach((post) => {
       speculationUrls={speculationUrls}
       speculationEagerness="moderate"
     />
-    <script>
-      const savedTheme = localStorage.getItem("theme");
-      const prefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)"
-      ).matches;
-      const isDark = savedTheme === "dark" || (!savedTheme && prefersDark);
-      if (isDark) {
-        document.documentElement.classList.add("dark");
-      }
-    </script>
   </head>
   <body>
     <Header />
@@ -81,11 +71,10 @@ posts.slice(0, 5).forEach((post) => {
                     (a, b) => b.data.date?.valueOf() - a.data.date?.valueOf()
                   )
                   .map((post) => {
-                    const slug = generatePostSlug(post);
                     return (
                       <li class="w-full">
                         <a
-                          href={`/post/${slug}.html`}
+                          href={getPostUrl(post)}
                           class="no-style block hover:bg-primary/20 p-4 rounded transition-colors"
                         >
                           <div class="flex items-center gap-3">

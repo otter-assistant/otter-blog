@@ -196,3 +196,13 @@ if (speculationUrls && speculationUrls.length > 0) {
 {speculationRulesJSON && (
   <script type="speculationrules" set:html={speculationRulesJSON} />
 )}
+
+<!-- 防止闪烁：在页面加载前设置主题 -->
+<script is:inline>
+  const savedTheme = localStorage.getItem("theme");
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const isDark = savedTheme === "dark" || (!savedTheme && prefersDark);
+  if (isDark) {
+    document.documentElement.classList.add("dark");
+  }
+</script>
