@@ -1,0 +1,48 @@
+---
+import { type CollectionEntry } from 'astro:content';
+import { generatePostSlug } from '../utils';
+
+interface Props {
+  backlinks: CollectionEntry<'blog'>[];
+}
+
+const { backlinks } = Astro.props;
+---
+
+{backlinks.length > 0 && (
+  <section class="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800">
+    <h2 class="text-xl font-bold mb-4 text-slate-900 dark:text-slate-100">
+      反向链接
+    </h2>
+    <ul class="space-y-3">
+      {backlinks.map((post) => (
+        <li>
+          <a
+            href={`/post/${generatePostSlug(post)}.html`}
+            class="group block p-4 rounded-lg bg-slate-50 dark:bg-slate-900 hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors"
+          >
+            <h3 class="font-medium text-slate-900 dark:text-slate-100 group-hover:text-primary">
+              {post.data.title}
+            </h3>
+            {post.data.description && (
+              <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
+                {post.data.description}
+              </p>
+            )}
+            <div class="mt-2 flex items-center gap-2 text-xs text-slate-500 dark:text-slate-500">
+              <time datetime={post.data.date.toISOString()}>
+                {post.data.date.toLocaleDateString('zh-CN')}
+              </time>
+              {post.data.categories && (
+                <>
+                  <span>·</span>
+                  <span>{post.data.categories}</span>
+                </>
+              )}
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}

@@ -6,6 +6,7 @@ import { defineConfig } from "astro/config";
 
 import tailwindcss from "@tailwindcss/vite";
 import rehypeGotoLinks from "./src/plugins/rehypeGotoLinks.ts";
+import remarkWikiLinks from "./src/plugins/remarkWikiLinks.ts";
 
 // Get git hash from environment variable
 const gitHash = process.env.VITE_GIT_HASH || 'unknown';
@@ -25,6 +26,7 @@ export default defineConfig({
       theme: "monokai",
       wrap: true,
     },
+    remarkPlugins: [remarkWikiLinks],
     rehypePlugins: [rehypeGotoLinks],
   },
 

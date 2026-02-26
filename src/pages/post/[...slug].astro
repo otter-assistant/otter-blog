@@ -2,24 +2,28 @@
 import { type CollectionEntry, getCollection, render } from "astro:content";
 import Tips from "../../components/Tips.astro";
 import BlogPost from "../../layouts/BlogPost.astro";
+import Backlinks from "../../components/Backlinks.astro";
 import { convertMdALinksToGoto, generatePostSlug, filterContent } from "../../utils";
+import { findBacklinks } from "../../utils/bidirectionalLinks";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
+  const filteredPosts = filterContent(posts);
 
-  return filterContent(posts)
+  return filteredPosts
     .map((post) => ({
       params: {
         slug: generatePostSlug(post) + ".html",
       },
-      props: post,
+      props: { post, allPosts: filteredPosts },
     }));
 }
-type Props = CollectionEntry<"blog">;
+type Props = { post: CollectionEntry<"blog">, allPosts: CollectionEntry<"blog">[] };
 
-let post = Astro.props;
+let { post, allPosts } = Astro.props;
 const { Content, headings } = await render(post);
 const isTempUrl = !post.data?.uri;
+const backlinks = findBacklinks(post.id, allPosts);
 ---
 
 <BlogPost
@@ -34,4 +38,5 @@ const isTempUrl = !post.data?.uri;
     )
   }
   <Content />
+  <Backlinks backlinks={backlinks} />
 </BlogPost>
