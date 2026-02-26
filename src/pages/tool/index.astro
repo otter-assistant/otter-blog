@@ -43,23 +43,18 @@ const tools = [
         </p>
       </div>
 
-      <div class="space-y-2">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
         {tools.map((tool) => (
           <a
             href={tool.href}
-            class="no-style group flex items-center gap-4 p-4 rounded-lg transition-colors hover:bg-primary/20 dark:hover:bg-primary/20"
+            class="no-style group block p-4 rounded-lg transition-colors hover:bg-primary/20 dark:hover:bg-primary/20"
           >
-            <div class="flex-1 min-w-0">
-              <h2 class="text-base font-medium text-slate-900 dark:text-slate-100 group-hover:text-primary dark:group-hover:text-primary transition-colors">
-                {tool.name}
-              </h2>
-              <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
-                {tool.description}
-              </p>
-            </div>
-            <svg class="flex-shrink-0 w-5 h-5 text-slate-400 group-hover:text-primary group-hover:translate-x-0.5 transition-all" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
+            <h2 class="text-base font-medium text-slate-900 dark:text-slate-100 group-hover:text-primary dark:group-hover:text-primary transition-colors">
+              {tool.name}
+            </h2>
+            <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
+              {tool.description}
+            </p>
           </a>
         ))}
       </div>
