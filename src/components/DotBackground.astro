@@ -1,0 +1,31 @@
+---
+/**
+ * DotBackground - 动态圆点背景组件
+ *
+ * 使用 Canvas 绘制交互式圆点背景效果
+ * - 组件卸载时自动清理资源
+ */
+---
+
+<canvas
+  id="dot-background"
+  data-dot-background
+  class="fixed inset-0 -z-10 pointer-events-none"
+></canvas>
+
+<script>
+  import { initBackground, destroyBackground } from '../scripts/dot-background';
+
+  const canvas = document.getElementById('dot-background') as HTMLCanvasElement | null;
+  
+  if (canvas) {
+    // 初始化背景并获取清理函数
+    const cleanup = initBackground(canvas);
+    
+    // 组件卸载时清理资源
+    document.addEventListener('astro:before-swap', () => {
+      cleanup();
+      destroyBackground();
+    });
+  }
+</script>
