@@ -1,0 +1,63 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import SearchModal from "../components/SearchModal.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import "../styles/global.css";
+---
+
+<!doctype html>
+<html lang="zh-CN" class="scroll-smooth">
+  <head>
+    <BaseHead 
+      title={`搜索 - ${SITE_TITLE}`} 
+      description="全站搜索"
+    />
+  </head>
+  <body>
+    <Header />
+    <main class="w-full min-h-[calc(100vh-56px)] max-w-4xl mx-auto p-8">
+      <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">搜索</h1>
+      
+      <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 text-center">
+        <p class="text-slate-600 dark:text-slate-400 mb-6">
+          正在初始化搜索...
+        </p>
+        <button id="open-search-btn" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors">
+          打开搜索
+        </button>
+      </div>
+    </main>
+    <Footer />
+    
+    <SearchModal />
+
+    <script>
+      import { initSearchCore, initSearchPage } from '../scripts/search-core';
+      
+      // Initialize search core and then the page logic
+      initSearchCore().then(() => {
+        initSearchPage();
+        
+        const openBtn = document.getElementById('open-search-btn');
+        const modal = document.getElementById('search-modal');
+        const input = document.getElementById('modal-search-input');
+        
+        if (openBtn && modal && input) {
+          openBtn.addEventListener('click', () => {
+            modal.classList.remove('hidden');
+            input.focus();
+          });
+          
+          // If no query, still open the modal by default on /search page
+          const urlParams = new URLSearchParams(window.location.search);
+          if (!urlParams.get('q')) {
+            modal.classList.remove('hidden');
+            input.focus();
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
