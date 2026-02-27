@@ -353,7 +353,7 @@ function drawHexagonLines(clampedX: number, clampedY: number): void {
         const isEvenRow = row % 2 === 0;
         // Bottom left
         if (!isEvenRow || col > 0) {
-          const bottomLeftIdx = i + gridCols - (isEvenRow ? 1 : 0);
+          const bottomLeftIdx = i + gridCols - 1;
           if (bottomLeftIdx < points.length) {
             const blPt = points[bottomLeftIdx];
             ctx.moveTo(x, y);
@@ -362,7 +362,7 @@ function drawHexagonLines(clampedX: number, clampedY: number): void {
         }
         // Bottom right
         if (isEvenRow || col < gridCols - 1) {
-          const bottomRightIdx = i + gridCols + (isEvenRow ? 0 : 1);
+          const bottomRightIdx = i + gridCols;
           if (bottomRightIdx < points.length) {
             const brPt = points[bottomRightIdx];
             ctx.moveTo(x, y);
