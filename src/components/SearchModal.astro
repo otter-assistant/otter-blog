@@ -1,0 +1,107 @@
+---
+interface Props {
+  hidden?: boolean;
+}
+
+const { hidden = true } = Astro.props;
+---
+
+<div
+  id="search-modal"
+  class:list={["fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24", { hidden }]}
+  role="dialog"
+  aria-modal="true"
+>
+  <!-- Backdrop -->
+  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity" aria-hidden="true"></div>
+
+  <!-- Modal Body -->
+  <div class="relative w-full max-w-2xl bg-white dark:bg-slate-950 rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh] mx-4 border border-slate-200 dark:border-slate-800">
+    
+    <!-- Search Header -->
+    <div class="flex items-center px-4 py-4 border-b border-slate-200 dark:border-slate-800 gap-3">
+      <div class="flex-1 relative flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="absolute left-3 w-5 h-5 text-slate-400 pointer-events-none">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+        </svg>
+        <input
+          type="text"
+          id="modal-search-input"
+          class="w-full pl-10 pr-12 py-2.5 text-base border-2 border-slate-300 rounded-md bg-white text-slate-900 placeholder-slate-500 transition-all duration-200 hover:border-slate-400 hover:bg-slate-50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 focus:bg-white dark:bg-slate-900 dark:text-slate-100 dark:border-slate-600 dark:placeholder-slate-400 dark:hover:border-slate-500 dark:hover:bg-slate-800 dark:focus:border-primary dark:focus:ring-2 dark:focus:ring-primary/10 dark:focus:bg-slate-900"
+          placeholder="搜索... (Ctrl/⌘+K)"
+          autocomplete="off"
+        />
+        <div class="absolute right-2 flex items-center">
+          <button
+            type="button"
+            id="regex-toggle"
+            class="px-2 py-1 text-xs font-mono rounded border border-slate-300 dark:border-slate-600 text-slate-500 dark:text-slate-400 hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20 dark:hover:text-primary transition-colors"
+            title="使用正则表达式"
+          >
+            .*
+          </button>
+        </div>
+      </div>
+      
+      <button
+        type="button"
+        id="close-modal"
+        class="p-2 rounded-md text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex-shrink-0"
+        aria-label="关闭"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Results Container -->
+    <div class="flex-1 overflow-y-auto p-2 sm:p-4 space-y-2" id="search-results">
+      <!-- Empty State -->
+      <div class="py-12 text-center text-slate-500 dark:text-slate-400" id="search-empty-state">
+        <p>输入关键词开始搜索...</p>
+      </div>
+
+      <!-- Loading State (Hidden by default) -->
+      <div class="hidden py-12 text-center text-slate-500 dark:text-slate-400" id="search-loading-state">
+        <div class="inline-block animate-spin rounded-full h-6 w-6 border-2 border-slate-300 border-t-primary dark:border-slate-600 dark:border-t-primary mb-2"></div>
+        <p>正在搜索...</p>
+      </div>
+
+      <!-- Example Result Item (Hidden by default, used as template or just structure) -->
+      <div class="hidden group block p-3 rounded-lg hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors cursor-pointer border border-transparent hover:border-primary/20">
+        <div class="flex items-center justify-between mb-1">
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 text-xs rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">文章</span>
+            <h3 class="text-base font-medium text-slate-900 dark:text-slate-100 group-hover:text-primary transition-colors">示例文章标题</h3>
+          </div>
+          <span class="text-xs text-slate-500 dark:text-slate-400">2026-01-26</span>
+        </div>
+        <p class="text-sm text-slate-600 dark:text-slate-300 line-clamp-3 mt-1">
+          这是一段示例摘要内容。搜索关键词会被<span class="text-primary font-medium">高亮</span>显示。使用 line-clamp-3 限制最多显示三行内容，保持界面整洁。
+        </p>
+      </div>
+    </div>
+
+    <!-- Footer Actions -->
+    <div class="px-4 py-3 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 flex justify-between items-center">
+      <div class="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-4">
+        <span class="hidden sm:inline-flex items-center gap-1"><kbd class="px-1.5 py-0.5 rounded bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-sans">↑</kbd> <kbd class="px-1.5 py-0.5 rounded bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-sans">↓</kbd> 导航</span>
+        <span class="hidden sm:inline-flex items-center gap-1"><kbd class="px-1.5 py-0.5 rounded bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-sans">Enter</kbd> 确认</span>
+        <span class="hidden sm:inline-flex items-center gap-1"><kbd class="px-1.5 py-0.5 rounded bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-sans">ESC</kbd> 关闭</span>
+      </div>
+      
+      <div class="flex items-center gap-3">
+        <!-- Google Fallback (Hidden by default) -->
+        <a href="#" id="google-fallback" class="hidden text-sm text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors">
+          在 Google 中搜索
+        </a>
+        
+        <!-- Search More (Hidden by default) -->
+        <button id="search-more" class="hidden px-3 py-1.5 text-sm rounded-md bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+          搜索更多结果
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
