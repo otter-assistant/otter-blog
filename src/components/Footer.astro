@@ -3,6 +3,7 @@ import config from "../config";
 import FooterLinks from "./FooterLinks.astro";
 import { generateColorFromHash } from "../utils/index";
 import { processLink } from "../utils/goto";
+import SearchModal from "./SearchModal.astro";
 
 const today = new Date();
 
@@ -72,4 +73,5 @@ const githubLink = processLink("https://github.com/eeymoo");
   <div>
     <FooterLinks links={config.friendlyLink} />
   </div>
+  <SearchModal hidden={true} />
 </footer>
