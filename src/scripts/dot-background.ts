@@ -133,14 +133,13 @@ function generatePoints(
       generateSquareGrid(pts, width, height, extendX, extendY);
   }
 
-  // 添加微小随机偏移使效果更自然
+  // 保存规则格点坐标到 baseX/baseY
+  // showLines=false 时对 x/y 添加微小随机偏移使效果更自然
+  // showLines=true 时 x/y 与 baseX/baseY 保持一致，确保连线几何规则
   for (const pt of pts) {
-    const jitterX = (random() - 0.5) * 8;
-    const jitterY = (random() - 0.5) * 8;
-    pt.x += jitterX;
-    pt.y += jitterY;
     pt.baseX = pt.x;
     pt.baseY = pt.y;
+    // 移除抖动，保证不显示连线时也能看出是绝对的正多边形网格
   }
 
   return pts;
@@ -218,18 +217,32 @@ function generateHexagonGrid(
   extendX: number,
   extendY: number
 ): void {
-  const ySpacing = config.dotGap * (Math.sqrt(3) / 2);
-  const cols = Math.ceil((width + extendX * 2) / (config.dotGap * 1.5)) + 2;
-  const rows = Math.ceil((height + extendY * 2) / ySpacing) + 2;
-  gridCols = cols;
+  const h = config.dotGap * (Math.sqrt(3) / 2);
+  const cols = Math.ceil((width + extendX * 2) / (3 * config.dotGap)) + 2;
+  const rows = Math.ceil((height + extendY * 2) / h) + 2;
+  gridCols = cols * 2;
   gridRows = rows;
 
   for (let row = 0; row < rows; row++) {
-    const xOffset = row % 2 === 0 ? 0 : config.dotGap * 0.75;
+    const isEven = row % 2 === 0;
     for (let col = 0; col < cols; col++) {
+      const baseX = col * 3 * config.dotGap;
+      const offsetX = isEven ? 0 : 1.5 * config.dotGap;
+      
+      // Point A
       pts.push({
-        x: col * config.dotGap * 1.5 + xOffset - extendX,
-        y: row * ySpacing - extendY,
+        x: baseX + offsetX - extendX,
+        y: row * h - extendY,
+        baseX: 0,
+        baseY: 0,
+        radius: config.dotSize,
+        targetRadius: config.dotSize,
+      });
+      
+      // Point B
+      pts.push({
+        x: baseX + offsetX + config.dotGap - extendX,
+        y: row * h - extendY,
         baseX: 0,
         baseY: 0,
         radius: config.dotSize,
@@ -238,6 +251,7 @@ function generateHexagonGrid(
     }
   }
 }
+
 
 // ============ 连线绘制 ============
 
@@ -341,32 +355,29 @@ function drawHexagonLines(clampedX: number, clampedY: number): void {
       const x = pt.baseX + PADDING + clampedX;
       const y = pt.baseY + PADDING + clampedY;
 
-      // Connect to right neighbor
-      if (col < gridCols - 1) {
+      // 1. Connect Horizontal (Right)
+      if (col % 2 === 0 && col < gridCols - 1) {
         const rightPt = points[i + 1];
         ctx.moveTo(x, y);
         ctx.lineTo(rightPt.baseX + PADDING + clampedX, rightPt.baseY + PADDING + clampedY);
       }
 
-      // Connect to bottom neighbors (zigzag)
+      // 2. Connect Slanted
       if (row < gridRows - 1) {
         const isEvenRow = row % 2 === 0;
-        // Bottom left
-        if (!isEvenRow || col > 0) {
-          const bottomLeftIdx = i + gridCols - 1;
-          if (bottomLeftIdx < points.length) {
-            const blPt = points[bottomLeftIdx];
+        if (isEvenRow && col > 0) {
+          const swIdx = i + gridCols - 1;
+          if (swIdx < points.length) {
+            const swPt = points[swIdx];
             ctx.moveTo(x, y);
-            ctx.lineTo(blPt.baseX + PADDING + clampedX, blPt.baseY + PADDING + clampedY);
+            ctx.lineTo(swPt.baseX + PADDING + clampedX, swPt.baseY + PADDING + clampedY);
           }
-        }
-        // Bottom right
-        if (isEvenRow || col < gridCols - 1) {
-          const bottomRightIdx = i + gridCols;
-          if (bottomRightIdx < points.length) {
-            const brPt = points[bottomRightIdx];
+        } else if (!isEvenRow && col < gridCols - 1) {
+          const seIdx = i + gridCols + 1;
+          if (seIdx < points.length) {
+            const sePt = points[seIdx];
             ctx.moveTo(x, y);
-            ctx.lineTo(brPt.baseX + PADDING + clampedX, brPt.baseY + PADDING + clampedY);
+            ctx.lineTo(sePt.baseX + PADDING + clampedX, sePt.baseY + PADDING + clampedY);
           }
         }
       }
@@ -460,8 +471,8 @@ function animate(): void {
 
   for (let i = 0; i < points.length; i++) {
     const pt = points[i];
-    const screenX = pt.baseX + PADDING + clampedX;
-    const screenY = pt.baseY + PADDING + clampedY;
+    const screenX = pt.x + PADDING + clampedX;
+    const screenY = pt.y + PADDING + clampedY;
     const dist = Math.hypot(mouse.x - screenX, mouse.y - screenY);
 
     if (dist < minDist) {
@@ -469,6 +480,7 @@ function animate(): void {
       nearestIndex = i;
     }
   }
+
 
   // 更新点半径（平滑过渡）
   const transitionSpeed = TRANSITION_DURATION * 0.1;
@@ -480,13 +492,14 @@ function animate(): void {
 
   // 绘制所有点
   for (const pt of points) {
-    const x = pt.baseX + PADDING + clampedX;
-    const y = pt.baseY + PADDING + clampedY;
+    const x = pt.x + PADDING + clampedX;
+    const y = pt.y + PADDING + clampedY;
 
     ctx.beginPath();
     ctx.arc(x, y, pt.radius, 0, Math.PI * 2);
     ctx.fill();
   }
+
 
   rafId = requestAnimationFrame(animate);
 }
