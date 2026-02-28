@@ -13,6 +13,7 @@ const config: Config = {
     {
       name: "Blog",
       href: "/post",
+      activePattern: "^/(post|microblog|archives|tags|categories)",
       children: [
         { name: "Microblog", href: "/microblog" },
         { name: "Archives", href: "/archives" },
@@ -25,6 +26,7 @@ const config: Config = {
     {
       name: "Tools",
       href: "/tool",
+      activePattern: "^/tool",
       children: [
         { name: "URL 重定向", href: "/tool/goto" },
         { name: "Gzip 压缩率对比", href: "/tool/gzip-compare" },

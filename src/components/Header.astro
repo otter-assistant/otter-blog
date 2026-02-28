@@ -15,6 +15,36 @@ interface Props {
 
 const { sticky = true } = Astro.props;
 const navLinks: any = config.navLinks || [];
+
+// 获取当前路径
+const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, "");
+const pathnameWithoutExt = pathname.replace(/\.html$/, "");
+
+// 检查链接是否激活
+const isLinkActive = (link: any): boolean => {
+  if (!link.href) return false;
+  
+  const hrefWithoutExt = String(link.href).replace(/\.html$/, "");
+  const subpath = pathnameWithoutExt.match(/[^\/]+/g);
+  
+  // 完全匹配
+  if (hrefWithoutExt === pathnameWithoutExt) return true;
+  
+  // 子路径匹配
+  if (hrefWithoutExt === "/" + (subpath?.[0] || "")) return true;
+  
+  // 正则匹配
+  if (link.activePattern) {
+    try {
+      const regex = new RegExp(link.activePattern);
+      if (regex.test(pathnameWithoutExt)) return true;
+    } catch (e) {
+      console.error('Invalid activePattern:', link.activePattern, e);
+    }
+  }
+  
+  return false;
+};
 ---
 
 <script src="../scripts/header.ts"></script>
@@ -72,15 +102,15 @@ const navLinks: any = config.navLinks || [];
                 link.children ? (
                   link.href ? (
                     <a href={link.href} class:list={[
-                      "no-style inline-block px-2 mx-2 my-2 text-gray-700 dark:text-gray-300 underline hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors rounded",
-                      { "font-black text-gray-900 dark:text-gray-200! decoration-primary!": false },
+                      "no-style nav-link px-2 mx-2 my-2 text-gray-700 dark:text-gray-300 underline hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors rounded",
+                      { "font-black decoration-primary! active-link": isLinkActive(link) },
                     ]}>
                       {link.name}
                     </a>
                   ) : (
                     <button class:list={[
-                      "no-style inline-block px-2 mx-2 my-2 text-gray-700 dark:text-gray-300 underline hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors rounded",
-                      { "font-black text-gray-900 dark:text-gray-200! decoration-primary!": false },
+                      "no-style nav-link px-2 mx-2 my-2 text-gray-700 dark:text-gray-300 underline hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors rounded",
+                      { "font-black decoration-primary! active-link": isLinkActive(link) },
                     ]} disabled={link.disabled}>
                       {link.name}
                     </button>

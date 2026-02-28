@@ -379,3 +379,16 @@ html.dark .prose em:not(.no-style) {
 .sol-button {
 	@apply bg-purple-500 text-white hover:bg-purple-600;
 }
+
+/* Header link styles - nav-link base class */
+.nav-link {
+	display: inline-block;
+}
+
+/* Header link active state - first letter highlight */
+.active-link {
+	font-weight: 700;}
+
+.active-link::first-letter {
+	color: var(--color-primary) !important;
+}
