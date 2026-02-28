@@ -13,7 +13,7 @@ const config: Config = {
     {
       name: "Blog",
       href: "/post",
-      activePattern: "^/(post|microblog|archives)",
+      activePattern: "^/(post|microblog|archives|tags|categories)",
       children: [
         { name: "Microblog", href: "/microblog" },
         { name: "Archives", href: "/archives" },

@@ -25,9 +25,9 @@ const isActive =
   href={href}
   class:list={[
     className,
-    "no-style inline-block px-2 mx-2 my-2 text-gray-700 dark:text-gray-300 underline hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors rounded",
+    "no-style nav-link px-2 mx-2 my-2 text-gray-700 dark:text-gray-300 underline hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors rounded",
     {
-      "font-black decoration-primary! active-link":
+      "font-black decoration-primary! active-link": // 选中状态额外添加 active-link 类
         isActive,
     },
   ]}
