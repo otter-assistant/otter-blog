@@ -3,7 +3,7 @@ import BaseHead from '../../../components/BaseHead.astro';
 import Header from '../../../components/Header.astro';
 import Footer from '../../../components/Footer.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../../consts';
-import gotoScriptUrl from '../../../scripts/goto.ts?url';
+
 
 const speculationUrls = ['/', '/post', '/categories', '/tags', '/archives'];
 ---
@@ -165,6 +165,6 @@ const speculationUrls = ['/', '/post', '/categories', '/tags', '/archives'];
     </main>
     <Footer />
 
-    <script type="module" src={gotoScriptUrl}></script>
+    <script src="../../../scripts/goto.ts"></script>
   </body>
 </html>
