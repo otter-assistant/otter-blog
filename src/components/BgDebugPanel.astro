@@ -46,15 +46,15 @@ const isDev = import.meta.env.DEV;
       <!-- dotGap -->
       <div>
         <label class="block text-slate-700 dark:text-slate-300 mb-1">
-          点间距: <span id="dotGap-value">33</span>px
+          外接圆直径: <span id="dotGap-value">40</span>px
         </label>
-        <input 
-          type="range" 
-          id="dotGap-slider" 
-          min="10" 
-          max="100" 
-          step="5" 
-          value="33"
+        <input
+          type="range"
+          id="dotGap-slider"
+          min="20"
+          max="120"
+          step="5"
+          value="40"
           class="w-full"
         />
       </div>
@@ -125,7 +125,7 @@ const isDev = import.meta.env.DEV;
     updateConfig({
       dotSize: parseFloat(dotSizeSlider?.value || '1'),
       dotSizeHighlight: parseInt(dotSizeHighlightSlider?.value || '2', 10),
-      dotGap: parseInt(dotGapSlider?.value || '33', 10),
+      dotGap: parseInt(dotGapSlider?.value || '40', 10),
       polygonSides: sides.length > 0 ? sides : [3, 4, 6],
       showLines: showLinesCheckbox?.checked,
     });
