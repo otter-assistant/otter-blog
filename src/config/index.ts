@@ -47,12 +47,6 @@ const config: Config = {
       img: "https://jellyfin-cn.eeymoo.com/assets/icon.png",
     },
     {
-      name: "zeroanon",
-      link: "https://zeroanon.com/",
-      desc: "不做圣经里腐朽的诗集，要做禁书里最惊世骇俗的篇章",
-      img: "https://avatars.githubusercontent.com/u/119206123?v=4",
-    },
-    {
       name: "dreamytzk",
       link: "https://www.antmoe.com/",
       desc: "",
