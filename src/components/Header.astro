@@ -6,7 +6,7 @@ import SearchBox from "./SearchBox.astro";
 import HeaderLink from "./HeaderLink.astro";
 import Logo from "./Logo.astro";
 import config from "../config";
-import headerScriptUrl from "../scripts/header.ts?url";
+
 
 interface Props {
   sticky?: boolean;
@@ -16,7 +16,7 @@ const { sticky = true } = Astro.props;
 const navLinks: any = config.navLinks || [];
 ---
 
-<script type="module" src={headerScriptUrl}></script>
+<script src="../scripts/header.ts"></script>
 
 <header
   class={`bg-white dark:bg-slate-950 px-3 sm:px-4 py-3 transition-colors ${sticky ? "sticky top-0 z-50" : ""}`}

@@ -1,5 +1,4 @@
 ---
-import donateScriptUrl from "../scripts/donate.ts?url";
 
 interface Props {
   etcAddress?: string;
@@ -9,7 +8,7 @@ interface Props {
 const { etcAddress, solAddress } = Astro.props;
 ---
 
-<script type="module" src={donateScriptUrl}></script>
+<script src="../scripts/donate.ts"></script>
 
 <div class="mt-8 mb-8 p-6 bg-slate-50 rounded-lg dark:bg-gray-900">
   <div class="flex flex-wrap gap-4 justify-center">
