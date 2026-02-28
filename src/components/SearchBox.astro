@@ -5,12 +5,12 @@ import searchBoxScriptUrl from "../scripts/search-box.ts?url";
 
 <div>
   <input
-    id="search-input"
+    class="search-input w-48 px-3 py-2 text-sm border-2 border-slate-300 rounded-md bg-white text-slate-900 placeholder-slate-500 transition-all duration-200 hover:border-slate-400 hover:bg-slate-50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 focus:bg-white dark:bg-slate-900 dark:text-slate-100 dark:border-slate-600 dark:placeholder-slate-400 dark:hover:border-slate-500 dark:hover:bg-slate-800 dark:focus:border-primary dark:focus:ring-2 dark:focus:ring-primary/10 dark:focus:bg-slate-900"
     type="text"
     data-site-url={config.siteUrl}
     placeholder="搜索... (Ctrl + K)"
-    class="w-48 px-3 py-2 text-sm border-2 border-slate-300 rounded-md bg-white text-slate-900 placeholder-slate-500 transition-all duration-200 hover:border-slate-400 hover:bg-slate-50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 focus:bg-white dark:bg-slate-900 dark:text-slate-100 dark:border-slate-600 dark:placeholder-slate-400 dark:hover:border-slate-500 dark:hover:bg-slate-800 dark:focus:border-primary dark:focus:ring-2 dark:focus:ring-primary/10 dark:focus:bg-slate-900"
     aria-label="搜索博客"
+    readonly
   />
 </div>
 

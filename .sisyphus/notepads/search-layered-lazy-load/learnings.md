@@ -1,0 +1,4 @@
+- Used dynamic import `import("./search-core.ts")` in `search-box.ts` to lazy load the search core.
+- Vite handles dynamic imports in Astro client scripts correctly, code-splitting the imported module.
+- Added `SearchModal` to `Footer.astro` to ensure it's only rendered once per page.
+- Used `querySelectorAll` with class `.search-input` instead of ID to support multiple search boxes on the same page (e.g., desktop and mobile headers).

@@ -3,22 +3,10 @@ import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import { tools } from '../../data/index.ts';
 import '../../styles/global.css';
 
 const speculationUrls = ['/', '/post', '/categories', '/tags', '/archives'];
-
-const tools = [
-  {
-    name: 'URL 重定向',
-    href: '/tool/goto',
-    description: '安全的外链跳转工具，支持所有 URI 协议',
-  },
-  {
-    name: 'Gzip 压缩率对比',
-    href: '/tool/gzip-compare',
-    description: '输入两段文本，实时对比它们的 Gzip 压缩率和大小',
-  },
-];
 ---
 
 <!doctype html>
