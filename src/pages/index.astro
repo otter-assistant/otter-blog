@@ -7,6 +7,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import { getCollection, render } from "astro:content";
 import { filterContent } from "../utils";
 import homeCssUrl from "../styles/pages/home.css?url";
+import BgDebugPanel from "../components/BgDebugPanel.astro";
 
 
 
@@ -193,5 +194,6 @@ if (allMicroblogs.length > 0) {
       }
     </main>
     <Footer />
+    <BgDebugPanel />
   </body>
 </html>

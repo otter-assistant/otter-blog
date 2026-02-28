@@ -35,6 +35,7 @@ interface AnimationState {
 export interface BgConfig {
   dotSize: number;
   dotSizeHighlight: number;
+  /** 外接圆直径 - 所有网格类型使用统一的外接圆直径作为基准 */
   dotGap: number;
   polygonSides: number[];
   showLines?: boolean;
@@ -43,7 +44,7 @@ export interface BgConfig {
 export let config: BgConfig = {
   dotSize: 1,
   dotSizeHighlight: 2,
-  dotGap: 33,
+  dotGap: 40, // 外接圆直径
   polygonSides: [3, 4, 6],
   showLines: false,
 };
@@ -147,7 +148,8 @@ function generatePoints(
 
 /**
  * 正三角形网格
- * 偶数行 X 偏移 gap/2，Y 间距 gap * sqrt(3) / 2
+ * 外接圆直径 D = dotGap，边长 a = √3 * D/2
+ * 水平间距 = a，垂直间距 = a * √3/2
  */
 function generateTriangleGrid(
   pts: Point[],
@@ -156,17 +158,21 @@ function generateTriangleGrid(
   extendX: number,
   extendY: number
 ): void {
-  const ySpacing = config.dotGap * (Math.sqrt(3) / 2);
-  const cols = Math.ceil((width + extendX * 2) / config.dotGap) + 2;
+  // 边长 a = √3 * D/2，D = dotGap
+  const sideLength = config.dotGap * (Math.sqrt(3) / 2);
+  const xSpacing = sideLength;
+  const ySpacing = sideLength * (Math.sqrt(3) / 2);
+
+  const cols = Math.ceil((width + extendX * 2) / xSpacing) + 2;
   const rows = Math.ceil((height + extendY * 2) / ySpacing) + 2;
   gridCols = cols;
   gridRows = rows;
 
   for (let row = 0; row < rows; row++) {
-    const xOffset = row % 2 === 0 ? 0 : config.dotGap / 2;
+    const xOffset = row % 2 === 0 ? 0 : xSpacing / 2;
     for (let col = 0; col < cols; col++) {
       pts.push({
-        x: col * config.dotGap + xOffset - extendX,
+        x: col * xSpacing + xOffset - extendX,
         y: row * ySpacing - extendY,
         baseX: 0,
         baseY: 0,
@@ -179,7 +185,7 @@ function generateTriangleGrid(
 
 /**
  * 正方形网格
- * 基础 (i * gap, j * gap)
+ * 外接圆直径 D = dotGap，边长 a = √2 * D/2
  */
 function generateSquareGrid(
   pts: Point[],
@@ -188,16 +194,19 @@ function generateSquareGrid(
   extendX: number,
   extendY: number
 ): void {
-  const cols = Math.ceil((width + extendX * 2) / config.dotGap) + 2;
-  const rows = Math.ceil((height + extendY * 2) / config.dotGap) + 2;
+  // 边长 a = √2 * D/2，D = dotGap
+  const sideLength = config.dotGap * (Math.sqrt(2) / 2);
+
+  const cols = Math.ceil((width + extendX * 2) / sideLength) + 2;
+  const rows = Math.ceil((height + extendY * 2) / sideLength) + 2;
   gridCols = cols;
   gridRows = rows;
 
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
       pts.push({
-        x: col * config.dotGap - extendX,
-        y: row * config.dotGap - extendY,
+        x: col * sideLength - extendX,
+        y: row * sideLength - extendY,
         baseX: 0,
         baseY: 0,
         radius: config.dotSize,
@@ -209,6 +218,8 @@ function generateSquareGrid(
 
 /**
  * 正六边形网格（蜂窝状）
+ * 外接圆直径 D = dotGap，边长 a = D/2
+ * 同行相邻点间距 = a，垂直间距 = a * √3/2
  */
 function generateHexagonGrid(
   pts: Point[],
@@ -217,32 +228,36 @@ function generateHexagonGrid(
   extendX: number,
   extendY: number
 ): void {
-  const h = config.dotGap * (Math.sqrt(3) / 2);
-  const cols = Math.ceil((width + extendX * 2) / (3 * config.dotGap)) + 2;
-  const rows = Math.ceil((height + extendY * 2) / h) + 2;
+  // 边长 a = D/2，D = dotGap
+  const sideLength = config.dotGap / 2;
+  // 垂直间距 = a * √3/2
+  const ySpacing = sideLength * (Math.sqrt(3) / 2);
+
+  const cols = Math.ceil((width + extendX * 2) / (3 * sideLength)) + 2;
+  const rows = Math.ceil((height + extendY * 2) / ySpacing) + 2;
   gridCols = cols * 2;
   gridRows = rows;
 
   for (let row = 0; row < rows; row++) {
     const isEven = row % 2 === 0;
     for (let col = 0; col < cols; col++) {
-      const baseX = col * 3 * config.dotGap;
-      const offsetX = isEven ? 0 : 1.5 * config.dotGap;
-      
+      const baseX = col * 3 * sideLength;
+      const offsetX = isEven ? 0 : 1.5 * sideLength;
+
       // Point A
       pts.push({
         x: baseX + offsetX - extendX,
-        y: row * h - extendY,
+        y: row * ySpacing - extendY,
         baseX: 0,
         baseY: 0,
         radius: config.dotSize,
         targetRadius: config.dotSize,
       });
-      
+
       // Point B
       pts.push({
-        x: baseX + offsetX + config.dotGap - extendX,
-        y: row * h - extendY,
+        x: baseX + offsetX + sideLength - extendX,
+        y: row * ySpacing - extendY,
         baseX: 0,
         baseY: 0,
         radius: config.dotSize,
@@ -251,7 +266,6 @@ function generateHexagonGrid(
     }
   }
 }
-
 
 // ============ 连线绘制 ============
 
