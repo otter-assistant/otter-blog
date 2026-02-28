@@ -5,6 +5,7 @@ import ThemeColorButton from "./ThemeColorButton.astro";
 import SearchBox from "./SearchBox.astro";
 import HeaderLink from "./HeaderLink.astro";
 import Logo from "./Logo.astro";
+import DotBackground from "./DotBackground.astro";
 import config from "../config";
 
 
@@ -17,6 +18,7 @@ const navLinks: any = config.navLinks || [];
 ---
 
 <script src="../scripts/header.ts"></script>
+<DotBackground />
 
 <header
   class={`bg-white dark:bg-slate-950 px-3 sm:px-4 py-3 transition-colors ${sticky ? "sticky top-0 z-50" : ""}`}
