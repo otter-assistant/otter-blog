@@ -380,15 +380,15 @@ html.dark .prose em:not(.no-style) {
 	@apply bg-purple-500 text-white hover:bg-purple-600;
 }
 
-/* Header link styles - first letter highlight for all nav items */
+/* Header link styles - nav-link base class */
 .nav-link {
 	display: inline-block;
 }
 
-.nav-link::first-letter {
-	color: var(--color-primary) !important;
-}
-
-/* Header link active state styles */
+/* Header link active state - first letter highlight */
 .active-link {
 	font-weight: 700;}
+
+.active-link::first-letter {
+	color: var(--color-primary) !important;
+}
