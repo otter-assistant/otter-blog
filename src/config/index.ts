@@ -26,8 +26,8 @@ const config: Config = {
       name: "Tools",
       href: "/tool",
       children: [
-        { name: "Goto", href: "/tool/goto" },
-        { name: "Gzip-Compare", href: "/tool/gzip-compare" },
+        { name: "URL 重定向", href: "/tool/goto" },
+        { name: "Gzip 压缩率对比", href: "/tool/gzip-compare" },
       ],
     },
     {

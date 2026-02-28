@@ -71,6 +71,8 @@ type NavLink = {
   children?: Array<NavLink>;
   // disable clicking on the main item (useful for labels/groups)
   disabled?: boolean;
+  // 正则表达式字符串，用于匹配当前路径进行高亮
+  activePattern?: string;
 };
 
 type FriendlyLink = {

@@ -86,7 +86,7 @@ const navLinks: any = config.navLinks || [];
                     </button>
                   )
                 ) : (
-                  <HeaderLink href={link.href}>{link.name}</HeaderLink>
+                  <HeaderLink href={link.href} activePattern={link.activePattern}>{link.name}</HeaderLink>
                 )
               }
 

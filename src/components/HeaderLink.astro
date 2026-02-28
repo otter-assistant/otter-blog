@@ -1,16 +1,24 @@
 ---
 import type { HTMLAttributes } from "astro/types";
 
-type Props = HTMLAttributes<"a">;
+type Props = HTMLAttributes<"a"> & {
+  /** 正则表达式字符串，用于匹配当前路径 */
+  activePattern?: string;
+};
 
-const { href = "", class: className, ...props } = Astro.props;
+const { href = "", class: className, activePattern, ...props } = Astro.props;
 const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, "");
 const hrefWithoutExt = String(href).replace(/\.html$/, "");
 const pathnameWithoutExt = pathname.replace(/\.html$/, "");
 const subpath = pathnameWithoutExt.match(/[^\/]+/g);
+
+// 正则表达式匹配
+const regexMatch = activePattern ? new RegExp(activePattern).test(pathnameWithoutExt) : false;
+
 const isActive =
   hrefWithoutExt === pathnameWithoutExt ||
-  hrefWithoutExt === "/" + (subpath?.[0] || "");
+  hrefWithoutExt === "/" + (subpath?.[0] || "") ||
+  regexMatch;
 ---
 
 <a
@@ -19,11 +27,11 @@ const isActive =
     className,
     "no-style inline-block px-2 mx-2 my-2 text-gray-700 dark:text-gray-300 underline hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors rounded",
     {
-      "font-black text-gray-900 dark:text-gray-200! decoration-primary!":
+      "font-black text-primary! decoration-primary!":
         isActive,
     },
   ]}
   {...props}
 >
-  <slot />
+  <span class:list={[{ "capitalize": isActive }]}><slot /></span>
 </a>
