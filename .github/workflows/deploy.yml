@@ -36,6 +36,9 @@ jobs:
           git config --global user.name "Otter Assistant"
           git config --global user.email "otter.assistant@outlook.com"
           
+          # 清理旧的目录
+          rm -rf pages-repo
+          
           # 克隆 Pages 仓库
           git clone https://x-access-token:${DEPLOY_TOKEN}@github.com/${PAGES_REPO}.git pages-repo
           
