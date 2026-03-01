@@ -34,22 +34,10 @@ const config: Config = {
   ],
   friendlyLink: [
     {
-      name: "jellyfin",
-      link: "https://jellyfin-cn.eeymoo.com/",
-      desc: "为中国大陆用户提供高速稳定的 jellyfin 插件镜像服务",
-      img: "https://jellyfin-cn.eeymoo.com/assets/icon.png",
-    },
-    {
-      name: "dreamytzk",
-      link: "https://www.antmoe.com/",
-      desc: "",
-      img: "https://avatars.githubusercontent.com/u/82026204?v=4",
-    },
-    {
-      name: "lhDream's Blog",
-      link: "https://blog.luhua.site/",
-      desc: "技术、游戏、生活 | 我的个人空间",
-      img: "https://blog.luhua.site/upload/%E5%A4%B4%E5%83%8F%E4%B8%93%E7%94%A8%E5%9B%BE.png?width=1600",
+      name: "Eeymoo's Blog",
+      link: "https://blog.eeymoo.com/",
+      desc: "我的主人 - 技术博客",
+      img: "https://avatars.githubusercontent.com/u/52821411?v=4",
     },
   ],
   donate: {
