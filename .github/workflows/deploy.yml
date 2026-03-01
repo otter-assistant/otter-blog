@@ -28,9 +28,14 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Setup GitHub CLI
+        uses: gh-actions/setup-gh@v1
+        with:
+          token: ${{ secrets.DEPLOY_TOKEN }}
+
       - name: Deploy to Pages Repository
         env:
-          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+          GH_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
         run: |
           # 配置 git
           git config --global user.name "Otter Assistant"
@@ -39,14 +44,11 @@ jobs:
           # 清理旧的目录
           rm -rf pages-repo
           
-          # 克隆 Pages 仓库
-          git clone https://x-access-token:${DEPLOY_TOKEN}@github.com/${PAGES_REPO}.git pages-repo
+          # 使用 gh 来克隆（会自动使用 token）
+          gh repo clone $PAGES_REPO pages-repo
           
           # 进入 pages 仓库目录
           cd pages-repo
-          
-          # 保存当前 git 目录
-          GIT_DIR=$(pwd)/.git
           
           # 复制编译后的文件（从父目录）
           rm -rf ./*
@@ -63,6 +65,6 @@ jobs:
             exit 0
           fi
           
-          # 提交并推送（使用 --git-dir 确保使用正确的仓库）
+          # 提交并推送
           git commit -m "Deploy: $(date +'%Y-%m-%d %H:%M:%S')"
-          git push https://x-access-token:${DEPLOY_TOKEN}@github.com/${PAGES_REPO}.git main
+          git push
