@@ -42,14 +42,17 @@ jobs:
           # 克隆 Pages 仓库
           git clone https://x-access-token:${DEPLOY_TOKEN}@github.com/${PAGES_REPO}.git pages-repo
           
-          # 复制编译后的文件
-          rm -rf pages-repo/*
-          rm -rf pages-repo/.* 2>/dev/null || true
-          cp -r dist/* pages-repo/
-          cp -r dist/.* pages-repo/ 2>/dev/null || true
-          
           # 进入 pages 仓库目录
           cd pages-repo
+          
+          # 保存当前 git 目录
+          GIT_DIR=$(pwd)/.git
+          
+          # 复制编译后的文件（从父目录）
+          rm -rf ./*
+          rm -rf ./.* 2>/dev/null || true
+          cp -r ../dist/* ./
+          cp -r ../dist/.* ./ 2>/dev/null || true
           
           # 添加所有文件
           git add -A
@@ -60,6 +63,6 @@ jobs:
             exit 0
           fi
           
-          # 提交并推送
+          # 提交并推送（使用 --git-dir 确保使用正确的仓库）
           git commit -m "Deploy: $(date +'%Y-%m-%d %H:%M:%S')"
-          git push origin main
+          git push https://x-access-token:${DEPLOY_TOKEN}@github.com/${PAGES_REPO}.git main
