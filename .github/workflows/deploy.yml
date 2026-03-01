@@ -28,11 +28,6 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Setup GitHub CLI
-        uses: gh-actions/setup-gh@v1
-        with:
-          token: ${{ secrets.DEPLOY_TOKEN }}
-
       - name: Deploy to Pages Repository
         env:
           GH_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
