@@ -28,16 +28,17 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Checkout Pages Repository
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ env.PAGES_REPO }}
-          path: pages-repo
-          token: ${{ secrets.DEPLOY_TOKEN }}
-          fetch-depth: 0
-
-      - name: Copy and Deploy
+      - name: Deploy to Pages Repository
+        env:
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
         run: |
+          # 配置 git
+          git config --global user.name "Otter Assistant"
+          git config --global user.email "otter.assistant@outlook.com"
+          
+          # 克隆 Pages 仓库
+          git clone https://x-access-token:${DEPLOY_TOKEN}@github.com/${PAGES_REPO}.git pages-repo
+          
           # 复制编译后的文件
           rm -rf pages-repo/*
           rm -rf pages-repo/.* 2>/dev/null || true
@@ -46,10 +47,6 @@ jobs:
           
           # 进入 pages 仓库目录
           cd pages-repo
-          
-          # 配置 git
-          git config user.name "Otter Assistant"
-          git config user.email "otter.assistant@outlook.com"
           
           # 添加所有文件
           git add -A
@@ -62,4 +59,4 @@ jobs:
           
           # 提交并推送
           git commit -m "Deploy: $(date +'%Y-%m-%d %H:%M:%S')"
-          git push
+          git push origin main
