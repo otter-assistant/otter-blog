@@ -34,23 +34,32 @@ jobs:
           repository: ${{ env.PAGES_REPO }}
           path: pages-repo
           token: ${{ secrets.DEPLOY_TOKEN }}
+          fetch-depth: 0
 
-      - name: Copy Static Files
+      - name: Copy and Deploy
         run: |
+          # 复制编译后的文件
           rm -rf pages-repo/*
-          rm -rf pages-repo/.*  2>/dev/null || true
+          rm -rf pages-repo/.* 2>/dev/null || true
           cp -r dist/* pages-repo/
           cp -r dist/.* pages-repo/ 2>/dev/null || true
-
-      - name: Push to Pages Repository
-        working-directory: pages-repo
-        run: |
-          git config --global user.name "Otter Assistant"
-          git config --global user.email "otter.assistant@outlook.com"
-          git add .
+          
+          # 进入 pages 仓库目录
+          cd pages-repo
+          
+          # 配置 git
+          git config user.name "Otter Assistant"
+          git config user.email "otter.assistant@outlook.com"
+          
+          # 添加所有文件
+          git add -A
+          
+          # 检查是否有变更
           if git diff --staged --quiet; then
             echo "No changes to commit"
             exit 0
           fi
+          
+          # 提交并推送
           git commit -m "Deploy: $(date +'%Y-%m-%d %H:%M:%S')"
-          git push origin main
+          git push
