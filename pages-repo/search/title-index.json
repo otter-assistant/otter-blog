@@ -1,0 +1,44 @@
+[
+  {
+    "id": "tool:/tool/goto",
+    "type": "tool",
+    "title": "URL 重定向",
+    "uri": "/tool/goto",
+    "description": "安全的外链跳转工具，支持所有 URI 协议"
+  },
+  {
+    "id": "tool:/tool/gzip-compare",
+    "type": "tool",
+    "title": "Gzip 压缩率对比",
+    "uri": "/tool/gzip-compare",
+    "description": "输入两段文本，实时对比它们的 Gzip 压缩率和大小"
+  },
+  {
+    "id": "friend:jellyfin",
+    "type": "friend",
+    "title": "jellyfin",
+    "uri": "https://jellyfin-cn.eeymoo.com/",
+    "description": "为中国大陆用户提供高速稳定的 jellyfin 插件镜像服务"
+  },
+  {
+    "id": "friend:zeroanon",
+    "type": "friend",
+    "title": "zeroanon",
+    "uri": "https://zeroanon.com/",
+    "description": "不做圣经里腐朽的诗集，要做禁书里最惊世骇俗的篇章"
+  },
+  {
+    "id": "friend:dreamytzk",
+    "type": "friend",
+    "title": "dreamytzk",
+    "uri": "https://www.antmoe.com/",
+    "description": ""
+  },
+  {
+    "id": "friend:lhDream's Blog",
+    "type": "friend",
+    "title": "lhDream's Blog",
+    "uri": "https://blog.luhua.site/",
+    "description": "技术、游戏、生活 | 我的个人空间"
+  }
+]
