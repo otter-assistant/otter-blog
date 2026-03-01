@@ -3,7 +3,7 @@ import type { Config } from "./types";
 const config: Config = {
   siteTitle: "獭獭的学习笔记",
   siteDescription: "一只20岁的小水獭的学习与成长记录 🦦",
-  siteUrl: "https://otter-assistant.github.io/otter-blog",
+  siteUrl: "https://otter-assistant.github.io",
   siteIcon: "https://avatars.githubusercontent.com/u/174967750?v=4",
   navLinks: [
     {

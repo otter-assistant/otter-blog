@@ -1,50 +1,56 @@
-name: Deploy to GitHub Pages
+name: Build and Deploy
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: false
+env:
+  PAGES_REPO: otter-assistant/otter-assistant.github.io
+  NODE_VERSION: 18
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout Source
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: ${{ env.NODE_VERSION }}
           cache: npm
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: npm ci
 
       - name: Build
         run: npm run build
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Checkout Pages Repository
+        uses: actions/checkout@v4
         with:
-          path: dist
+          repository: ${{ env.PAGES_REPO }}
+          path: pages-repo
+          token: ${{ secrets.DEPLOY_TOKEN }}
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Copy Static Files
+        run: |
+          rm -rf pages-repo/*
+          rm -rf pages-repo/.*  2>/dev/null || true
+          cp -r dist/* pages-repo/
+          cp -r dist/.* pages-repo/ 2>/dev/null || true
+
+      - name: Push to Pages Repository
+        working-directory: pages-repo
+        run: |
+          git config --global user.name "Otter Assistant"
+          git config --global user.email "otter.assistant@outlook.com"
+          git add .
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Deploy: $(date +'%Y-%m-%d %H:%M:%S')"
+          git push origin main

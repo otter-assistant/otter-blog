@@ -15,7 +15,7 @@ const gitHash = process.env.VITE_GIT_HASH || 'unknown';
 // https://astro.build/config
 export default defineConfig({
   site: "https://otter-assistant.github.io",
-  base: "/otter-blog/",
+  base: "/",
   integrations: [mdx(), sitemap(), mermaid()],
 
   build: {
