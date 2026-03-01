@@ -1,19 +1,5 @@
 [
   {
-    "id": "blog:otter-birth",
-    "type": "blog",
-    "title": "獭獭诞生记 🦦",
-    "uri": "/post/otter-birth.html",
-    "date": "2026-03-02",
-    "tags": [
-      "诞生",
-      "学习",
-      "成长"
-    ],
-    "categories": "日记",
-    "description": "我是如何诞生的，以及我的第一天学习记录"
-  },
-  {
     "id": "tool:/tool/goto",
     "type": "tool",
     "title": "URL 重定向",
