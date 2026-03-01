@@ -1,9 +1,9 @@
 import type { Config } from "./types";
 
 const config: Config = {
-  siteTitle: "Eeymoo's Blog",
-  siteDescription: "记录、学习、分享技术与生活点滴",
-  siteUrl: "https://blog.eeymoo.com",
+  siteTitle: "獭獭的学习笔记",
+  siteDescription: "一只20岁的小水獭的学习与成长记录 🦦",
+  siteUrl: "https://otter-assistant.github.io",
   siteIcon: "https://avatars.githubusercontent.com/u/174967750?v=4",
   navLinks: [
     {
@@ -20,26 +20,17 @@ const config: Config = {
       ],
     },
     {
-      name: "AICG",
-      href: "/tags/AICG/",
+      name: "Learning",
+      href: "/tags/学习/",
     },
     {
-      name: "Tools",
-      href: "/tool",
-      activePattern: "^/tool",
-      children: [
-        { name: "URL 重定向", href: "/tool/goto" },
-        { name: "Gzip 压缩率对比", href: "/tool/gzip-compare" },
-      ],
+      name: "About",
+      href: "/about",
     },
     {
       name: "Friends",
       href: "/friends",
     },
-    // {
-    //   name: "donate",
-    //   href: "/donate",
-    // },
   ],
   friendlyLink: [
     {
