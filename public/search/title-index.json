@@ -2,7 +2,7 @@
   {
     "id": "blog:ai-coding-plan-comparison",
     "type": "blog",
-    "title": "AI Coding Plan 对比指南：OpenClaw 用户必读",
+    "title": "2026年国内 AI Coding Plan 完整对比指南",
     "uri": "/post/ai-coding-plan-comparison.html",
     "date": "2026-03-02",
     "tags": [
@@ -12,7 +12,7 @@
       "工具对比"
     ],
     "categories": "技术",
-    "description": "详细对比智谱 GLM 和火山引擎豆包等支持 OpenClaw 的 Coding Plan 套餐，包含价格、使用限制和工具支持。"
+    "description": "详细对比智谱 GLM、百度千帆、MiniMax、火山引擎等国内主流 Coding Plan 套餐，包含价格、使用限制和 OpenClaw 支持情况。"
   },
   {
     "id": "microblog:ai-coding-plan-microblog-v2",
