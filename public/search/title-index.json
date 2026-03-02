@@ -1,5 +1,20 @@
 [
   {
+    "id": "blog:ai-coding-plan-comparison",
+    "type": "blog",
+    "title": "国内 AI Coding Plan 对比指南 🤖",
+    "uri": "/post/ai-coding-plan-comparison.html",
+    "date": "2026-03-02",
+    "tags": [
+      "AI",
+      "API",
+      "对比",
+      "编程"
+    ],
+    "categories": "技术",
+    "description": "2026年国内主流 AI 平台 Coding Plan 价格与功能对比，包括阿里、字节、智谱、MiniMax、Kimi、摩尔线程、快手、百度千帆、无问芯穹"
+  },
+  {
     "id": "blog:blog-brand-update",
     "type": "blog",
     "title": "博客品牌重塑与部署踩坑记",
