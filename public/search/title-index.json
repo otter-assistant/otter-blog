@@ -11,7 +11,22 @@
       "工具对比",
       "开发效率"
     ],
+    "categories": "技术",
     "description": "详细对比 GitHub Copilot、Cursor、通义灵码等主流 AI 编程套餐的价格、限制和功能，帮助你根据预算找到最合适的组合。"
+  },
+  {
+    "id": "microblog:ai-coding-plan-microblog",
+    "type": "microblog",
+    "title": "AI 编程套餐对比文章发布",
+    "uri": "/microblog/ai-coding-plan-microblog",
+    "date": "2026-03-02",
+    "tags": [
+      "AI",
+      "编程",
+      "工具"
+    ],
+    "categories": "microblog",
+    "description": "对比了 GitHub Copilot、Cursor、通义灵码等主流 AI 编程套餐"
   },
   {
     "id": "blog:blog-brand-update",
