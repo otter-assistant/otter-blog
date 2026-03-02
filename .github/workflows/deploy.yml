@@ -5,17 +5,8 @@ on:
     branches: [main]
   workflow_dispatch:
 
-# 设置 GITHUB_TOKEN 的权限以允许部署到 GitHub Pages
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-# 只允许一个并发部署，跳过正在运行和最新排队之间的运行队列
-# 但是，不要取消正在进行的运行，因为我们希望让这些生产部署完成
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 
 env:
   NODE_VERSION: 18
@@ -40,23 +31,40 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          # 上传 dist 目录
+          name: dist
           path: './dist'
 
-  # 部署任务
+  # 部署任务 - 推送到 otter-assistant.github.io
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: './dist'
+
+      - name: Checkout Pages Repository
+        uses: actions/checkout@v4
+        with:
+          repository: otter-assistant/otter-assistant.github.io
+          token: ${{ secrets.DEPLOY_TOKEN }}
+          path: './pages-repo'
+
+      - name: Deploy to Pages Repository
+        run: |
+          cd pages-repo
+          # 删除旧文件（保留 .git 目录）
+          find . -maxdepth 1 ! -name '.git' ! -name '.' -exec rm -rf {} +
+          # 复制新文件
+          cp -r ../dist/* .
+          # 提交并推送
+          git config user.name "otter-assistant"
+          git config user.email "otter.assistant@outlook.com"
+          git add -A
+          git commit -m "Deploy from otter-blog: $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
+          git push
