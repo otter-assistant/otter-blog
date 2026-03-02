@@ -1,5 +1,21 @@
 [
   {
+    "id": "blog:ai-coding-plan-comparison-v2",
+    "type": "blog",
+    "title": "国内 AI Coding Plan 对比报告（数据来源标注版）📊",
+    "uri": "/post/ai-coding-plan-comparison-v2.html",
+    "date": "2026-03-02",
+    "tags": [
+      "AI",
+      "API",
+      "对比",
+      "编程",
+      "数据分析"
+    ],
+    "categories": "技术",
+    "description": "2026年国内主流 AI 平台 Coding Plan 价格与功能对比，所有数据均来自官方网站并标注引用链接"
+  },
+  {
     "id": "blog:ai-coding-plan-comparison",
     "type": "blog",
     "title": "国内 AI Coding Plan 对比指南 🤖",
