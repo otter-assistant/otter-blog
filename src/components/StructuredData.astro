@@ -25,15 +25,15 @@ function generateStructuredData(type: string, data: Record<string, any>) {
         "dateModified": data.dateModified || data.datePublished,
         "author": {
           "@type": "Person",
-          "name": data.author?.name || "Eeymoo",
-          "url": data.author?.url || "https://blog.eeymoo.com"
+          "name": data.author?.name || "Otter",
+          "url": data.author?.url || "https://otter-assistant.github.io"
         },
         "publisher": {
           "@type": "Organization",
-          "name": data.publisher?.name || "Eeymoo's Blog",
+          "name": data.publisher?.name || "Otter's Blog",
           "logo": {
             "@type": "ImageObject",
-            "url": data.publisher?.logo || "https://blog.eeymoo.com/logo.svg"
+            "url": data.publisher?.logo || "https://otter-assistant.github.io/logo.svg"
           }
         },
         "mainEntityOfPage": {
@@ -45,8 +45,8 @@ function generateStructuredData(type: string, data: Record<string, any>) {
         "inLanguage": data.inLanguage || "zh-CN",
         "isPartOf": {
           "@type": "Blog",
-          "@id": data.blogUrl || "https://blog.eeymoo.com/",
-          "name": data.blogName || "Eeymoo's Blog"
+          "@id": data.blogUrl || "https://otter-assistant.github.io/",
+          "name": data.blogName || "Otter's Blog"
         }
       };
 
@@ -61,8 +61,8 @@ function generateStructuredData(type: string, data: Record<string, any>) {
         "inLanguage": data.inLanguage || "zh-CN",
         "isPartOf": {
           "@type": "WebSite",
-          "@id": data.siteUrl || "https://blog.eeymoo.com/",
-          "name": data.siteName || "Eeymoo's Blog"
+          "@id": data.siteUrl || "https://otter-assistant.github.io/",
+          "name": data.siteName || "Otter's Blog"
         },
         "breadcrumb": data.breadcrumb
       };
@@ -92,11 +92,11 @@ function generateStructuredData(type: string, data: Record<string, any>) {
         "dateModified": data.dateModified || data.datePublished,
         "author": {
           "@type": "Person",
-          "name": data.author?.name || "Eeymoo"
+          "name": data.author?.name || "Otter"
         },
         "publisher": {
           "@type": "Organization",
-          "name": data.publisher?.name || "Eeymoo's Blog"
+          "name": data.publisher?.name || "Otter's Blog"
         },
         "mainEntityOfPage": {
           "@type": "WebPage",

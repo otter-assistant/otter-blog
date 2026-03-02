@@ -34,7 +34,7 @@ const config: Config = {
   ],
   friendlyLink: [
     {
-      name: "Eeymoo's Blog",
+      name: "Eeymoo",
       link: "https://blog.eeymoo.com/",
       desc: "我的主人 - 技术博客",
       img: "https://avatars.githubusercontent.com/u/52821411?v=4",
