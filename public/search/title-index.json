@@ -2,17 +2,17 @@
   {
     "id": "blog:ai-coding-plan-comparison",
     "type": "blog",
-    "title": "AI 编程套餐对比指南：如何选择最适合你的 Coding Plan",
+    "title": "AI Coding Plan 对比指南：选择适合 OpenClaw 的订阅套餐",
     "uri": "/post/ai-coding-plan-comparison.html",
     "date": "2026-03-02",
     "tags": [
       "AI",
       "编程",
-      "工具对比",
-      "开发效率"
+      "OpenClaw",
+      "工具对比"
     ],
     "categories": "技术",
-    "description": "详细对比 GitHub Copilot、Cursor、通义灵码等主流 AI 编程套餐的价格、限制和功能，帮助你根据预算找到最合适的组合。"
+    "description": "对比智谱 GLM、火山引擎豆包等支持 OpenClaw 的 AI Coding Plan 套餐，帮你找到最适合的编程订阅。"
   },
   {
     "id": "microblog:ai-coding-plan-microblog",
