@@ -3,7 +3,7 @@ import type { ImageMetadata } from "astro";
 import FallbackImage from "../assets/blog-placeholder-1.jpg";
 import { SITE_TITLE } from "../consts";
 import globalCssUrl from "../styles/global.css?url";
-
+import config from "../config/index";
 interface Props {
   title: string;
   description: string;
@@ -29,7 +29,7 @@ const {
   description, 
   image = FallbackImage,
   keywords = [],
-  author = "Eeymoo",
+  author = config.siteAuthor || "Eeymoo",
   publishedTime,
   modifiedTime,
   articleSection,
@@ -172,17 +172,21 @@ if (speculationUrls && speculationUrls.length > 0) {
 {publishedTime && <meta property="article:author" content={author} />}
 
 <!-- Additional Twitter -->
-<meta name="twitter:creator" content="@eeymoo" />
-<meta name="twitter:site" content="@eeymoo" />
+<meta name="twitter:creator" content={config.twitterCreator || "@eeymoo"} />
+<meta name="twitter:site" content={config.twitterCreator || "@eeymoo"} />
 
 <!-- Google Site Verification -->
-<meta
-  name="google-site-verification"
-  content="PVxtW6MnJYdBv7MoHJjCTH-Vzotp1gT8_0F67f2hyrc"
-/>
+{config.googleSiteVerification && (
+  <meta
+    name="google-site-verification"
+    content={config.googleSiteVerification}
+  />
+)}
 
 <!-- Bing Site Verification -->
-<meta name="msvalidate.01" content="YOUR_BING_VERIFICATION_CODE" />
+{config.bingSiteVerification && config.bingSiteVerification !== "YOUR_BING_VERIFICATION_CODE" && (
+  <meta name="msvalidate.01" content={config.bingSiteVerification} />
+)}
 
 <!-- Yandex Verification -->
 <meta name="yandex-verification" content="YOUR_YANDEX_VERIFICATION_CODE" />
