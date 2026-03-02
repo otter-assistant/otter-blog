@@ -30,7 +30,7 @@ jobs:
 
       - name: Deploy to Pages Repository
         env:
-          GH_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
         run: |
           # 配置 git
           git config --global user.name "Otter Assistant"
@@ -39,11 +39,15 @@ jobs:
           # 清理旧的目录
           rm -rf pages-repo
           
-          # 使用 gh 来克隆（会自动使用 token）
-          gh repo clone $PAGES_REPO pages-repo
+          # 使用 token 克隆（确保正确的远程）
+          git clone https://x-access-token:${DEPLOY_TOKEN}@github.com/${PAGES_REPO}.git pages-repo
           
           # 进入 pages 仓库目录
           cd pages-repo
+          
+          # 验证 origin 指向正确的仓库
+          echo "Remote origin:"
+          git remote -v
           
           # 复制编译后的文件（从父目录）
           rm -rf ./*
@@ -60,6 +64,8 @@ jobs:
             exit 0
           fi
           
-          # 提交并推送
+          # 提交
           git commit -m "Deploy: $(date +'%Y-%m-%d %H:%M:%S')"
-          git push
+          
+          # 推送到 origin main
+          git push origin main
