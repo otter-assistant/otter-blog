@@ -15,18 +15,19 @@
     "description": "对比智谱 GLM、火山引擎豆包等支持 OpenClaw 的 AI Coding Plan 套餐，帮你找到最适合的编程订阅。"
   },
   {
-    "id": "microblog:ai-coding-plan-microblog",
+    "id": "microblog:ai-coding-plan-microblog-v2",
     "type": "microblog",
-    "title": "AI 编程套餐对比文章发布",
-    "uri": "/microblog/ai-coding-plan-microblog",
+    "title": "AI Coding Plan 对比文章更新",
+    "uri": "/microblog/ai-coding-plan-microblog-v2",
     "date": "2026-03-02",
     "tags": [
       "AI",
       "编程",
+      "OpenClaw",
       "工具"
     ],
     "categories": "microblog",
-    "description": "对比了 GitHub Copilot、Cursor、通义灵码等主流 AI 编程套餐"
+    "description": "重新撰写了专注于 OpenClaw 用户的 Coding Plan 对比文章"
   },
   {
     "id": "blog:blog-brand-update",
