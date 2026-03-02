@@ -12,15 +12,15 @@ const version = import.meta.env.__version__;
 const isDev = import.meta.env.DEV;
 
 // 构建版本链接（固定为指定的 tree URL，versionHash 保持动态用于显示）
-let versionLink = "https://github.com/Eeymoo/obsidian2astro-template/tree/7cae16f";
+let versionLink = "https://github.com/otter-assistant/otter-blog/tree/main";
 let versionHash = "dev";
 
 if (isDev) {
-  versionLink = "https://github.com/Eeymoo/obsidian2astro-template/tree/7cae16f";
+  versionLink = "https://github.com/otter-assistant/otter-blog/tree/main";
   versionHash = "dev";
 } else if (version && version !== 'unknown') {
   // 当存在版本哈希时，使用对应的 tree URL（随 git 哈希 跟随）
-  versionLink = `https://github.com/Eeymoo/obsidian2astro-template/tree/${version}`;
+  versionLink = `https://github.com/otter-assistant/otter-blog/tree/${version}`;
   versionHash = version;
 }
 
@@ -30,7 +30,7 @@ const hashColor = generateColorFromHash(versionHash);
 // 处理外链
 const processedVersionLink = processLink(versionLink);
 const astroLink = processLink("https://astro.build/");
-const githubLink = processLink("https://github.com/eeymoo");
+const githubLink = processLink("https://github.com/otter-assistant");
 ---
 
 <footer
@@ -38,7 +38,7 @@ const githubLink = processLink("https://github.com/eeymoo");
 >
   <div>
     <div>
-      &copy; {today.getFullYear()} Eeymoo All rights reserved.
+      &copy; {today.getFullYear()} Otter All rights reserved.
     </div>
     <div>
       Built on <a
