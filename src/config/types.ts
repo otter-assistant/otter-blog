@@ -3,6 +3,10 @@ type Config = {
   siteDescription: string;
   siteUrl: string;
   siteIcon: string;
+  siteAuthor?: string;
+  twitterCreator?: string;
+  googleSiteVerification?: string;
+  bingSiteVerification?: string;
   // 导航链接
   navLinks: Array<NavLink>;
   // 友情连接
@@ -13,6 +17,8 @@ type Config = {
   comments: CommentsConfig;
   // Goto 跳转配置
   goto?: GotoConfig;
+  // 背景点配置
+  background?: BackgroundConfig;
 };
 
 type GotoConfig = {
@@ -23,6 +29,14 @@ type GotoConfig = {
     disableAutoRedirect: boolean;
     showWarning: boolean;
   };
+};
+
+type BackgroundConfig = {
+  dotSize?: number;
+  dotSizeHighlight?: number;
+  dotGap?: number;
+  polygonSides?: number[];
+  showLines?: boolean;
 };
 
 type CommentsConfig = {
@@ -81,4 +95,4 @@ type FriendlyLink = {
   desc: string;
   img: string;
 };
-export type { Config, NavLink, FriendlyLink, DonateConfig, GiscusConfig, GitalkConfig, CommentsConfig, GotoConfig };
+export type { Config, NavLink, FriendlyLink, DonateConfig, GiscusConfig, GitalkConfig, CommentsConfig, GotoConfig, BackgroundConfig };

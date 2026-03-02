@@ -2,13 +2,14 @@
  * dot-background.ts - Canvas 动态几何顶点背景核心渲染逻辑
  *
  * 功能：
- * - 确定性随机种子（基于日期）
+ * - 确定性随机种子（基于日期，同一天保持相同形状）
  * - 多边形网格（三角形/正方形/六边形）
  * - 鼠标视差效果
  * - 最近点高亮
  * - 主题颜色响应
  */
 
+import siteConfig from '../config/index';
 // ============ 类型定义 ============
 
 interface Point {
@@ -42,11 +43,11 @@ export interface BgConfig {
 }
 
 export let config: BgConfig = {
-  dotSize: 1,
-  dotSizeHighlight: 2,
-  dotGap: 40, // 外接圆直径
-  polygonSides: [3, 4, 6],
-  showLines: false,
+  dotSize: siteConfig.background?.dotSize ?? 1,
+  dotSizeHighlight: siteConfig.background?.dotSizeHighlight ?? 2,
+  dotGap: siteConfig.background?.dotGap ?? 40, // 外接圆直径
+  polygonSides: siteConfig.background?.polygonSides ?? [3, 4, 6],
+  showLines: siteConfig.background?.showLines ?? false,
 };
 
 const PADDING = 200;
@@ -536,7 +537,6 @@ function handleResize(): void {
   const sides = choosePolygonSides(random);
   points = generatePoints(sides, width, height, random);
 }
-
 /**
  * 根据随机值选择多边形边数
  */
@@ -557,11 +557,6 @@ function handleMouseMove(e: MouseEvent): void {
 
 // ============ 公共 API ============
 
-/**
- * 初始化背景
- * @param canvasElement Canvas 元素
- * @returns 清理函数
- */
 /**
  * 更新配置并重新生成背景
  * @param newConfig 新配置（部分）
