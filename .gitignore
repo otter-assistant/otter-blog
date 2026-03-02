@@ -24,7 +24,6 @@ pnpm-debug.log*
 .idea/
 
 # 博客内容从外部传入
-/src/content/
-
+/src/content/*
 # 但允许 blog 目录直接被追踪
 !src/content/blog/
