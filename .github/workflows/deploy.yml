@@ -39,15 +39,11 @@ jobs:
           # 清理旧的目录
           rm -rf pages-repo
           
-          # 使用 token 克隆（确保正确的远程）
+          # 使用 token 克隆
           git clone https://x-access-token:${DEPLOY_TOKEN}@github.com/${PAGES_REPO}.git pages-repo
           
           # 进入 pages 仓库目录
           cd pages-repo
-          
-          # 验证 origin 指向正确的仓库
-          echo "Remote origin:"
-          git remote -v
           
           # 复制编译后的文件（从父目录）
           rm -rf ./*
@@ -67,5 +63,5 @@ jobs:
           # 提交
           git commit -m "Deploy: $(date +'%Y-%m-%d %H:%M:%S')"
           
-          # 推送到 origin main
-          git push origin main
+          # 直接使用完整 URL 推送，不依赖 origin
+          git push https://x-access-token:${DEPLOY_TOKEN}@github.com/${PAGES_REPO}.git main
