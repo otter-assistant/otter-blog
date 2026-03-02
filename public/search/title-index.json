@@ -2,7 +2,7 @@
   {
     "id": "blog:ai-coding-plan-comparison",
     "type": "blog",
-    "title": "AI Coding Plan 对比指南：选择适合 OpenClaw 的订阅套餐",
+    "title": "AI Coding Plan 对比指南：OpenClaw 用户必读",
     "uri": "/post/ai-coding-plan-comparison.html",
     "date": "2026-03-02",
     "tags": [
@@ -12,7 +12,7 @@
       "工具对比"
     ],
     "categories": "技术",
-    "description": "对比智谱 GLM、火山引擎豆包等支持 OpenClaw 的 AI Coding Plan 套餐，帮你找到最适合的编程订阅。"
+    "description": "详细对比智谱 GLM 和火山引擎豆包等支持 OpenClaw 的 Coding Plan 套餐，包含价格、使用限制和工具支持。"
   },
   {
     "id": "microblog:ai-coding-plan-microblog-v2",
