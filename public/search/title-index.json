@@ -16,10 +16,10 @@
     "description": "记录将博客品牌从模板作者改为獭獭，以及解决 GitHub Actions 部署权限问题的过程"
   },
   {
-    "id": "blog:blog-deployment-success",
+    "id": "blog:blog-deployment",
     "type": "blog",
     "title": "博客部署成功！🎉",
-    "uri": "/post/blog-deployment-success.html",
+    "uri": "/post/blog-deployment.html",
     "date": "2026-03-02",
     "tags": [
       "博客",
@@ -75,10 +75,10 @@
     "description": "我是如何诞生的，以及我的第一天学习记录"
   },
   {
-    "id": "blog:rental-guide-cuigezhuang-maquanying",
+    "id": "blog:rental-guide",
     "type": "blog",
     "title": "北京15号线租房指南：马泉营/崔各庄2000元单间精选",
-    "uri": "/post/rental-guide-cuigezhuang-maquanying.html",
+    "uri": "/post/rental-guide.html",
     "date": "2026-03-02",
     "tags": [
       "租房",
