@@ -56,7 +56,7 @@ const isLinkActive = (link: any): boolean => {
   <nav
     class="max-w-screen-xl mx-auto flex items-center justify-between gap-3 sm:gap-4 flex-wrap md:flex-nowrap lg:grid lg:grid-cols-[auto_1fr_auto] lg:items-center lg:gap-6"
   >
-    <div class="flex items-center gap-3 flex-shrink-0">
+    <div class="flex items-center gap-1 sm:gap-3 flex-shrink-0">
       <!-- Mobile Menu Button (Left) -->
       <button
         id="mobile-menu-toggle"
@@ -75,6 +75,29 @@ const isLinkActive = (link: any): boolean => {
             stroke-linecap="round"
             stroke-linejoin="round"
             d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"
+          ></path>
+        </svg>
+      </button>
+      
+      <!-- 移动端操作按钮切换 (Left) -->
+      <button
+        id="mobile-actions-toggle"
+        class="md:hidden w-10 h-10 flex items-center justify-center text-slate-700 hover:bg-primary/10 transition-colors dark:text-slate-300 dark:hover:bg-primary/20"
+        aria-label="更多操作"
+        aria-expanded="false"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="size-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42"
           ></path>
         </svg>
       </button>
@@ -140,32 +163,67 @@ const isLinkActive = (link: any): boolean => {
       <div class="hidden lg:block">
         <SearchBox />
       </div>
-      <a
-        href="/rss.xml"
-        target="_blank"
-        class="w-10 h-10 flex items-center justify-center text-slate-700 hover:bg-primary/10 transition-colors dark:text-slate-300 dark:hover:bg-primary/20"
-      >
-        <span class="sr-only">Subscribe to RSS</span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="size-6"
+      
+      <!-- 桌面端操作按钮 -->
+      <div class="hidden md:flex items-center gap-2">
+        <a
+          href="/rss.xml"
+          target="_blank"
+          class="w-10 h-10 flex items-center justify-center text-slate-700 hover:bg-primary/10 transition-colors dark:text-slate-300 dark:hover:bg-primary/20"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M12.75 19.5v-.75a7.5 7.5 0 0 0-7.5-7.5H4.5m0-6.75h.75c7.87 0 14.25 6.38 14.25 14.25v.75M6 18.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-          ></path>
-        </svg>
-      </a>
-      <DarkModeButton />
-      <ThemeColorButton />
+          <span class="sr-only">Subscribe to RSS</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12.75 19.5v-.75a7.5 7.5 0 0 0-7.5-7.5H4.5m0-6.75h.75c7.87 0 14.25 6.38 14.25 14.25v.75M6 18.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+            ></path>
+          </svg>
+        </a>
+        <DarkModeButton />
+        <ThemeColorButton />
+      </div>
+    </div>
     </div>
   </nav>
 
+  <!-- Mobile Actions Panel (弹出面板) -->
+  <div
+    id="mobile-actions-panel"
+    class="hidden md:hidden absolute left-3 top-full mt-1 bg-white dark:bg-slate-900 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 p-2 z-50"
+  >
+    <a
+      href="/rss.xml"
+      target="_blank"
+      class="w-10 h-10 flex items-center justify-center text-slate-700 hover:bg-primary/10 transition-colors dark:text-slate-300 dark:hover:bg-primary/20"
+    >
+      <span class="sr-only">Subscribe to RSS</span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="size-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M12.75 19.5v-.75a7.5 7.5 0 0 0-7.5-7.5H4.5m0-6.75h.75c7.87 0 14.25 6.38 14.25 14.25v.75M6 18.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+        ></path>
+      </svg>
+    </a>
+    <DarkModeButton />
+    <ThemeColorButton />
+  </div>
+  
   <!-- Mobile Menu -->
   <div
     id="mobile-menu"

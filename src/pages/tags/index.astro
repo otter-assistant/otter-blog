@@ -37,9 +37,9 @@ tags.slice(0, 5).forEach(({ name }) => {
   <head>
     <BaseHead title={`${SITE_TITLE} · Tags`} description={SITE_DESCRIPTION} speculationUrls={speculationUrls} speculationEagerness="moderate" />
   </head>
-  <body>
+  <body class="min-h-screen flex flex-col">
     <Header />
-    <main class="w-full h-[calc(100vh-56px)] max-w-285 mx-auto px-4 py-12">
+    <main class="flex-1 w-full max-w-285 mx-auto px-4 py-12">
       <section>
         <h1 class="m-0 mb-6 text-xl font-bold text-gray-900 dark:text-gray-100">
           所有标签
