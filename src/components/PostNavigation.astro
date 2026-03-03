@@ -16,8 +16,7 @@ export interface Props {
 const { currentPost } = Astro.props;
 
 // 获取所有文章并按日期排序
-const posts = await getCollection("blog");
-const allPosts = filterContent(posts || [])
+const allPosts = filterContent(await getCollection("blog"))
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 
 // 找到当前文章的索引
