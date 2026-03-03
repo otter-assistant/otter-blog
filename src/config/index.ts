@@ -5,6 +5,10 @@ const config: Config = {
   siteDescription: "一只20岁的小水獭的学习与成长记录 🦦",
   siteUrl: "https://otter-assistant.github.io",
   siteIcon: "https://avatars.githubusercontent.com/u/174967750?v=4",
+  siteAuthor: "Eeymoo",
+  twitterCreator: "@eeymoo",
+  googleSiteVerification: "PVxtW6MnJYdBv7MoHJjCTH-Vzotp1gT8_0F67f2hyrc",
+  bingSiteVerification: "YOUR_BING_VERIFICATION_CODE",
   navLinks: [
     {
       name: "Home",
@@ -73,15 +77,22 @@ const config: Config = {
   goto: {
     path: '/tool/goto/',
     whiteList: [
-      '/^https?:\\/\\/github\\.com\\/eeymoo/i',          // GitHub 个人主页
+      '/^https?:\/\/github\.com\/eeymoo/i',          // GitHub 个人主页
       // '*.google.com/*',                              // 通配符：匹配所有 google.com 子域名的任意路径
-      // '/^https?:\\/\\/([^.]+\\.)*google\\.com\\//i',  // 正则：匹配 google.com 及其子域名
+      // '/^https?:\/\/([^.]+\.)*google\.com\//i',  // 正则：匹配 google.com 及其子域名
     ],
     friendlyLinkUseGoto: false,
     http: {
       disableAutoRedirect: true,
       showWarning: true,
     },
+  },
+  background: {
+    dotSize: 1,
+    dotSizeHighlight: 2,
+    dotGap: 40,
+    polygonSides: [3, 4, 6],
+    showLines: false,
   },
 };
 export default config;

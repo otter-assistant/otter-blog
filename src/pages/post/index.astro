@@ -12,7 +12,13 @@ import { filterContent } from "../../utils";
 import { getPostUrl } from "../../utils/urls";
 
 const posts = filterContent(await getCollection("blog"))
-  .sort((a, b) => b.data.date?.valueOf() - a.data.date?.valueOf());
+  .sort((a, b) => {
+    // 处理 undefined date：无日期的放到最后
+    if (!a.data.date && !b.data.date) return 0;
+    if (!a.data.date) return 1;
+    if (!b.data.date) return -1;
+    return b.data.date.valueOf() - a.data.date.valueOf();
+  });
 const image = {
   width: 1140,
   height: 360,
