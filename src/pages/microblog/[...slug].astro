@@ -4,9 +4,7 @@ import MicroblogPost from "../../layouts/MicroblogPost.astro";
 import { convertMdALinksToGoto, generatePostSlug, filterContent } from "../../utils";
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog");
-
-  return filterContent(posts, 'microblog')
+  return filterContent(await getCollection("blog"), 'microblog')
     .map((post) => ({
       params: {
         slug: generatePostSlug(post),
