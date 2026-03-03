@@ -14,6 +14,10 @@ let currentBucketIndex = 0;
 let isRegexMode = false;
 let isInitialized = false;
 
+// 键盘导航状态
+let selectedIndex = -1;
+let currentResults: SearchResult[] = [];
+
 export async function initSearchCore() {
   if (isInitialized) return;
   isInitialized = true;
@@ -39,6 +43,22 @@ export async function initSearchCore() {
     renderResults([]);
     emptyState.classList.remove("hidden");
   };
+  // 更新选中状态
+  const updateSelection = () => {
+    const items = resultsContainer.querySelectorAll('.search-result-item');
+    items.forEach((item, index) => {
+      if (index === selectedIndex) {
+        item.classList.add('bg-primary/10', 'dark:bg-primary/20', 'border-primary/20');
+      } else {
+        item.classList.remove('bg-primary/10', 'dark:bg-primary/20', 'border-primary/20');
+      }
+    });
+    
+    // 滚动到可见区域
+    if (selectedIndex >= 0 && items[selectedIndex]) {
+      items[selectedIndex].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+  };
 
   closeBtn.addEventListener("click", closeModal);
   modal.addEventListener("click", (e) => {
@@ -47,8 +67,28 @@ export async function initSearchCore() {
     }
   });
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+    if (modal.classList.contains("hidden")) return;
+    
+    if (e.key === "Escape") {
       closeModal();
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (currentResults.length > 0) {
+        selectedIndex = Math.min(selectedIndex + 1, currentResults.length - 1);
+        updateSelection();
+      }
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (currentResults.length > 0) {
+        selectedIndex = Math.max(selectedIndex - 1, 0);
+        updateSelection();
+      }
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      if (selectedIndex >= 0 && selectedIndex < currentResults.length) {
+        const result = currentResults[selectedIndex];
+        window.location.href = result.uri;
+      }
     }
   });
   // Regex toggle logic
@@ -296,6 +336,10 @@ export async function initSearchCore() {
   const renderResults = (results: SearchResult[], query: string = "", isInvalidRegex = false) => {
     resultsContainer.querySelectorAll('.search-result-item').forEach(el => el.remove());
     
+    // 重置选中状态并保存当前结果
+    selectedIndex = -1;
+    currentResults = results;
+    
     if (isInvalidRegex) {
       const noResult = document.createElement('div');
       noResult.className = 'search-result-item py-12 text-center text-slate-500 dark:text-slate-400';
@@ -326,10 +370,11 @@ export async function initSearchCore() {
       searchMoreBtn.classList.add("hidden");
     }
 
-    results.forEach(result => {
+    results.forEach((result, index) => {
       const item = document.createElement('a');
       item.href = result.uri;
       item.className = 'search-result-item group block p-3 rounded-lg hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors cursor-pointer border border-transparent hover:border-primary/20 no-underline';
+      item.setAttribute('data-index', index.toString());
       
       const typeLabel = result.type === 'blog' ? '文章' : 
                         result.type === 'microblog' ? '微博客' : 
