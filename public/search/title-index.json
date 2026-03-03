@@ -29,10 +29,10 @@
     "categories": "DevOps"
   },
   {
-    "id": "blog:奇思妙想-如何基于nr-electron实现跨pc-移动端的项目",
+    "id": "blog:奇思妙想-如何基于NRELECTRON实现跨PC移动端的项目",
     "type": "blog",
     "title": "如何基于NR+ELECTRON实现跨PC+移动端的项目",
-    "uri": "/post/奇思妙想-如何基于nr-electron实现跨pc-移动端的项目.html",
+    "uri": "/post/奇思妙想-如何基于NRELECTRON实现跨PC移动端的项目.html",
     "date": "2026-01-07 09:16:55",
     "tags": "",
     "categories": "跨平台"
@@ -84,10 +84,10 @@
     "categories": "CSS"
   },
   {
-    "id": "blog:web-标准-javascript-speculation-rules-api-让网页更快的加载",
+    "id": "blog:Web-标准-Javascript-Speculation-Rules-API-让网页更快的加载",
     "type": "blog",
     "title": "让时间快一点，再快一点！",
-    "uri": "/post/web-标准-javascript-speculation-rules-api-让网页更快的加载.html",
+    "uri": "/post/Web-标准-Javascript-Speculation-Rules-API-让网页更快的加载.html",
     "date": "2026-01-12 10:35:16",
     "tags": "",
     "categories": "JavaScript"

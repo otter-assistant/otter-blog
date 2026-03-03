@@ -9,6 +9,8 @@ import { join, dirname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { promisify } from 'node:util';
 
+import { generatePostSlug } from '../src/utils/index.ts';
+
 const writeFile = promisify(writeFileAsync);
 const mkdir = promisify(mkdirAsync);
 
@@ -117,16 +119,20 @@ function parseFrontmatter(content: string): BlogFrontmatter {
 }
 
 /**
- * 从文件路径生成 slug（简化版 generatePostSlug）
+ * 从文件路径生成 slug（与页面路由保持一致）
  * @param filePath - 文件相对路径
+ * @param frontmatter - 解析的 frontmatter
  * @returns slug
  */
-function generateSlugFromPath(filePath: string): string {
-  // 移除扩展名
-  let slug = filePath.replace(/\.(md|mdx)$/, '');
-  // 移除路径分隔符，替换为 -
-  slug = slug.replace(/[/\\]/g, '-');
-  return slug;
+function generateSlugFromEntry(filePath: string, frontmatter: BlogFrontmatter): string {
+  // 模拟 CollectionEntry 对象结构
+  const entry = {
+    id: filePath.replace(/\.(md|mdx)$/, ''),
+    data: {
+      uri: frontmatter.uri
+    }
+  };
+  return generatePostSlug(entry as any);
 }
 
 /**
@@ -178,8 +184,8 @@ function readBlogContent(): Array<{
       const content = readFileSync(filePath, 'utf-8');
       const frontmatter = parseFrontmatter(content);
 
-      // 生成 ID（使用 uri 或文件路径）
-      const id = frontmatter.uri || generateSlugFromPath(file);
+      // 使用与页面路由相同的 slug 生成逻辑
+      const id = generateSlugFromEntry(file, frontmatter);
 
       entries.push({
         id,
