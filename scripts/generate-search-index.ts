@@ -9,6 +9,8 @@ import { writeFileSync, mkdirSync, existsSync, readdirSync, readFileSync } from 
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
+import { generatePostSlug } from '../src/utils/index.ts';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -168,15 +170,6 @@ function readMarkdownFiles(contentDir: string): Array<{ id: string; content: str
   return results;
 }
 
-// 生成 slug
-function generateSlug(id: string, title: string): string {
-  // 简单的 slug 生成：使用 id 或从标题生成
-  const slug = id
-    .toLowerCase()
-    .replace(/[^a-z0-9\u4e00-\u9fa5]+/g, '-')
-    .replace(/^-|-$/g, '');
-  return slug || `post-${Date.now()}`;
-}
 
 // 主函数
 async function main() {
@@ -211,7 +204,14 @@ async function main() {
     if (frontmatter.hidden === true) continue;
     
     const type: SearchSourceType = frontmatter.categories === 'microblog' ? 'microblog' : 'blog';
-    const slug = frontmatter.uri || generateSlug(id, frontmatter.title || '');
+    // 使用与页面路由相同的 slug 生成逻辑
+    const entry = {
+      id,
+      data: {
+        uri: frontmatter.uri
+      }
+    };
+    const slug = generatePostSlug(entry as any);
     const uri = type === 'microblog' 
       ? `/microblog/${slug}` 
       : `/post/${slug}.html`;
