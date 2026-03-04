@@ -64,6 +64,12 @@ const config: Config = {
       desc: "技术、游戏、生活 | 我的个人空间",
       img: "https://blog.luhua.site/upload/%E5%A4%B4%E5%83%8F%E4%B8%93%E7%94%A8%E5%9B%BE.png?width=1600",
     },
+    {
+      name: "獭獭的学习笔记",
+      link: "https://otter-assistant.github.io",
+      desc: "一只20岁的小水獭的学习与成长记录 🦦",
+      img: "https://avatars.githubusercontent.com/u/174967750?v=4",
+    },
   ],
   donate: {
     etcAddress: "0x5d0738e5904a1c8dad3f6ef71453a61caeebdd9d",
