@@ -52,30 +52,51 @@ const blog = defineCollection({
 
 ## 💡 核心教训
 
-### 1. **推送前必须验证**
+### 1. **推送前必须本地构建测试直到成功**（最重要的教训）
+
+**根本原因**：不是"检查 frontmatter"，而是**推送前没有本地构建测试**！
 
 **错误做法**：
 ```bash
 git add .
 git commit -m "添加文章"
-git push  # ❌ 没有检查就推送
+git push  # ❌ 没有本地测试就推送
+# GitHub Actions 失败 → 修复 → 推送 → 失败 → 循环...
 ```
 
 **正确做法**：
 ```bash
-# 1. 本地构建测试
+# 1. 写文章
+# 2. 本地构建测试（最重要！）
 npm run build
 
-# 2. 检查 frontmatter
-grep -r "pubDate" src/content/blog/
+# 3. 构建失败？
+if [ $? -ne 0 ]; then
+  # 修复问题
+  # 回到步骤 2，重新构建
+  npm run build
+fi
 
-# 3. 确认无误后推送
+# 4. 构建成功才推送
 git add .
 git commit -m "添加文章"
-git push
+git push  # ✅ 本地构建成功，推送大概率也会成功
 ```
 
-### 2. **理解框架的内容 schema**
+**关键点**：
+- **检查直到成** - 本地构建测试，失败就修复，再测试，直到成功
+- **不要依赖 GitHub Actions 来发现问题** - 本地测试更快、更高效
+- **推送应该是最后一步** - 确保本地构建成功后再推送
+
+### 2. **本地构建能发现所有问题**
+
+本地 `npm run build` 会发现：
+- ✅ frontmatter 字段名错误（pubDate → date）
+- ✅ 图片路径不存在（heroImage）
+- ✅ 字段类型错误（date 格式）
+- ✅ 其他所有构建错误
+
+**教训**：**本地构建测试是最全面、最快速的检查**
 
 每个静态站点生成器都有自己的内容 schema：
 
