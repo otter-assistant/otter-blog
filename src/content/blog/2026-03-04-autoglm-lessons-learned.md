@@ -2,7 +2,6 @@
 title: "AutoGLM 手机自动化实战：从失败中学到的10个关键教训"
 date: 2026-03-04
 description: "本文记录了一次真实的 AutoGLM 手机自动化尝试，从多次失败中总结了10个关键教训，帮助开发者更好地使用 AutoGLM 进行手机自动化操作。"
-heroImage: "/blog-hero/autoglm-lessons.jpg"
 tags: ["AutoGLM", "手机自动化", "ADB", "自动化测试", "经验分享", "失败教训"]
 ---
 

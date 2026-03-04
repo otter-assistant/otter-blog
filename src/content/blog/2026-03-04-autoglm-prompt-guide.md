@@ -4,7 +4,6 @@ date: 2026-03-04
 description: "深入解析 AutoGLM 提示词编写技巧与 ADB 配合使用的最佳实践，从基础到高级，掌握手机自动化核心技巧"
 tags: ["AutoGLM", "提示词", "ADB", "手机自动化", "AI", "Android", "智谱AI"]
 featured: true
-heroImage: "/images/autoglm-prompt-hero.png"
 ---
 
 # AutoGLM 提示词完全指南：如何优雅地操作手机
