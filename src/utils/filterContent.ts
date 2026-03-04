@@ -18,12 +18,13 @@ interface ContentEntry {
  * 过滤内容的工具方法
  * @param posts - 需要过滤的内容数组
  * @param filterType - 过滤类型，可选，默认为 'default'，可选 'default' | 'microblog'
- * @returns 过滤后的内容数组
+ * @returns 过滤后的内容数组（按时间降序排列）
  * @description 过滤规则：
  *   1. 过滤掉 hidden === true 的内容
  *   2. 过滤掉 draft === true 的内容
  *   3. 过滤掉缺少必填字段（title、date）的内容
  *   4. 根据类型过滤 categories
+ *   5. 按时间降序排序（最新的在前面）
  */
 export function filterContent(posts: ContentEntry[], filterType: 'default' | 'microblog' = 'default'): ContentEntry[] {
   if (!Array.isArray(posts)) return [];
@@ -46,12 +47,14 @@ export function filterContent(posts: ContentEntry[], filterType: 'default' | 'mi
   });
   
   if (filterType === 'default') {
-    // 默认过滤规则：过滤掉 categories === 'microblog' 的内容
-    return filteredPosts.filter(post => post?.data?.categories !== 'microblog');
+    filteredPosts = filteredPosts.filter(post => post?.data?.categories !== 'microblog');
   } else if (filterType === 'microblog') {
-    // microblog 过滤规则：只保留 categories === 'microblog' 的内容
-    return filteredPosts.filter(post => post?.data?.categories === 'microblog');
+    filteredPosts = filteredPosts.filter(post => post?.data?.categories === 'microblog');
   }
-  // 其他类型暂不处理，返回过滤后的数组
-  return filteredPosts;
+  
+  return filteredPosts.sort((a, b) => {
+    const dateA = a.data.date instanceof Date ? a.data.date : new Date(a.data.date as string);
+    const dateB = b.data.date instanceof Date ? b.data.date : new Date(b.data.date as string);
+    return dateB.getTime() - dateA.getTime();
+  });
 }
