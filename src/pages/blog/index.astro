@@ -24,19 +24,19 @@ const posts = filterContent(await getCollection("blog")).sort(
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
-  <body>
+  <body class="min-h-screen flex flex-col">
     <Header />
-    <main class="w-full max-w-[1140px] mx-auto px-4 py-12">
+    <main class="flex-1 w-full max-w-[1140px] mx-auto px-4 py-12">
       <section>
         <ul
-          class="grid grid-cols-2 gap-6 list-none m-0 p-0 sm:grid-cols-1 sm:gap-6"
+          class="grid grid-cols-1 gap-6 list-none m-0 p-0 sm:grid-cols-2"
         >
           {
             posts.map((post) => (
               <li class="w-full first:mb-8">
                 <a
-                  href={`/post/${post.id}.html`}
-                  class="block hover:bg-primary/10 p-4 rounded transition-colors"
+                  href={`/blog/${post.id}/`}
+                  class="block hover:bg-primary/10 p-3 sm:p-4 rounded transition-colors"
                 >
                   {post.data.heroImage && (
                     <Image

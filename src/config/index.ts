@@ -43,6 +43,12 @@ const config: Config = {
       desc: "我的主人 - 技术博客",
       img: "https://avatars.githubusercontent.com/u/52821411?v=4",
     },
+    {
+      name: "獭獭的学习笔记",
+      link: "https://otter-assistant.github.io",
+      desc: "一只20岁的小水獭的学习与成长记录 🦦",
+      img: "https://avatars.githubusercontent.com/u/174967750?v=4",
+    },
   ],
   donate: {
     etcAddress: "0x5d0738e5904a1c8dad3f6ef71453a61caeebdd9d",

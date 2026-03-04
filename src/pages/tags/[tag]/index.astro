@@ -89,9 +89,9 @@ const tagStructuredData = {
     />
     <StructuredData type="WebPage" data={tagStructuredData} />
   </head>
-  <body>
+  <body class="min-h-screen flex flex-col">
     <Header />
-    <main class="w-full max-w-285 mx-auto px-4 py-12">
+    <main class="flex-1 w-full max-w-285 mx-auto px-4 py-12">
       <!-- 面包屑导航 -->
       <Breadcrumb items={breadcrumbs} />
       
@@ -103,13 +103,13 @@ const tagStructuredData = {
           allPosts.length === 0 ? (
             <p class="text-gray-600 dark:text-gray-300">该标签暂无文章。</p>
           ) : (
-            <ul class="grid grid-cols-2 gap-6 list-none m-0 p-0 sm:grid-cols-1 sm:gap-6">
+            <ul class="grid grid-cols-1 gap-6 list-none m-0 p-0 sm:grid-cols-2">
               {allPosts.map((post) => {
                 return (
                   <li class="w-full first:mb-4">
                     <a
                       href={getPostUrl(post)}
-                      class="no-style block bg-slate-50 dark:bg-slate-800/30 hover:bg-primary/20 p-4! rounded-xl transition-colors"
+                      class="no-style block bg-slate-50 dark:bg-slate-800/30 hover:bg-primary/20 p-3! sm:p-4! rounded-xl transition-colors"
                     >
                       <h4 class="title m-0 text-gray-900 leading-tight underline decoration-primary hover:decoration-primary transition-colors dark:text-gray-100">
                         {post.data.title}
