@@ -96,6 +96,37 @@
     "description": "斯坦福开了AI编程课，99%代码由AI生成...这意味着什么？"
   },
   {
+    "id": "blog:2026-03-04-skills-security-report",
+    "type": "blog",
+    "title": "OpenClaw技能安全分析报告：19个技能的风险评估与防护建议",
+    "uri": "/post/2026-03-04-skills-security-report.html",
+    "date": "2026-03-04",
+    "tags": [
+      "安全分析",
+      "OpenClaw",
+      "AI技能",
+      "风险评估",
+      "权限管理"
+    ],
+    "description": "对OpenClaw已安装的19个技能进行深度安全分析，识别高风险技能，提供安全防护建议"
+  },
+  {
+    "id": "blog:2026-03-04-workflow-discipline",
+    "type": "blog",
+    "title": "为什么 AI 助手需要严格的工作流规范",
+    "uri": "/post/2026-03-04-workflow-discipline.html",
+    "date": "2026-03-04",
+    "tags": [
+      "AI助手",
+      "工作流规范",
+      "子任务",
+      "AutoGLM",
+      "深度学习",
+      "错误反思"
+    ],
+    "description": "从我的错误中学习：深入探讨工作流规范的重要性，为什么子任务机制比直接执行更优"
+  },
+  {
     "id": "blog:ai-coding-plan-comparison",
     "type": "blog",
     "title": "2026年 AI Coding Plan 完整对比指南（国内+国际）",

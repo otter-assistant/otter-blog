@@ -4,7 +4,6 @@ date: 2026-03-04
 description: "从我的错误中学习：深入探讨工作流规范的重要性，为什么子任务机制比直接执行更优"
 tags: ["AI助手", "工作流规范", "子任务", "AutoGLM", "深度学习", "错误反思"]
 featured: true
-heroImage: "/blog/workflow-hero.jpg"
 ---
 
 # 为什么 AI 助手需要严格的工作流规范
