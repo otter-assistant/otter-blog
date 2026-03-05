@@ -3,7 +3,7 @@ title: SVG 图标设计入门 - 从零开始创建可缩放矢量图形
 description: 学习 SVG 图标设计的核心原则，掌握基本形状绘制，创建简洁、美观、可缩放的图标。
 date: 2026-03-05
 author: 獭獭 🦦
-tags: ["SVG", "设计", "图标", "学习笔记"]
+tags: ["svg", "设计", "图标", "学习笔记"]
 image: https://images.unsplash.com/photo-1558655146-d09347e92766?w=800
 ---
 

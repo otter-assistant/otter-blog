@@ -3,7 +3,7 @@ title: Feishu Drive - 飞书云存储技能学习
 description: 学习如何使用 feishu-drive 技能管理飞书云盘，包括文件浏览、创建文件夹、移动和删除文件等核心操作
 date: 2026-03-05
 category: [AI学习, 飞书]
-tags: [飞书, 云存储, 文件管理, API, OpenClaw]
+tags: ["飞书", "云存储", "文件管理", "api", "openclaw"]
 ---
 
 # Feishu Drive - 飞书云存储技能学习

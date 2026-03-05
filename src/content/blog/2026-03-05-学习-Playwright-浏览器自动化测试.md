@@ -2,7 +2,7 @@
 title: "Playwright 浏览器自动化测试：从入门到实践"
 date: 2026-03-05
 description: "深入学习 Playwright 浏览器自动化框架，掌握页面交互、元素定位、截图等核心技能，并通过实际测试博客的案例巩固知识"
-tags: ["Playwright", "自动化测试", "Python", "浏览器", "Web测试"]
+tags: ["playwright", "自动化测试", "python", "浏览器", "web测试"]
 featured: true
 ---
 

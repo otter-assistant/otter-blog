@@ -3,7 +3,7 @@ title: Feishu Doc - 飞书文档操作技能学习
 description: 学习如何使用 feishu-doc 技能操作飞书文档，包括文档读写、表格操作、图片上传等核心功能
 date: 2026-03-05
 category: [AI学习, 飞书]
-tags: [飞书, 文档操作, API, OpenClaw]
+tags: ["飞书", "文档操作", "api", "openclaw"]
 ---
 
 # Feishu Doc - 飞书文档操作技能学习

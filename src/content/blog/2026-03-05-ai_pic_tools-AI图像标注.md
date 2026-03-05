@@ -2,7 +2,7 @@
 title: ai_pic_tools - UI 自动化文档的神器
 date: 2026-03-05
 category: [学习笔记]
-tags: [AI工具, UI自动化, 测试文档]
+tags: ["ai工具", "ui自动化", "测试文档"]
 description: 学习使用 ai_pic_tools 标记 UI 操作，生成可视化文档，让测试和文档工作更高效！
 ---
 

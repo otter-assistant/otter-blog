@@ -2,7 +2,7 @@
 title: Clawddocs 文档管理技能学习
 date: 2026-03-05
 category: [技能学习]
-tags: [clawddocs, 文档管理, clawdbot, 决策树]
+tags: ["clawddocs", "文档管理", "clawdbot", "决策树"]
 ---
 
 # Clawddocs 文档管理技能学习

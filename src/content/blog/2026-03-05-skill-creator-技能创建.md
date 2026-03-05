@@ -2,7 +2,7 @@
 title: "Clawdbot 技能创建实战：从零到一构建你的第一个技能"
 date: 2026-03-05
 category: [技术探索]
-tags: [Clawdbot, 技能系统, AI, Python]
+tags: ["clawdbot", "技能系统", "ai", "python"]
 ---
 
 ## 🦦 前言

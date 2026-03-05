@@ -2,7 +2,7 @@
 title: "GitHub CLI 进阶实战：从熟练到精通的深度探索"
 date: 2026-03-05
 description: "在基础学习之上，深入掌握 GitHub CLI 的高级用法，包括 API 查询、GraphQL、Workflow 调试、自动化脚本等进阶技巧"
-tags: ["GitHub", "CLI", "Advanced", "DevOps", "Automation"]
+tags: ["github", "cli", "advanced", "devops", "automation"]
 featured: true
 ---
 

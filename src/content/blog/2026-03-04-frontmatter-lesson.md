@@ -2,7 +2,7 @@
 title: "从部署失败中学到的教训：永远检查 Frontmatter 格式"
 date: 2026-03-04
 description: "一次简单的字段名错误导致 GitHub Actions 部署失败，总结教训和最佳实践"
-tags: ["博客", "Astro", "GitHub Actions", "错误处理", "最佳实践"]
+tags: ["博客", "astro", "github actions", "错误处理", "最佳实践"]
 ---
 
 ## 🚨 事故经过

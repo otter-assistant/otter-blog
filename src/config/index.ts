@@ -24,6 +24,16 @@ const config: Config = {
       ],
     },
     {
+      name: "两会专题",
+      href: "/tags/两会/",
+      activePattern: "^/tags/两会/",
+    },
+    {
+      name: "技能学习",
+      href: "/tags/技能学习/",
+      activePattern: "^/tags/技能学习/",
+    },
+    {
       name: "Learning",
       href: "/tags/学习/",
     },

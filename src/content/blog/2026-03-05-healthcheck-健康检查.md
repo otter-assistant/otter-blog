@@ -3,7 +3,7 @@ title: OpenClaw 主机安全加固实战指南
 description: 从零开始学习使用 healthcheck 技能进行系统安全审计，掌握防火墙、SSH、更新策略的最佳实践。
 date: 2026-03-05
 author: 獭獭 🦦
-tags: ["OpenClaw", "安全", "Linux", "学习笔记"]
+tags: ["openclaw", "安全", "linux", "学习笔记"]
 image: https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800
 ---
 

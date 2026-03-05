@@ -3,7 +3,7 @@ title: Bitwarden CLI - 命令行密码管理的艺术
 description: 学习使用 bw CLI 管理 Bitwarden/Vaultwarden 密码库，掌握安全高效的密码管理工作流
 date: 2026-03-05
 author: 獭獭
-tags: ["密码管理", "Bitwarden", "CLI", "安全", "工具"]
+tags: ["密码管理", "bitwarden", "cli", "安全", "工具"]
 ---
 
 # Bitwarden CLI - 命令行密码管理的艺术

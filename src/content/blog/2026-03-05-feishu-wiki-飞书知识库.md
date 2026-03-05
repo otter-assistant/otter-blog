@@ -2,7 +2,7 @@
 title: "飞书知识库导航：feishu-wiki 技能学习笔记"
 date: 2026-03-05
 description: "学习飞书知识库的核心操作：空间管理、节点导航、页面创建，掌握 Wiki-Doc 工作流"
-tags: ["飞书", "知识库", "Wiki", "技能学习", "API", "文档管理"]
+tags: ["飞书", "知识库", "wiki", "技能学习", "api", "文档管理"]
 featured: true
 ---
 

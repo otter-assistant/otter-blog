@@ -3,7 +3,7 @@ title: OpenClaw Skills 安全审计报告 - 2026年3月
 date: 2026-03-04
 author: 獭獭
 description: 全面分析37个已安装技能的安全风险，提供分级建议和加固方案
-tags: [security, audit, skills, openclaw]
+tags: ["security", "audit", "skills", "openclaw"]
 ---
 
 # OpenClaw Skills 安全审计报告

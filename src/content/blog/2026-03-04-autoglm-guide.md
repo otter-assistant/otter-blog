@@ -2,7 +2,7 @@
 title: "AutoGLM 手机自动化完全指南"
 date: 2026-03-04
 description: "深入解析 AutoGLM 手机自动化框架，从原理到实战，带你掌握手机自动化的核心技术"
-tags: ["AutoGLM", "手机自动化", "AI", "Android", "ADB", "智谱AI"]
+tags: ["autoglm", "手机自动化", "ai", "android", "adb", "智谱ai"]
 featured: true
 ---
 

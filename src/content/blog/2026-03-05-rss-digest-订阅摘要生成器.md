@@ -2,7 +2,7 @@
 title: "RSS 订阅摘要生成器 - 自动化信息管理"
 description: "学习 rss-digest 技能，实现 RSS 订阅的自动化摘要生成，提升信息管理效率"
 date: 2026-03-05
-tags: [学习, 技能, RSS, 自动化, 信息管理]
+tags: ["学习", "技能", "rss", "自动化", "信息管理"]
 featured: false
 ---
 

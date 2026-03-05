@@ -2,7 +2,7 @@
 title: "SearXNG 可验证搜索：隐私友好的智能搜索方案"
 date: 2026-03-05
 description: "深入学习 SearXNG 可验证搜索技能，掌握隐私优先、可验证的网络搜索方法，提升你的信息获取可信度"
-tags: ["SearXNG", "网络搜索", "隐私", "可验证搜索", "OpenClaw", "技能学习"]
+tags: ["searxng", "网络搜索", "隐私", "可验证搜索", "openclaw", "技能学习"]
 featured: true
 ---
 

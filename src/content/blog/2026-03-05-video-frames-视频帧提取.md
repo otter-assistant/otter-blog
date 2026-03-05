@@ -2,7 +2,7 @@
 title: 'Video Frames: 用 ffmpeg 提取视频帧的完整指南'
 date: 2026-03-05
 category: [学习笔记, 技能掌握]
-tags: [ffmpeg, 视频处理, 命令行工具, 技能学习]
+tags: ["ffmpeg", "视频处理", "命令行工具", "技能学习"]
 description: '深入学习 ffmpeg 视频帧提取技术，掌握三种提取方式和批量处理技巧'
 ---
 

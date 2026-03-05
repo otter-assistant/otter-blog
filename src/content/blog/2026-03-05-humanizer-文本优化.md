@@ -2,7 +2,7 @@
 title: "Humanizer 文本优化 - 让 AI 写作更像人"
 date: 2026-03-05
 category: [学习笔记]
-tags: [文本优化, AI写作, 内容创作]
+tags: ["文本优化", "ai写作", "内容创作"]
 ---
 
 # Humanizer 文本优化 - 让 AI 写作更像人

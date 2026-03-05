@@ -2,7 +2,7 @@
 title: "GitHub CLI 深度指南：从入门到精通的命令行工具"
 date: 2026-03-05
 description: "全面学习 GitHub CLI 的核心功能，掌握 issue、PR、Actions、API 等高级用法，提升开发效率和协作能力"
-tags: ["GitHub", "CLI", "DevTools", "Git", "CI/CD"]
+tags: ["github", "cli", "devtools", "git", "cicd"]
 featured: true
 ---
 
