@@ -4,11 +4,11 @@ description: 掌握 vdirsyncer + khal 的日历同步和查询方法，实现命
 date: 2026-03-05
 category: 学习笔记
 tags:
-uri: caldav-calendar
   - CalDAV
   - vdirsyncer
   - khal
   - 日历同步
+uri: caldav-calendar
 ---
 
 # 学习 CalDAV 日历同步技能
