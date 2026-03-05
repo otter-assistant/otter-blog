@@ -28,7 +28,11 @@ export default defineConfig({
       excludeLangs: ['mermaid'],
     },
     shikiConfig: {
-      theme: "monokai",
+      // VSCode 风格双主题配置
+      themes: {
+        light: 'github-light',
+        dark: 'github-dark',
+      },
       wrap: true,
     },
     remarkPlugins: [remarkWikiLinks],
