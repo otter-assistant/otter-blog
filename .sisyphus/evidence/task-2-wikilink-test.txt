@@ -1,0 +1,30 @@
+Test Evidence: Task 2 - citationToHast WikiLink Tests
+
+Test Run: citationToHast.test.ts (Scene 3-4: WikiLink Citations)
+Command: npx vitest run src/plugins/__tests__/citationToHast.test.ts --reporter=verbose
+
+Test Results:
+✓ citationToHast > 场景 3: WikiLink 引用 - 匹配成功 > WikiLink 引用匹配到文章时应该生成内部链接 URL 1ms
+✓ citationToHast > 场景 3: WikiLink 引用 - 匹配成功 > WikiLink 引用应该支持中文标题匹配 0ms
+✓ citationToHast > 场景 4: WikiLink 引用 - 未匹配 > WikiLink 引用未匹配到文章时不应该设置 dataUrl 0ms
+
+WikiLink Match Success:
+- Input: {cite [[Existing Post]]}
+- Mock post found: { title: 'Existing Post', slug: 'existing-post' }
+- dataContent: 'Existing Post'
+- dataUrl: '/post/existing-post.html'
+- Verification: ✓ PASSED
+
+Chinese Title Match:
+- Input: {cite [[已存在的文章]]}
+- Mock post found: { title: '已存在的文章', slug: 'existing-article' }
+- dataContent: '已存在的文章'
+- dataUrl: '/post/existing-article.html'
+- Verification: ✓ PASSED
+
+WikiLink No Match:
+- Input: {cite [[Non-Existent Post]]}
+- Mock post search result: undefined
+- dataContent: 'Non-Existent Post'
+- dataUrl: undefined (not set)
+- Verification: ✓ PASSED (graceful degradation)

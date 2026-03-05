@@ -1,10 +1,10 @@
 {
-  "active_plan": "/Users/luanmeihua/Codes/obsidian2astro-template/.sisyphus/plans/search-layered-lazy-load.md",
-  "started_at": "2026-02-27T12:20:00.000Z",
+  "active_plan": "/home/eeymoo/Codes/obsidian2astro-template/.sisyphus/plans/fix-citation-references.md",
+  "started_at": "2026-03-05T16:36:42.755Z",
   "session_ids": [
-    "ses_3618da350ffeYy64mHzuM0P4FY",
-    "ses_35deead58ffe0mCeAoBsO46udi"
+    "ses_34130e77cffeZHzlk4LX9D7qj0"
   ],
-  "plan_name": "search-layered-lazy-load",
-  "worktree_path": "/Users/luanmeihua/Codes/obsidian2astro-template/.worktrees/search-layered"
+  "plan_name": "fix-citation-references",
+  "agent": "atlas",
+  "worktree_path": "/home/eeymoo/Codes/obsidian2astro-template"
 }
