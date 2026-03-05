@@ -1,0 +1,44 @@
+=== EXISTING TESTS VERIFICATION ===
+Date: Fri Mar 06 2026
+
+SCENARIO 1: remarkCitation.test.ts
+===================================
+Command: npx vitest run src/plugins/__tests__/remarkCitation.test.ts --reporter=verbose
+
+Result: ✓ All 7 tests PASSED
+- ✓ 场景 1: 纯文字引用 > 应该将 {cite 百度一下} 转换为上标 [1]
+- ✓ 场景 2: 链接引用 > 应该将 {cite [百度](https://baidu.com)} 转换为上标 [1] 并收集链接
+- ✓ 场景 3: WikiLink 引用 > 应该将 {cite [[其他文章]]} 转换为上标 [1] 并收集 WikiLink
+- ✓ 场景 4: 多个引用 > 应该为多个引用顺序编号 [1], [2], [3]
+- ✓ 场景 5: 边界情况 > 应该处理空引用 {cite }
+- ✓ 场景 5: 边界情况 > 应该处理特殊字符
+- ✓ 场景 5: 边界情况 > 应该处理中文和空格
+
+Test Files: 1 passed (1)
+Tests: 7 passed (7)
+Duration: 287ms
+
+SCENARIO 2: rehypeCitation.test.ts
+===================================
+Command: npx vitest run src/plugins/__tests__/rehypeCitation.test.ts --reporter=verbose
+
+Result: ✓ All 7 tests PASSED
+- ✓ 应该将 citation 节点转换为上标链接
+- ✓ 应该在 article 末尾插入参考文献区
+- ✓ 应该生成正确格式的参考文献列表项
+- ✓ 应该将参考文献中的外链转换为 goto 链接
+- ✓ 应该正确处理多个引用并按顺序编号
+- ✓ 无引用时不应生成参考文献区
+- ✓ 应该处理空 article 元素
+
+Test Files: 1 passed (1)
+Tests: 7 passed (7)
+Duration: 288ms
+
+=== SUMMARY ===
+Total Tests: 14
+Passed: 14
+Failed: 0
+Status: ✓ ALL TESTS PASS - No breakage detected
+
+Export additions DO NOT affect existing functionality.

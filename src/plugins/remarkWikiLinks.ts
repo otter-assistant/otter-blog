@@ -4,7 +4,7 @@ import type { Root, Text, Link } from 'mdast';
 import { readFileSync, existsSync, readdirSync, statSync } from 'fs';
 import { join, basename } from 'path';
 
-interface PostData {
+export interface PostData {
   title: string;
   slug: string;
   uri?: string;
@@ -23,7 +23,7 @@ function extractUri(content: string): string | undefined {
   return uriMatch ? uriMatch[1].trim() : undefined;
 }
 
-function generateSlug(title: string, id: string, uri?: string): string {
+export function generateSlug(title: string, id: string, uri?: string): string {
   if (uri) return uri;
   
   const baseName = basename(id, '.md').replace(/\.mdx$/, '');
@@ -33,7 +33,7 @@ function generateSlug(title: string, id: string, uri?: string): string {
     .replace(/[^\w\-\u4e00-\u9fa5]/g, '');
 }
 
-function loadAllPosts(): PostData[] {
+export function loadAllPosts(): PostData[] {
   if (postsCache) {
     return postsCache;
   }

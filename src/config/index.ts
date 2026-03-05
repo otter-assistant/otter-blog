@@ -91,7 +91,7 @@ const config: Config = {
     },
   },
   goto: {
-    path: '/tool/goto/',
+    path: '/tool/goto',
     whiteList: [
       '/^https?:\/\/github\.com\/eeymoo/i',          // GitHub 个人主页
       // '*.google.com/*',                              // 通配符：匹配所有 google.com 子域名的任意路径

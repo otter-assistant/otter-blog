@@ -1,0 +1,19 @@
+Test Evidence: Task 2 - citationToHast Implementation
+
+Test Run: citationToHast.test.ts (Scene 2: Link Citations)
+Command: npx vitest run src/plugins/__tests__/citationToHast.test.ts --reporter=verbose
+
+Test Results:
+✓ citationToHast > 场景 2: 链接引用 > 链接引用应该提取 URL 和文本 1ms
+
+PASS: Link citations correctly extract URL and text
+- Input: {cite [百度](https://baidu.com)}
+- dataContent: '百度'
+- dataUrl: 'https://baidu.com'
+- dataType: 'link'
+- dataId: 1
+
+Verification: ✓ PASSED
+- dataContent matches extracted text
+- dataUrl matches extracted URL from markdown link syntax
+- dataType correctly identifies as 'link'
