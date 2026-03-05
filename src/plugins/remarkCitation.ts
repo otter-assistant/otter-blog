@@ -43,6 +43,47 @@ function reconstructLinkContent(link: Link): string {
   return `[${text}](${link.url})`;
 }
 
+function expandTextCitations(
+  text: string,
+  citations: CitationData[],
+  getNextIndex: () => number,
+): Array<Text | CitationNode> {
+  const citationRegex = /\{cite\s+([^}]+)\}/g;
+  const nodes: Array<Text | CitationNode> = [];
+  let lastIndex = 0;
+  let match;
+
+  while ((match = citationRegex.exec(text)) !== null) {
+    const content = match[1].trim();
+    if (!content) continue;
+
+    const before = text.slice(lastIndex, match.index);
+    if (before) {
+      nodes.push({ type: 'text', value: before });
+    }
+
+    const currentIndex = getNextIndex();
+    const contentType = detectContentType(content);
+
+    nodes.push({
+      type: 'citation',
+      content,
+      index: currentIndex,
+      contentType,
+    } as CitationNode);
+
+    citations.push({ content, index: currentIndex, type: contentType });
+    lastIndex = match.index + match[0].length;
+  }
+
+  const after = text.slice(lastIndex);
+  if (after) {
+    nodes.push({ type: 'text', value: after });
+  }
+
+  return nodes;
+}
+
 const remarkCitation: Plugin<[CitationOptions?], Root> = () => {
   return (tree: Root, file: any) => {
     if (!file.data) {
@@ -79,31 +120,35 @@ const remarkCitation: Plugin<[CitationOptions?], Root> = () => {
         
         if (!closeBraceMatch) return;
         
-        citationIndex++;
-        const currentIndex = citationIndex;
         const content = linkContent;
         const contentType: 'link' = 'link';
-        
-        const citationNode: CitationNode = {
-          type: 'citation',
-          content,
-          index: currentIndex,
-          contentType,
-        };
-        
-        citations.push({
-          content,
-          index: currentIndex,
-          type: contentType,
-        });
         
         transformations.push(() => {
           const newNodes: Array<Text | CitationNode> = [];
           
           const beforeText = value.slice(0, value.lastIndexOf('{cite '));
           if (beforeText) {
-            newNodes.push({ type: 'text', value: beforeText });
+            const expanded = expandTextCitations(
+              beforeText, citations, () => ++citationIndex,
+            );
+            newNodes.push(...expanded);
           }
+          
+          citationIndex++;
+          const currentIndex = citationIndex;
+          
+          const citationNode: CitationNode = {
+            type: 'citation',
+            content,
+            index: currentIndex,
+            contentType,
+          };
+          
+          citations.push({
+            content,
+            index: currentIndex,
+            type: contentType,
+          });
           
           newNodes.push(citationNode);
           
@@ -127,62 +172,12 @@ const remarkCitation: Plugin<[CitationOptions?], Root> = () => {
       
       if (/\{cite\s+$/.test(value)) return;
       
-      citationRegex.lastIndex = 0;
-      
-      const newNodes: Array<Text | CitationNode> = [];
-      let lastIndex = 0;
-      let match;
-      
-      while ((match = citationRegex.exec(value)) !== null) {
-        const content = match[1].trim();
-        
-        if (!content) continue;
-        
-        const beforeText = value.slice(lastIndex, match.index);
-        
-        if (beforeText) {
-          newNodes.push({
-            type: 'text',
-            value: beforeText,
-          });
-        }
-        
-        citationIndex++;
-        const currentIndex = citationIndex;
-        
-        const contentType = detectContentType(content);
-        
-        const citationNode: CitationNode = {
-          type: 'citation',
-          content,
-          index: currentIndex,
-          contentType,
-        };
-        
-        newNodes.push(citationNode);
-        
-        citations.push({
-          content,
-          index: currentIndex,
-          type: contentType,
-        });
-        
-        lastIndex = match.index + match[0].length;
-      }
-      
-      const afterText = value.slice(lastIndex);
-      if (afterText) {
-        newNodes.push({
-          type: 'text',
-          value: afterText,
-        });
-      }
-      
-      if (newNodes.length > 0) {
-        transformations.push(() => {
+      transformations.push(() => {
+        const newNodes = expandTextCitations(value, citations, () => ++citationIndex);
+        if (newNodes.length > 0) {
           parent.children.splice(index, 1, ...newNodes);
-        });
-      }
+        }
+      });
     });
     
     transformations.forEach(fn => fn());

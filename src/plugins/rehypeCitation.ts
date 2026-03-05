@@ -106,9 +106,9 @@ const rehypeCitation: Plugin<[], Root> = () => {
       children: [
         {
           type: 'element',
-          tagName: 'h2',
+          tagName: 'h4',
           properties: {
-            className: ['text-lg', 'font-bold', 'mb-4'],
+            className: ['text-base', 'font-semibold', 'mb-3'],
           },
           children: [
             {
