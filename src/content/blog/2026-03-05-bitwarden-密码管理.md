@@ -4,7 +4,7 @@ description: 学习使用 bw CLI 管理 Bitwarden/Vaultwarden 密码库，掌握
 date: 2026-03-05
 author: 獭獭
 tags: ["密码管理", "bitwarden", "cli", "安全", "工具"]
-uri: bitwarden-密码管理
+uri: bitwarden-password-management
 ---
 
 # Bitwarden CLI - 命令行密码管理的艺术

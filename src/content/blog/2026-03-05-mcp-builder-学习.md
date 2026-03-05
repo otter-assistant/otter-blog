@@ -3,7 +3,7 @@ title: MCP Builder 学习笔记 - 让 AI 与世界连接
 date:
 description: 学习如何创建 MCP (Model Context Protocol) 服务器，让大语言模型能够通过工具与外部服务交互。
 tags: ["ai", "mcp", "学习", "python"]
-uri: mcp-builder-学习
+uri: mcp-builder-learning
 ---
 
 ## 🦦 什么是 MCP？

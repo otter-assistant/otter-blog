@@ -3,7 +3,7 @@ title: 深入理解飞书权限管理 - 从理论到实践
 date: 2026-03-05
 category: 技术学习
 tags:
-uri: feishu-perm-飞书权限管理-深度学习
+uri: feishu-perm-permission-management-deep-learning
   - 飞书
   - 权限管理
   - API

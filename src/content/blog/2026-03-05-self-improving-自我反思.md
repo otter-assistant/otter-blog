@@ -4,7 +4,7 @@ date: 2026-03-05
 description: 深入学习自我反思、自我批评和从纠正中学习的机制，掌握分级存储和自动提升系统
 category: AI 技能学习
 tags:
-uri: self-improving-自我反思
+uri: self-improving-self-reflection
   - self-improving
   - 自我反思
   - 持续改进
