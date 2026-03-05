@@ -16,7 +16,7 @@ export function citationToHast(state: State, node: MdastNodes): HastNodes | Arra
     properties: {
       dataId: citationNode.index,
       dataContent: citationNode.content,
-      contentType: citationNode.contentType,
+      dataType: citationNode.contentType,
     },
     children: [],
   };

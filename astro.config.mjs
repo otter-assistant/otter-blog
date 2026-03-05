@@ -10,6 +10,7 @@ import rehypeGotoLinks from "./src/plugins/rehypeGotoLinks.ts";
 import remarkWikiLinks from "./src/plugins/remarkWikiLinks.ts";
 import remarkCitation from "./src/plugins/remarkCitation.ts";
 import rehypeCitation from "./src/plugins/rehypeCitation.ts";
+import { citationToHast } from "./src/plugins/citationToHast.ts";
 
 // Get git hash from environment variable
 const gitHash = process.env.VITE_GIT_HASH || 'unknown';
@@ -33,8 +34,13 @@ export default defineConfig({
       theme: "monokai",
       wrap: true,
     },
-    remarkPlugins: [remarkWikiLinks, remarkCitation],
+    remarkPlugins: [remarkCitation, remarkWikiLinks],
     rehypePlugins: [rehypeGotoLinks, rehypeCitation],
+    remarkRehype: {
+      handlers: {
+        citation: citationToHast,
+      },
+    },
   },
 
   vite: {

@@ -128,11 +128,18 @@ const rehypeCitation: Plugin<[], Root> = () => {
       ],
     };
     
+    let inserted = false;
+    
     visit(tree, 'element', (node: Element) => {
-      if (node.tagName !== 'article') return;
+      if (node.tagName !== 'article' || inserted) return;
       
       node.children.push(citationsSection);
+      inserted = true;
     });
+    
+    if (!inserted && citations.length > 0) {
+      tree.children.push(citationsSection);
+    }
   };
 };
 
