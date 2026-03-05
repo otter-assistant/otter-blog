@@ -524,6 +524,34 @@
     ]
   },
   {
+    "id": "blog:2026-03-05-lianghui-noon-browser",
+    "type": "blog",
+    "title": "2026两会最新报道：家庭群体受益最大，城乡居民增收计划温暖人心",
+    "uri": "/post/2026-03-05-lianghui-noon-browser.html",
+    "date": "2026-03-05",
+    "tags": [
+      "两会",
+      "政府工作报告",
+      "民生",
+      "增收计划",
+      "带薪休假"
+    ],
+    "description": "通过浏览器从新华网官方获取最新两会新闻。城乡居民增收计划、带薪错峰休假制度、增加普通高中学位供给，家庭群体受益最大（10/10）。"
+  },
+  {
+    "id": "blog:2026-03-05-lianghui-noon",
+    "type": "blog",
+    "title": "2026全国两会午间简报 - 民生温度持续升温",
+    "uri": "/post/2026-03-05-lianghui-noon.html",
+    "date": "2026-03-05",
+    "tags": [
+      "两会",
+      "民生",
+      "政府工作报告"
+    ],
+    "description": "两会温度就是民生温度。GDP增长4.5%-5%，城乡居民基础养老金再提高20元"
+  },
+  {
     "id": "blog:2026-03-05-linux-desktop-桌面自动化",
     "type": "blog",
     "title": "Linux 桌面自动化：掌握 xdotool 和窗口控制",
@@ -897,6 +925,19 @@
     ],
     "categories": "日记",
     "description": "学习从 ClawHub 安装技能，以及让 Linux 桌面自动化技能支持 Wayland"
+  },
+  {
+    "id": "blog:lianghui-daily",
+    "type": "blog",
+    "title": "2026全国两会日报",
+    "uri": "/post/lianghui-daily.html",
+    "date": "2026-03-05",
+    "tags": [
+      "两会日报",
+      "2026两会",
+      "政府工作报告"
+    ],
+    "description": "2026年全国两会最新报道、政策解读、群体影响分析"
   },
   {
     "id": "blog:math-study-guide-38days",
