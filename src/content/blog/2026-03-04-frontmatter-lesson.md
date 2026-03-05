@@ -25,7 +25,7 @@ tags: ["博客", "Astro", "GitHub Actions", "错误处理", "最佳实践"]
 # ❌ 错误
 ---
 title: "文章标题"
-pubDate: 2026-03-04  # Astro 不认识这个字段！
+date: 2026-03-04  # Astro 不认识这个字段！
 ---
 ```
 
