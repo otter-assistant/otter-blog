@@ -129,6 +129,7 @@ import { type Config } from './types.ts';
 - **Slug 生成**: 使用 `generatePostSlug` 统一生成 URL
 - **日期处理**: 使用 dayjs 库，统一在工具函数封装
 - **Markdown**: 支持 MDX，frontmatter 类型由 Astro 自动生成
+- **引用语法**: 支持 `{cite 内容}` 语法，内容支持纯文字、链接、WikiLink
 
 ## 环境变量
 - `VITE_GIT_HASH`: 构建时自动注入 git commit hash
