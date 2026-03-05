@@ -3,6 +3,28 @@
 ## 项目概述
 Astro + TypeScript + Tailwind CSS 4.x 博客项目，支持 MDX、Markdown 内容管理。
 
+**内容分离架构**：
+- 博客内容存储在独立仓库 `otter-content`
+- 本仓库 (`otter-blog`) 负责构建和部署
+- 内容推送时自动触发构建流程
+
+## 仓库架构
+
+```
+otter-content (内容仓库)
+    ↓ 推送触发 GitHub Actions
+otter-blog (构建仓库)
+    ↓ 构建后自动部署
+otter-assistant.github.io (部署仓库)
+```
+
+**工作流程**：
+1. 在 `otter-content` 仓库修改博客文章
+2. 推送到 `main` 分支触发 `trigger-build.yml`
+3. 通过 `repository_dispatch` 触发 `otter-blog` 的构建
+4. `otter-blog` 拉取最新内容并构建
+5. 构建产物自动推送到 `otter-assistant.github.io`
+
 ## 主要命令
 
 ### 构建
@@ -133,9 +155,43 @@ import { type Config } from './types.ts';
 ## 环境变量
 - `VITE_GIT_HASH`: 构建时自动注入 git commit hash
 - 通过 `import.meta.env.__version__` 访问
+- `CONTENT_REPO`: 内容仓库地址（可选，默认为 https://github.com/otter-assistant/otter-content.git）
+- `CONTENT_BRANCH`: 内容仓库分支（可选，默认为 main）
 
 ## 常见任务
 - **添加新页面**: 在 `src/pages/` 创建 `*.astro` 或 `[param]/index.astro`
 - **添加组件**: 在 `src/components/` 创建 `*.astro`
 - **添加工具函数**: 在 `src/utils/` 创建 `*.ts`，统一在 `index.ts` 导出
 - **修改配置**: 编辑 `src/config/index.ts` 和 `src/config/types.ts`
+- **本地开发同步内容**: 运行 `npx tsx scripts/sync-content.ts` 从 `otter-content` 拉取最新内容
+- **初始化内容仓库**: 运行 `./scripts/init-content-repo.sh` 创建新的 `otter-content` 仓库
+- **迁移现有内容**: 运行 `./scripts/migrate-content.sh` 将本地内容迁移到 `otter-content`
+
+## GitHub Actions 配置
+
+### otter-blog 仓库
+- 工作流文件: `.github/workflows/deploy.yml`
+- 触发条件:
+  - 推送到 `main` 分支
+  - 接收 `repository_dispatch` 事件 (event-type: `content-updated`)
+  - 手动触发 (`workflow_dispatch`)
+- 构建流程:
+  1. 检出代码
+  2. 安装依赖
+  3. 同步内容 (`scripts/sync-content.ts`)
+  4. 构建 (`npm run build`)
+  5. 部署到 `otter-assistant.github.io`
+
+### otter-content 仓库
+- 工作流文件: `.github/workflows/trigger-build.yml`
+- 触发条件:
+  - 推送到 `main` 分支
+  - 手动触发
+- 执行操作:
+  - 通过 `repository_dispatch` 触发 `otter-blog` 构建
+
+### 必需的 GitHub Secrets
+- `otter-blog` 仓库:
+  - `DEPLOY_TOKEN`: 用于推送构建产物到 `otter-assistant.github.io`
+- `otter-content` 仓库:
+  - `TRIGGER_TOKEN`: 用于触发 `otter-blog` 的构建工作流

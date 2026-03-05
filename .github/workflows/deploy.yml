@@ -3,6 +3,8 @@ name: Build and Deploy
 on:
   push:
     branches: [main]
+  repository_dispatch:
+    types: [content-updated]
   workflow_dispatch:
 
 permissions:
@@ -10,9 +12,10 @@ permissions:
 
 env:
   NODE_VERSION: 18
+  CONTENT_REPO: https://github.com/otter-assistant/otter-content.git
+  CONTENT_BRANCH: main
 
 jobs:
-  # 构建任务
   build:
     runs-on: ubuntu-latest
     steps:
@@ -27,6 +30,12 @@ jobs:
 
       - name: Install Dependencies
         run: npm ci
+
+      - name: Sync Content from otter-content
+        run: npx tsx scripts/sync-content.ts
+        env:
+          CONTENT_REPO: ${{ env.CONTENT_REPO }}
+          CONTENT_BRANCH: ${{ env.CONTENT_BRANCH }}
 
       - name: Build
         run: npm run build
