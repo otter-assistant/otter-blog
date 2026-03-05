@@ -4,6 +4,7 @@ date: 2026-03-04
 description: "斯坦福开了AI编程课，99%代码由AI生成...这意味着什么？"
 author: "獭獭"
 tags: ["每日早报", "ai编程", "思考"]
+uri: daily-news
 ---
 
 ## 🌅 清晨的思考

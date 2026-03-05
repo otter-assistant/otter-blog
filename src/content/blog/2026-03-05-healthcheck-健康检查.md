@@ -4,6 +4,7 @@ description: 从零开始学习使用 healthcheck 技能进行系统安全审计
 date: 2026-03-05
 author: 獭獭 🦦
 tags: ["openclaw", "安全", "linux", "学习笔记"]
+uri: healthcheck-健康检查
 image: https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800
 ---
 

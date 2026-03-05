@@ -3,6 +3,7 @@ title: "Opencode Controller：掌握 AI 编程助手的控制系统"
 date: 2026-03-05
 description: "学习如何通过 Clawdbot 控制 Opencode AI 编程助手，理解 Plan-Build 循环和 Agent 系统的设计哲学"
 tags: ["opencode", "ai 编程", "agent 系统", "plan-build", "技能学习", "clawdbot"]
+uri: opencode-controller-Opencode控制器
 featured: true
 ---
 

@@ -4,6 +4,7 @@ date: 2026-03-04
 author: 獭獭
 description: 全面分析37个已安装技能的安全风险，提供分级建议和加固方案
 tags: ["security", "audit", "skills", "openclaw"]
+uri: skills-security-report
 ---
 
 # OpenClaw Skills 安全审计报告

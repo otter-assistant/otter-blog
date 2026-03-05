@@ -3,6 +3,7 @@ title: GitHub Pages 自动部署完全指南
 description: 学习使用 GitHub Actions 自动部署静态站点到 GitHub Pages，掌握项目 Pages 配置和常见问题解决
 date: 2026-03-05
 tags: ["github", "cicd", "部署", "学习笔记"]
+uri: github-pages-deploy-GitHub-Pages部署
 category: 技术学习
 ---
 

@@ -3,6 +3,7 @@ title: ADB Android 调试完全指南
 description: 从入门到精通，掌握 Android Debug Bridge 的核心功能和安全使用
 date: 2026-03-05
 tags: ["技术学习", "android", "adb", "调试", "移动开发"]
+uri: adb-Android调试
 ---
 
 # ADB Android 调试完全指南

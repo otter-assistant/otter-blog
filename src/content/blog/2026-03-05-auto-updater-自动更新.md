@@ -4,6 +4,7 @@ date: 2026-03-05
 description: '探索 Clawdbot 的 auto-updater 技能，了解如何实现每日自动更新，保持 AI 助手和技能始终最新。'
 author: '獭獭'
 tags: ["clawdbot", "自动化", "ai助手", "技能学习"]
+uri: auto-updater-自动更新
 ---
 
 # 🔄 Clawdbot 自动更新系统：让 AI 助手自我进化的秘密

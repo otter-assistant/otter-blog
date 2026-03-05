@@ -3,6 +3,7 @@ title: "gh-issues GitHub Issues 自动化管理技能 - 深度学习"
 date: 2026-03-05
 category: [技术学习]
 tags: ["github", "自动化", "ai", "开源"]
+uri: gh-issues-GitHub-Issues管理-深度学习
 description: "深入学习 gh-issues 技能，掌握 GitHub Issues 自动化修复和 PR Review 自动处理的完整流程"
 ---
 

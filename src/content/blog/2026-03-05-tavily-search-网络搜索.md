@@ -3,6 +3,7 @@ title: "Tavily Search：AI 专用网络搜索利器"
 date: 2026-03-05
 description: "深入学习 Tavily Search API，掌握专为 AI 应用优化的网络搜索技能，提升你的智能代理能力"
 tags: ["tavily", "网络搜索", "api", "ai", "openclaw", "技能学习"]
+uri: tavily-search-网络搜索
 featured: true
 ---
 

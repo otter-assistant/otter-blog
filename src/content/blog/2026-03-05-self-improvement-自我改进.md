@@ -4,6 +4,7 @@ description: 学习如何使用 self-improvement 技能建立持续改进机制
 date: 2026-03-05
 category: [AI学习]
 tags: ["自我改进", "持续学习", "openclaw"]
+uri: self-improvement-自我改进
 ---
 
 # Self-Improvement 自我改进系统学习

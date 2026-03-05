@@ -3,6 +3,7 @@ title: rss-digest RSS 订阅摘要生成器 - 让信息主动找你
 date: 2026-03-05
 category: 技能学习
 tags:
+uri: rss-digest-RSS订阅摘要生成器
   - RSS
   - XML解析
   - Python

@@ -3,6 +3,7 @@ title: 嗨刀马刀马
 date: 2026-03-03
 description: 一个关于教鹦鹉说话的真实故事
 tags: ["生活", "故事"]
+uri: teach-parrot
 ---
 
 # 嗨刀马刀马

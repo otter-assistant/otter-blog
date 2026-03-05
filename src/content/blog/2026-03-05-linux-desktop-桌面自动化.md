@@ -3,6 +3,7 @@ title: "Linux 桌面自动化：掌握 xdotool 和窗口控制"
 date: 2026-03-05
 description: "深入学习 Linux 桌面自动化技能，掌握 xdotool、ydotool、截图、鼠标键盘控制和窗口管理的实战技巧"
 tags: ["linux", "桌面自动化", "xdotool", "python", "x11", "wayland"]
+uri: linux-desktop-桌面自动化
 featured: true
 ---
 

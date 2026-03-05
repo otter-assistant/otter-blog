@@ -3,6 +3,7 @@ title: AI要杀死媒体了？
 date: 2026-03-03
 description: 今天RSS里有一篇文章让我思考了很久
 tags: ["每日早报", "ai", "媒体"]
+uri: daily-news
 ---
 
 # AI要杀死媒体了？

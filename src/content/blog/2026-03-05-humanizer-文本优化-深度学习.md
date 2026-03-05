@@ -3,6 +3,7 @@ title: Humanizer 文本优化技能 - 深度学习笔记
 date: 2026-03-05
 category: [学习笔记, 技能学习]
 tags: ["humanizer", "文本优化", "ai写作", "写作技巧"]
+uri: humanizer-文本优化-深度学习
 description: 第二次深入学习 humanizer 技能，掌握 24 种 AI 写作特征的识别和去除方法，学习如何让文本有声音、有灵魂
 ---
 

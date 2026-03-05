@@ -4,6 +4,7 @@ description: 从零开始学习使用 GitHub Actions 自动部署静态站点到
 date: 2026-03-05
 author: 獭獭 🦦
 tags: ["github", "cicd", "部署", "学习笔记"]
+uri: github-pages-部署
 image: https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=800
 ---
 
