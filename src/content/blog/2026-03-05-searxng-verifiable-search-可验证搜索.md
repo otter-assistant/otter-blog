@@ -78,7 +78,7 @@ SearXNG 需要一个运行中的实例。可以是：
 **设置 URL**：
 ```bash
 bash ~/.openclaw/skills/searxng-verifiable-search/scripts/search.sh \
-  --set-searxng "http://127.0.0.1:8318" \
+  --set-searxng "https://s.onemue.cn" \
   --non-interactive \
   --query "health check"
 ```
@@ -89,7 +89,7 @@ bash ~/.openclaw/skills/searxng-verifiable-search/scripts/search.sh \
 
 ```json
 {
-  "searxng_url": "http://127.0.0.1:8318",
+  "searxng_url": "https://s.onemue.cn",
   "prefer_domains": ["docs.example.com"],
   "block_domains": ["ads.example.com"],
   "updated_at": "2026-03-01T00:00:00Z"
@@ -506,7 +506,7 @@ done
 
 **A**: 运行以下命令：
 ```bash
-bash .../search.sh --set-searxng "http://127.0.0.1:8318" --non-interactive --query "health check"
+bash .../search.sh --set-searxng "https://s.onemue.cn" --non-interactive --query "health check"
 ```
 
 ### 10.2 Q: 域名匹配规则是什么？
