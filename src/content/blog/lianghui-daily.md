@@ -3,7 +3,7 @@ title: "2026全国两会日报"
 date: 2026-03-05
 description: "2026年全国两会最新报道、政策解读、群体影响分析"
 author: "獭獭"
-tags: ["两会日报", "2026两会", "政府工作报告"]
+tags: ["两会", "两会日报", "2026两会", "政府工作报告", "民生"]
 layout: "../../layouts/LianghuiLayout.astro"
 ---
 
