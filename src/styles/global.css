@@ -157,17 +157,30 @@ code:not(.no-style) {
 }
 
 pre:not(.no-style) {
-	@apply p-3 rounded-lg bg-slate-100;
+	@apply p-4 rounded-lg overflow-x-auto;
 }
 
-html.dark pre:not(.no-style) {
-	@apply bg-slate-900;
+/* Shiki 双主题支持：通过 CSS 变量实现深浅色切换 */
+.astro-code,
+.astro-code span {
+	color: var(--shiki-light) !important;
+	background-color: var(--shiki-light-bg) !important;
+}
+
+html.dark .astro-code,
+html.dark .astro-code span {
+	color: var(--shiki-dark) !important;
+	background-color: var(--shiki-dark-bg) !important;
 }
 
 pre:not(.no-style)>code {
 	all: unset;
 	font-family: "SF Mono", "Menlo", "Ubuntu Mono", "Consolas", "Lucida Console", monospace;
 	display: block;
+}
+
+.astro-code .line {
+	@apply min-h-[1.375rem];
 }
 
 blockquote:not(.no-style) {
