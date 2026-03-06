@@ -67,6 +67,8 @@ jobs:
       - name: Deploy to Pages Repository
         run: |
           cd pages-repo
+          # 拉取远程更改
+          git pull origin main --rebase || echo "First deploy"
           # 删除旧文件（保留 .git 目录）
           find . -maxdepth 1 ! -name '.git' ! -name '.' -exec rm -rf {} +
           # 复制新文件
