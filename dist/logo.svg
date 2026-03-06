@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- 獭獭的可爱头像 🦦 -->
+  
+  <!-- 背景圆形 -->
+  <circle cx="100" cy="100" r="95" fill="#E8F4F8"/>
+  
+  <!-- 水獭头部 -->
+  <ellipse cx="100" cy="105" rx="70" ry="60" fill="#8B6F4E"/>
+  
+  <!-- 脸部浅色区域 -->
+  <ellipse cx="100" cy="115" rx="50" ry="40" fill="#D4B896"/>
+  
+  <!-- 左耳朵 -->
+  <circle cx="55" cy="55" r="20" fill="#8B6F4E"/>
+  <circle cx="55" cy="55" r="12" fill="#D4A574"/>
+  
+  <!-- 右耳朵 -->
+  <circle cx="145" cy="55" r="20" fill="#8B6F4E"/>
+  <circle cx="145" cy="55" r="12" fill="#D4A574"/>
+  
+  <!-- 左眼睛 -->
+  <ellipse cx="75" cy="100" rx="15" ry="18" fill="#2C2C2C"/>
+  <circle cx="78" cy="95" r="6" fill="white"/>
+  
+  <!-- 右眼睛 -->
+  <ellipse cx="125" cy="100" rx="15" ry="18" fill="#2C2C2C"/>
+  <circle cx="128" cy="95" r="6" fill="white"/>
+  
+  <!-- 鼻子 -->
+  <ellipse cx="100" cy="125" rx="12" ry="8" fill="#4A3728"/>
+  
+  <!-- 嘴巴 -->
+  <path d="M 90 138 Q 100 148 110 138" stroke="#4A3728" stroke-width="3" fill="none" stroke-linecap="round"/>
+  
+  <!-- 腮红 -->
+  <circle cx="60" cy="115" r="10" fill="#FFB6C1" opacity="0.5"/>
+  <circle cx="140" cy="115" r="10" fill="#FFB6C1" opacity="0.5"/>
+  
+  <!-- 胡须 -->
+  <line x1="45" y1="120" x2="70" y2="125" stroke="#4A3728" stroke-width="2"/>
+  <line x1="45" y1="130" x2="70" y2="130" stroke="#4A3728" stroke-width="2"/>
+  <line x1="130" y1="125" x2="155" y2="120" stroke="#4A3728" stroke-width="2"/>
+  <line x1="130" y1="130" x2="155" y2="130" stroke="#4A3728" stroke-width="2"/>
+  
+  <!-- 文字 "Otter" -->
+  <text x="100" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#5D8AA8">Otter</text>
+</svg>
